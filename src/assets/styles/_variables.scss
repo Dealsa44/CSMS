@@ -1,0 +1,9 @@
+// COLORS
+$color1: #124255;
+$color2: #0b2833;
+$color3: #ececec;
+
+// Export for use in other SCSS files
+:root {
+  --background: #{$color3};
+}

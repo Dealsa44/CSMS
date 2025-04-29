@@ -1,0 +1,34 @@
+<section class="section2">
+    <h2 class="section-heading">{{ getHeading() }}</h2>
+    
+    <div class="content-container">
+      <div class="text-column">
+        <div *ngFor="let title of titles; let i = index" 
+             class="text-item" 
+             [class.active]="activeIndex === i"
+             [class.expanded]="expandedItems[i]">
+          
+          <div class="title-row" (click)="toggleItem(i)">
+            <h3 class="item-title">{{ getTitle(title) }}</h3>
+            <button class="toggle-btn">
+              <span class="material-icons">
+                {{ expandedItems[i] ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
+              </span>
+            </button>
+          </div>
+          
+          <div *ngIf="expandedItems[i]" class="content-details">
+            <p>{{ getContent(contents[i]) }}</p>
+            <button class="learn-more-btn" (click)="onLearnMore()">
+              {{ getLinkText(contents[i]) }}
+            </button>
+            
+          </div>
+        </div>
+      </div>
+      
+      <div class="image-column">
+        <img [src]="getImagePath()" [alt]="getTitle(titles[activeIndex])" class="feature-image">
+      </div>
+    </div>
+  </section>

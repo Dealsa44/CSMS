@@ -1,0 +1,28 @@
+<section class="section3" id="section3">
+    <h2 class="section-heading">{{ getText(heading) }}</h2>
+    
+    <div class="content-container">
+      <div class="items-container">
+        <div *ngFor="let item of items; let i = index" 
+             class="item-card"
+             [class.active]="activeItemIndex === i"
+             (click)="setActiveItem(i)">
+          <h3 class="item-title">{{ getText(item) }}</h3>
+        </div>
+      </div>
+  
+      <div class="details-container">
+        <div class="text-content">
+          <p>{{ getContent(contents[activeItemIndex]) }}</p>
+          <button class="learn-more-btn" (click)="onLearnMore()">
+            {{ getLinkText(contents[activeItemIndex]) }}
+          </button>
+        </div>
+        <div class="image-container">
+          <img [src]="getImagePath()" 
+               [alt]="getText(items[activeItemIndex])" 
+               class="feature-image">
+        </div>
+      </div>
+    </div>
+  </section>

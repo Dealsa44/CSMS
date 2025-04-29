@@ -1,0 +1,223 @@
+.section3 {
+  padding: 5rem 2rem;
+  background-color: #ececec;
+  position: relative;
+
+  .section-heading {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #124255;
+    font-weight: 700;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 50px;
+      height: 2px;
+      background: linear-gradient(90deg, #1a936f, rgba(26, 147, 111, 0.2));
+    }
+
+    &::before {
+      left: -60px;
+    }
+
+    &::after {
+      right: -60px;
+    }
+
+    &:hover {
+      &::before,
+      &::after {
+        width: 70px;
+        background: linear-gradient(90deg, #1a936f, #124255);
+      }
+    }
+  }
+
+  .content-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .items-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .item-card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.2rem 2rem;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+    box-shadow: 0 2px 8px rgba(11, 40, 51, 0.05);
+    border: 1px solid rgba(18, 66, 85, 0.1);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 0;
+      background: linear-gradient(to top, #124255, #1a936f);
+      z-index: -1;
+      transition: height 0.4s ease;
+    }
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(11, 40, 51, 0.1);
+      border-color: rgba(26, 147, 111, 0.3);
+
+      .item-title {
+        color: white;
+      }
+    }
+
+    &.active {
+      background: linear-gradient(135deg, #124255, #0b2833);
+      box-shadow: 0 8px 24px rgba(11, 40, 51, 0.15);
+
+      .item-title {
+        color: white;
+      }
+
+      &::before {
+        height: 0;
+      }
+    }
+  }
+
+  .item-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #0b2833;
+    margin: 0;
+    transition: color 0.3s ease;
+    position: relative;
+    z-index: 2;
+    white-space: nowrap;
+  }
+
+  .details-container {
+    background: white;
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 24px rgba(11, 40, 51, 0.1);
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+    transition: all 0.4s ease;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      padding: 1.5rem;
+    }
+  }
+
+  .text-content {
+    flex: 1;
+
+    p {
+      color: #0b2833;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+  }
+
+  .learn-more-btn {
+    background: linear-gradient(to right, #1a936f, #0b2833);
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 30px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 12px rgba(26, 147, 111, 0.3);
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: all 0.6s ease;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(26, 147, 111, 0.4);
+
+      &::before {
+        left: 100%;
+      }
+    }
+
+    &::after {
+      content: '→';
+      transition: transform 0.3s ease;
+    }
+
+    &:hover::after {
+      transform: translateX(4px);
+    }
+  }
+
+  .image-container {
+    flex: 1;
+    min-width: 300px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(11, 40, 51, 0.15);
+    transition: all 0.5s ease;
+    transform: translateY(20px);
+    opacity: 0;
+    animation: fadeInUp 0.6s 0.3s forwards;
+
+    &:hover {
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 15px 40px rgba(11, 40, 51, 0.2);
+    }
+  }
+
+  .feature-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.8s ease;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

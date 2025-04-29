@@ -1,0 +1,20 @@
+<div class="modal-overlay" *ngIf="visible" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="close-btn" (click)="closeModal()">×</button>
+      <h2 class="modal-header">{{ getText(contactData[0]) }}</h2>
+      
+      <form (ngSubmit)="onSubmit()" class="request-form">
+        <div class="form-group" *ngFor="let field of contactData.slice(1, -1)">
+          <label>{{ getText(field) }}</label>
+          <input type="text" 
+                 [(ngModel)]="formData[field.order]" 
+                 [name]="'field-'+field.order"
+                 [placeholder]="getText(field)">
+        </div>
+        
+        <button type="submit" class="submit-btn">
+          {{ getText(contactData[contactData.length - 1]) }}
+        </button>
+      </form>
+    </div>
+  </div>
