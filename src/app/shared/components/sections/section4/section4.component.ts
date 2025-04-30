@@ -3,24 +3,28 @@ import { LanguageService } from '../../../../core/services/language.service';
 import { sectionHeadingsMocks } from '../../../../core/mocks/sections/sectionheadings';
 import { section4Mocks } from '../../../../core/mocks/sections/section4mock';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-section4',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './section4.component.html',
-  styleUrls: ['./section4.component.scss']
+  styleUrls: ['./section4.component.scss'],
 })
 export class Section4Component implements OnInit {
   heading = sectionHeadingsMocks[4]; // Contact heading
   content = section4Mocks;
   currentLanguageIndex = 0;
   phoneNumber = '+995';
+  showNotification = false;
+  notificationMessage = 'Thank you for your submission!';
+  private notificationTimeout: any;
 
   constructor(private languageService: LanguageService) {}
 
   ngOnInit(): void {
-    this.languageService.currentLanguage$.subscribe(index => {
+    this.languageService.currentLanguage$.subscribe((index) => {
       this.currentLanguageIndex = index;
     });
   }
@@ -31,7 +35,23 @@ export class Section4Component implements OnInit {
 
   onSubmit(): void {
     console.log('Phone number submitted:', this.phoneNumber);
-    this.phoneNumber= '+995'; // Reset the phone number after submission
-    // Here you would normally send the data to your backend
+    this.showNotification = true;
+    this.notificationMessage = this.getText(this.content[3]);
+
+    // Auto-dismiss after 5 seconds
+    this.notificationTimeout = setTimeout(() => {
+      this.dismissNotification();
+    }, 5000);
+  }
+  dismissNotification(): void {
+    this.showNotification = false;
+    if (this.notificationTimeout) {
+      clearTimeout(this.notificationTimeout);
+    }
+  }
+  ngOnDestroy(): void {
+    if (this.notificationTimeout) {
+      clearTimeout(this.notificationTimeout);
+    }
   }
 }

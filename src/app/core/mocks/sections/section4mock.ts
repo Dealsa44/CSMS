@@ -11,4 +11,8 @@ export const section4Mocks: any[]= [
         title: ["გაგზავნა","Send","Отправить"],
         order: 2,
     },
+    {
+        title: ["მადლობა დაინტერესებისთვის, ჩვენ მალე დაგიკავშირდებით!","Thank you for your interest, we will contact you soon!","Спасибо за ваш интерес, мы скоро с вами свяжемся!"],
+        order: 3,
+    }
 ]

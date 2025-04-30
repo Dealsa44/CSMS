@@ -1,20 +1,30 @@
 <div class="modal-overlay" *ngIf="visible" (click)="closeModal()">
-    <div class="modal-content" (click)="$event.stopPropagation()">
-      <button class="close-btn" (click)="closeModal()">×</button>
-      <h2 class="modal-header">{{ getText(contactData[0]) }}</h2>
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <button class="close-btn" (click)="closeModal()">×</button>
+    <h2 class="modal-header">{{ getText(contactData[0]) }}</h2>
+    
+    <form (ngSubmit)="onSubmit()" class="request-form">
+      <div class="form-group" *ngFor="let field of contactData.slice(1, -7)">
+        <label>{{ getText(field) }}</label>
+        <input type="text" 
+               [(ngModel)]="formData[field.order]" 
+               [name]="'field-'+field.order"
+               [placeholder]="getText(field)">
+        <!-- Error messages for specific fields -->
+        <div class="error-message" *ngIf="field.order === 1 && formErrors.name">{{ formErrors.name }}</div>
+        <div class="error-message" *ngIf="field.order === 2 && formErrors.surname">{{ formErrors.surname }}</div>
+        <div class="error-message" *ngIf="field.order === 4 && formErrors.contact">{{ formErrors.contact }}</div>
+        <div class="error-message" *ngIf="field.order === 5 && formErrors.email">{{ formErrors.email }}</div>
+        <div class="error-message" *ngIf="field.order === 4 && formErrors.phone">{{ formErrors.phone }}</div>
+      </div>
       
-      <form (ngSubmit)="onSubmit()" class="request-form">
-        <div class="form-group" *ngFor="let field of contactData.slice(1, -1)">
-          <label>{{ getText(field) }}</label>
-          <input type="text" 
-                 [(ngModel)]="formData[field.order]" 
-                 [name]="'field-'+field.order"
-                 [placeholder]="getText(field)">
-        </div>
-        
-        <button type="submit" class="submit-btn">
-          {{ getText(contactData[contactData.length - 1]) }}
-        </button>
-      </form>
-    </div>
+      <button type="submit" class="submit-btn">
+        {{ getText(contactData[contactData.length - 7]) }}
+      </button>
+    </form>
   </div>
+  <div class="notification" *ngIf="showNotification">
+    <span class="notification-message">{{ getText(contactData[7]) }}</span>
+    <button class="close-notification" (click)="dismissNotification()">×</button>
+  </div>
+</div>

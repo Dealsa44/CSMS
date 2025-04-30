@@ -1,6 +1,6 @@
 export const navbarMocks: any[] = [
     {
-        title: 'CSMS',
+        title: 'VMS',
         order: -1, // Special order for brand
     },
     {
@@ -20,7 +20,7 @@ export const navbarMocks: any[] = [
         order: 3,
     },
     {
-        title:['ENG', 'РУС', 'GEO'],
+        title:['GEO', 'ENG', 'РУС'],
         order: 4,
     },
     {

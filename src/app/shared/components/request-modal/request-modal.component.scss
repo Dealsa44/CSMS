@@ -63,7 +63,7 @@
     padding-bottom: 1rem;
 
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       bottom: 0;
       left: 50%;
@@ -130,14 +130,18 @@
     overflow: hidden;
 
     &::after {
-      content: '→';
+      content: "→";
       position: absolute;
       right: 1.5rem;
       transition: all 0.3s ease;
     }
 
     &:hover {
-      background: linear-gradient(to right, darken(#1a936f, 5%), darken(#124255, 5%));
+      background: linear-gradient(
+        to right,
+        darken(#1a936f, 5%),
+        darken(#124255, 5%)
+      );
       transform: translateY(-2px);
       box-shadow: 0 6px 16px rgba(26, 147, 111, 0.4);
 
@@ -171,4 +175,49 @@
     transform: translateY(0) scale(1);
     opacity: 1;
   }
+}
+.notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #124255;
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 1000;
+  animation: slideIn 0.3s ease-out forwards;
+
+  .notification-message {
+    font-size: 0.9rem;
+  }
+
+  .close-notification {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0 0 0 1rem;
+    line-height: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.error-message {
+  color: #ff0000;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
 }

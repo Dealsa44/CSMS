@@ -1,11 +1,13 @@
 <nav class="navbar">
-  <div class="navbar-brand" (click)="scrollToSection('main')">CSMS</div>
+  <div class="navbar-brand" (click)="scrollToSection('main')">VMS</div>
 
   <!-- Regular navigation (visible on larger screens) -->
   <div class="nav-links">
-    <a *ngFor="let item of regularNavItems" 
-       class="nav-link"
-       (click)="scrollToSection(getSectionForNavItem(item.order))">
+    <a
+      *ngFor="let item of regularNavItems"
+      class="nav-link"
+      (click)="scrollToSection(getSectionForNavItem(item.order))"
+    >
       {{ getNavItemTitle(item) }}
     </a>
   </div>
@@ -19,20 +21,37 @@
 
   <!-- Action buttons (always visible) -->
   <div class="nav-actions">
-    <button class="nav-action-btn language-btn" (click)="changeLanguage()">
-      {{ getCurrentLanguageText() }}
-    </button>
+    <!-- Replace the existing language button with this dropdown structure -->
+    <div class="language-dropdown">
+      <button class="nav-action-btn language-btn">
+        {{ getCurrentLanguageText() }}
+        <span class="dropdown-arrow">▼</span>
+      </button>
+      <div class="dropdown-content">
+        <button
+          *ngFor="let lang of availableLanguages; let i = index"
+          (click)="setLanguage(i)"
+          [class.active]="currentLanguageIndex === i"
+        >
+          {{ lang.name }}
+        </button>
+      </div>
+    </div>
     <button class="nav-action-btn demo-btn" (click)="onDemoClick()">
       {{ getDemoButtonText() }}
     </button>
-    
   </div>
 
   <!-- Mobile menu dropdown (hidden on larger screens) -->
   <div class="mobile-menu" [class.open]="mobileMenuOpen">
-    <a *ngFor="let item of regularNavItems" 
-       class="mobile-nav-link"
-       (click)="scrollToSection(getSectionForNavItem(item.order)); mobileMenuOpen = false">
+    <a
+      *ngFor="let item of regularNavItems"
+      class="mobile-nav-link"
+      (click)="
+        scrollToSection(getSectionForNavItem(item.order));
+        mobileMenuOpen = false
+      "
+    >
       {{ getNavItemTitle(item) }}
     </a>
   </div>

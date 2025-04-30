@@ -26,4 +26,8 @@
              class="contact-image">
       </div>
     </div>
+    <div class="notification" *ngIf="showNotification">
+      <span class="notification-message">{{ notificationMessage }}</span>
+      <button class="close-notification" (click)="dismissNotification()">×</button>
+    </div>
   </section>

@@ -54,7 +54,7 @@
       }
 
       &::after {
-        content: '';
+        content: "";
         position: absolute;
         bottom: 0;
         left: 0;
@@ -109,6 +109,64 @@
     gap: 1rem;
     margin-left: auto;
 
+    .language-dropdown {
+      position: relative;
+      display: inline-block;
+
+      &:hover {
+        .dropdown-content {
+          display: block;
+        }
+        .language-btn {
+          background-color: rgba(26, 147, 111, 0.2);
+          color: #ffffff;
+          border-color: #1a936f;
+        }
+      }
+
+      .dropdown-arrow {
+        font-size: 0.7rem;
+        margin-left: 5px;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: #124255;
+        min-width: 120px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        border-radius: 4px;
+        overflow: hidden;
+        border: 1px solid rgba(136, 212, 152, 0.3);
+
+        button {
+          color: #f3e9d2;
+          padding: 0.6rem 1rem;
+          text-decoration: none;
+          display: block;
+          width: 100%;
+          text-align: left;
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 0.9rem;
+          transition: all 0.2s ease;
+
+          &:hover {
+            background-color: rgba(26, 147, 111, 0.3);
+            color: #ffffff;
+          }
+
+          &.active {
+            background-color: rgba(26, 147, 111, 0.5);
+            font-weight: 600;
+          }
+        }
+      }
+    }
+
     .nav-action-btn {
       border: none;
       cursor: pointer;
@@ -128,18 +186,6 @@
 
       &:active {
         transform: translateY(0);
-      }
-
-      &.language-btn {
-        background: transparent;
-        border: 1px solid #88d498; // Light green border
-        color: #f3e9d2;
-
-        &:hover {
-          background-color: rgba(26, 147, 111, 0.2); // Semi-transparent green
-          color: #ffffff;
-          border-color: #1a936f;
-        }
       }
 
       &.demo-btn {
@@ -193,7 +239,7 @@
       }
 
       &::before {
-        content: '';
+        content: "";
         position: absolute;
         left: 1rem;
         top: 50%;

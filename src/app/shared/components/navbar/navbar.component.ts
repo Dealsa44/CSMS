@@ -18,6 +18,11 @@ export class NavbarComponent {
   currentLanguageIndex = 0;
   mobileMenuOpen = false;
   private languageSubscription!: Subscription;
+  availableLanguages = [
+    { code: 'ka', name: 'ქართული' },
+    { code: 'en', name: 'English' },
+    { code: 'ru', name: 'Русский' }
+  ];
 
   // Filter out non-regular nav items
   get regularNavItems() {
@@ -115,5 +120,9 @@ export class NavbarComponent {
 
   onDemoClick(): void {
     this.requestModalTrigger.emit();
+  }
+  setLanguage(index: number): void {
+    this.languageService.setLanguage(index);
+    this.mobileMenuOpen = false; // Close mobile menu if open
   }
 }

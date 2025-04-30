@@ -17,7 +17,7 @@ export class Section2Component implements OnInit {
   titles = section2Mocks[0];
   contents = section2Mocks[1];
   currentLanguageIndex = 0;
-  activeIndex = 0;
+  activeIndex = -1;
   expandedItems: boolean[] = [];
 
   constructor(private languageService: LanguageService) {}
@@ -59,6 +59,10 @@ export class Section2Component implements OnInit {
     // If clicking the currently active item, just toggle its expanded state
     if (this.activeIndex === index) {
       this.expandedItems[index] = !this.expandedItems[index];
+      // If collapsing, set activeIndex to -1
+      if (!this.expandedItems[index]) {
+        this.activeIndex = -1;
+      }
     } else {
       // Set all items to collapsed
       this.expandedItems.fill(false);
@@ -69,6 +73,9 @@ export class Section2Component implements OnInit {
   }
 
   getImagePath(): string {
+    if (this.activeIndex === -1) {
+      return 'assets/imgs/section2/pic7.png'; // Default image when nothing is selected
+    }
     return `assets/imgs/section2/pic${this.activeIndex + 1}.png`;
   }
 
