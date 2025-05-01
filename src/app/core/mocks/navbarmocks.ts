@@ -20,7 +20,7 @@ export const navbarMocks: any[] = [
         order: 3,
     },
     {
-        title:['GEO', 'ENG', 'РУС'],
+        title:['ქარ', 'ENG', 'РУС'],
         order: 4,
     },
     {
