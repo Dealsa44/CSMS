@@ -114,17 +114,6 @@
       position: relative;
       display: inline-block;
 
-      &:hover {
-        .dropdown-content {
-          display: block;
-        }
-        .language-btn {
-          background-color: rgba(26, 147, 111, 0.2);
-          color: #ffffff;
-          border-color: #1a936f;
-        }
-      }
-
       .dropdown-arrow {
         font-size: 0.7rem;
         margin-left: 5px;
@@ -141,6 +130,10 @@
         border-radius: 4px;
         overflow: hidden;
         border: 1px solid rgba(136, 212, 152, 0.3);
+
+        &.show {
+          display: block;
+        }
 
         button {
           color: #f3e9d2;
@@ -164,6 +157,14 @@
             background-color: rgba(26, 147, 111, 0.5);
             font-weight: 600;
           }
+        }
+      }
+
+      .language-btn {
+        &:hover {
+          background-color: rgba(26, 147, 111, 0.2);
+          color: #ffffff;
+          border-color: #1a936f;
         }
       }
     }

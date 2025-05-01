@@ -21,8 +21,9 @@ export class NavbarComponent {
   availableLanguages = [
     { code: 'ka', name: 'ქართული' },
     { code: 'en', name: 'English' },
-    { code: 'ru', name: 'Русский' }
+    { code: 'ru', name: 'Русский' },
   ];
+  isLanguageDropdownOpen = false;
 
   // Filter out non-regular nav items
   get regularNavItems() {
@@ -124,5 +125,6 @@ export class NavbarComponent {
   setLanguage(index: number): void {
     this.languageService.setLanguage(index);
     this.mobileMenuOpen = false; // Close mobile menu if open
+    this.isLanguageDropdownOpen = false; // Close the dropdown
   }
 }

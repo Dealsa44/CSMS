@@ -23,11 +23,18 @@
   <div class="nav-actions">
     <!-- Replace the existing language button with this dropdown structure -->
     <div class="language-dropdown">
-      <button class="nav-action-btn language-btn">
+      <button 
+        class="nav-action-btn language-btn"
+        (click)="isLanguageDropdownOpen = !isLanguageDropdownOpen"
+      >
         {{ getCurrentLanguageText() }}
         <span class="dropdown-arrow">▼</span>
       </button>
-      <div class="dropdown-content">
+      <div 
+        class="dropdown-content"
+        [class.show]="isLanguageDropdownOpen"
+        (mouseleave)="isLanguageDropdownOpen = false"
+      >
         <button
           *ngFor="let lang of availableLanguages; let i = index"
           (click)="setLanguage(i)"

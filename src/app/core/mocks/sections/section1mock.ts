@@ -20,7 +20,7 @@ export const section1Mocks: any[]= [
         order: 4,
     },
     {
-        title:["დოკუმენტების არაეფექტური მართვა(ფურცლომანია)", "Ineffective document management (paper mania)", "Неэффективное управление документами (бумажная мания)"],
+        title:["დოკუმენტების არაეფექტური მართვა (ფურცლომანია)", "Ineffective document management (paper mania)", "Неэффективное управление документами (бумажная мания)"],
         order: 5,
     },
     {
