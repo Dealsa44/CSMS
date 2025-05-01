@@ -108,6 +108,7 @@
     display: flex;
     gap: 1rem;
     margin-left: auto;
+    align-items: center;
 
     .language-dropdown {
       position: relative;
@@ -197,6 +198,15 @@
           background-color: darken(#1a936f, 8%);
           border-color: rgba(255, 255, 255, 0.3);
         }
+      }
+      @media (max-width: 700px) {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.9rem;
+      }
+  
+      @media (max-width: 500px) {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.85rem;
       }
     }
   }
