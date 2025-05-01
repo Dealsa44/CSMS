@@ -13,6 +13,9 @@ import { CommonModule } from '@angular/common';
 export class FooterComponent {
   footerData = footerMock;
   currentYear = new Date().getFullYear();
+  isMobileDevice(): boolean {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }
   
   constructor(private languageService: LanguageService) {}
 
@@ -34,5 +37,11 @@ export class FooterComponent {
 
   openSocial(url: string): void {
     window.open(url, '_blank');
+  }
+  handlePhoneClick(): void {
+    if (this.isMobileDevice()) {
+      window.location.href = 'tel:+995322220505';
+    }
+    // On desktop, do nothing (just the text will be displayed)
   }
 }
