@@ -44,6 +44,10 @@
   .text-column {
     flex: 0 0 60%; // Takes exactly 70% width
     min-width: 0;
+    @media (max-width: 768px) {
+      flex: 0 0 100%; // Full width on mobile
+      min-width: 100%;
+    }
   }
 
   .text-item {
