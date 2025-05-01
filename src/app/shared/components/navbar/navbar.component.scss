@@ -193,16 +193,29 @@
         background-color: #1a936f; // Green button
         color: white;
         border: 1px solid transparent;
+        white-space: normal; // allow wrapping
+        word-break: keep-all; // only break at word boundaries
+        text-align: center; // center multiline text
+        line-height: 1.2; // tighter lines so it looks nice
 
         &:hover {
           background-color: darken(#1a936f, 8%);
           border-color: rgba(255, 255, 255, 0.3);
         }
+        @media (max-width: 600px) {
+          max-width: 120px; // or 90px if needed
+          font-size: 0.8rem;
+        }
+      
+        @media (max-width: 400px) {
+          font-size: 0.7rem;
+        }
       }
-      @media (max-width: 700px) {
+      @media (max-width: 869px) {
         padding: 0.5rem 0.8rem;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
       }
+      
   
       @media (max-width: 500px) {
         padding: 0.4rem 0.6rem;
