@@ -5,10 +5,11 @@
     
     <form (ngSubmit)="onSubmit()" class="request-form">
       <div class="form-group" *ngFor="let field of contactData.slice(1, -7)">
-        <label>{{ getText(field) }}</label>
+        <label [for]="'field-'+field.order">{{ getText(field) }}</label>
         <input type="text" 
                [(ngModel)]="formData[field.order]" 
                [name]="'field-'+field.order"
+               [id]="'field-'+field.order"
                [placeholder]="getText(field)">
         <!-- Error messages for specific fields -->
         <div class="error-message" *ngIf="field.order === 1 && formErrors.name">{{ formErrors.name }}</div>
