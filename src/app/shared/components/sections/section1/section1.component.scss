@@ -1,10 +1,27 @@
 .section1 {
   padding: 5rem 2rem;
-  background-color: #ececec;
+  background: linear-gradient(135deg, #ececec 0%, #f5f5f5 50%, #ececec 100%);
   position: relative;
+  overflow: hidden;
+
+  // Animated background particles
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(circle at 20% 80%, rgba(26, 147, 111, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(18, 66, 85, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(26, 147, 111, 0.05) 0%, transparent 50%);
+    animation: floatingParticles 20s ease-in-out infinite;
+    pointer-events: none;
+  }
 
   .section-heading {
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 4vw, 2.5rem);
     text-align: center;
     margin-bottom: 4rem;
     color: #124255;
@@ -13,6 +30,27 @@
     display: inline-block;
     left: 50%;
     transform: translateX(-50%);
+    opacity: 0;
+    animation: headingReveal 1s ease-out 0.3s forwards;
+
+    // Enhanced text effects
+    background: linear-gradient(135deg, #124255 0%, #1a936f 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(ellipse at center, rgba(26, 147, 111, 0.1) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      z-index: -1;
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
 
     &::after {
       content: '';
@@ -22,69 +60,177 @@
       background: linear-gradient(90deg, transparent, #1a936f, transparent);
       margin: 1rem auto 0;
       opacity: 0.7;
-      transition: all 0.4s ease;
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    &::after::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      animation: shimmer 2s ease-in-out infinite;
     }
 
     &:hover::after {
       width: 80%;
       opacity: 1;
       background: linear-gradient(90deg, transparent, #1a936f, #124255, transparent);
+      transform: scaleY(1.5);
     }
   }
 
   .challenges-container {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     justify-content: center;
     gap: 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    perspective: 2000px;
   }
 
   .challenge-card {
-    background: white;
-    border-radius: 10px;
-    padding: 1rem;
-    width: 320px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 1.5rem;
     display: flex;
     align-items: flex-start;
-    gap: 0.8rem;
-    box-shadow: 0 4px 12px rgba(11, 40, 51, 0.08);
-    transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+    gap: 1rem;
+    box-shadow: 
+      0 4px 12px rgba(11, 40, 51, 0.08),
+      0 1px 3px rgba(11, 40, 51, 0.1);
+    transition: all 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
     opacity: 0;
-    transform: translateY(30px) rotateX(15deg);
-    perspective: 1000px;
+    transform: translateY(50px) rotateX(15deg) scale(0.9);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(26, 147, 111, 0.1);
 
-    &.animate {
-      opacity: 1;
-      transform: translateY(0) rotateX(0);
+    // Subtle animated border
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 16px;
+      padding: 1px;
+      background: linear-gradient(135deg, 
+        rgba(26, 147, 111, 0.3) 0%, 
+        transparent 50%, 
+        rgba(18, 66, 85, 0.3) 100%);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: xor;
+      opacity: 0;
+      transition: opacity 0.6s ease;
     }
 
+    // Floating animation when in view
+    &.animate {
+      opacity: 1;
+      transform: translateY(0) rotateX(0) scale(1);
+      animation: floatCard 6s ease-in-out infinite;
+    }
+
+    // Staggered animation delay for cards
+    &:nth-child(1) { transition-delay: 0.1s; animation-delay: 0s; }
+    &:nth-child(2) { transition-delay: 0.2s; animation-delay: 1s; }
+    &:nth-child(3) { transition-delay: 0.3s; animation-delay: 2s; }
+    &:nth-child(4) { transition-delay: 0.4s; animation-delay: 3s; }
+    &:nth-child(5) { transition-delay: 0.5s; animation-delay: 4s; }
+    &:nth-child(6) { transition-delay: 0.6s; animation-delay: 5s; }
+
     &:hover {
-      transform: translateY(-5px) !important;
-      box-shadow: 0 8px 24px rgba(11, 40, 51, 0.12);
+      transform: translateY(-8px) scale(1.02) !important;
+      box-shadow: 
+        0 20px 40px rgba(11, 40, 51, 0.15),
+        0 8px 16px rgba(26, 147, 111, 0.1);
+      background: rgba(255, 255, 255, 1);
+
+      &::before {
+        opacity: 1;
+      }
       
       .challenge-image-container {
-        transform: scale(1.1) rotate(5deg);
-        background: linear-gradient(135deg, #124255, #1a936f);
+        transform: scale(1.15) rotate(8deg);
+        background: linear-gradient(135deg, #1a936f, #124255);
+        box-shadow: 
+          0 8px 16px rgba(18, 66, 85, 0.3),
+          0 0 20px rgba(26, 147, 111, 0.4);
+
+        &::after {
+          opacity: 0.3;
+          transform: scale(1.2);
+        }
       }
+
+      .challenge-image {
+        transform: scale(1.1) rotate(-3deg);
+        filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+      }
+    }
+
+    // Hover ripple effect
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(26, 147, 111, 0.1) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      transition: all 0.6s ease;
+      pointer-events: none;
+    }
+
+    &:hover::after {
+      width: 300px;
+      height: 300px;
     }
   }
 
   .challenge-image-container {
-    width: 60px;
-    height: 60px;
-    min-width: 60px;
-    border-radius: 12px;
+    width: 70px;
+    height: 70px;
+    min-width: 70px;
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, #124255, #0b2833);
-    transition: all 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
-    box-shadow: 0 4px 8px rgba(18, 66, 85, 0.2);
+    transition: all 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+    box-shadow: 
+      0 6px 12px rgba(18, 66, 85, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
     position: relative;
     overflow: hidden;
 
+    // Animated shine effect
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, 
+        transparent 30%, 
+        rgba(255,255,255,0.3) 50%, 
+        transparent 70%);
+      transform: rotate(45deg);
+      animation: shine 3s ease-in-out infinite;
+    }
+
+    // Glass effect overlay
     &::after {
       content: '';
       position: absolute;
@@ -93,29 +239,33 @@
       width: 100%;
       height: 100%;
       background: linear-gradient(135deg, 
-                rgba(255,255,255,0.2) 0%, 
+                rgba(255,255,255,0.25) 0%, 
                 rgba(255,255,255,0) 50%);
+      transition: all 0.6s ease;
     }
   }
 
   .challenge-image {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     object-fit: contain;
     filter: brightness(0) invert(1);
-    transition: transform 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
     z-index: 2;
+    position: relative;
   }
 
   .challenge-title {
     color: #0b2833;
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     font-weight: 600;
     margin: 0;
     padding-top: 0.5rem;
     position: relative;
-    transition: color 0.3s ease;
+    transition: all 0.4s ease;
+    line-height: 1.4;
 
+    // Animated underline
     &::after {
       content: '';
       position: absolute;
@@ -123,28 +273,141 @@
       left: 0;
       width: 0;
       height: 2px;
-      background-color: #1a936f;
-      transition: width 0.4s ease;
+      background: linear-gradient(90deg, #1a936f, #124255);
+      transition: all 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+      border-radius: 1px;
     }
 
     .challenge-card:hover & {
       color: #124255;
+      transform: translateY(-2px);
 
       &::after {
-        width: 40px;
+        width: 50px;
+        background: linear-gradient(90deg, #1a936f, #124255, #1a936f);
       }
     }
   }
 }
 
-// Animation when scrolling into view
-@keyframes cardEntrance {
-  from {
+// Enhanced Animations
+@keyframes headingReveal {
+  0% {
     opacity: 0;
-    transform: translateY(30px) rotateX(15deg);
+    transform: translateX(-50%) translateY(30px);
   }
-  to {
+  100% {
     opacity: 1;
-    transform: translateY(0) rotateX(0);
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes floatingParticles {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.2;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes floatCard {
+  0%, 100% {
+    transform: translateY(0) rotateX(0) scale(1);
+  }
+  50% {
+    transform: translateY(-5px) rotateX(1deg) scale(1.005);
+  }
+}
+
+@keyframes shine {
+  0% {
+    transform: rotate(45deg) translateX(-200%);
+  }
+  50% {
+    transform: rotate(45deg) translateX(0%);
+  }
+  100% {
+    transform: rotate(45deg) translateX(200%);
+  }
+}
+
+@keyframes cardEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) rotateX(15deg) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0) scale(1);
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .section1 {
+    padding: 3rem 1rem;
+
+    .section-heading {
+      font-size: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .challenges-container {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .challenge-card {
+      padding: 1.25rem;
+      
+      &:hover {
+        transform: translateY(-4px) scale(1.01) !important;
+      }
+    }
+
+    .challenge-image-container {
+      width: 60px;
+      height: 60px;
+      min-width: 60px;
+    }
+
+    .challenge-image {
+      width: 28px;
+      height: 28px;
+    }
+
+    .challenge-title {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+// Reduced motion for accessibility
+@media (prefers-reduced-motion: reduce) {
+  .section1 * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
