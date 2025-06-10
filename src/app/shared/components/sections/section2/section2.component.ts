@@ -20,6 +20,11 @@ export class Section2Component implements OnInit {
   activeIndex = -1;
   expandedItems: boolean[] = [];
 
+  // New properties for smooth image transitions
+  imageLoading = false;
+  imageChanging = false;
+  currentImageSrc = '';
+
   constructor(private languageService: LanguageService) {}
 
   ngOnInit(): void {
@@ -28,6 +33,12 @@ export class Section2Component implements OnInit {
     });
     // Initialize all items as collapsed
     this.expandedItems = new Array(this.titles.length).fill(false);
+    
+    // Set initial image
+    this.currentImageSrc = this.getImagePath();
+    
+    // Preload all images for better performance
+    this.preloadImages();
   }
 
   getHeading(): string {
@@ -55,12 +66,17 @@ export class Section2Component implements OnInit {
     return item.link;
   }
 
+  // Enhanced toggleItem method with smooth image transition
   toggleItem(index: number): void {
+    // Store the previous activeIndex to determine if image should change
+    const previousActiveIndex = this.activeIndex;
+    
     // If clicking the currently active item, just toggle its expanded state
     if (this.activeIndex === index) {
       this.expandedItems[index] = !this.expandedItems[index];
-      // If collapsing, set activeIndex to -1
+      // If collapsing, set activeIndex to -1 and handle image transition
       if (!this.expandedItems[index]) {
+        this.handleImageTransition(-1, previousActiveIndex);
         this.activeIndex = -1;
       }
     } else {
@@ -69,14 +85,77 @@ export class Section2Component implements OnInit {
       // Set the clicked item as active and expanded
       this.activeIndex = index;
       this.expandedItems[index] = true;
+      // Handle image transition to new index
+      this.handleImageTransition(index, previousActiveIndex);
     }
   }
 
+  // New method to handle smooth image transitions
+  private handleImageTransition(newIndex: number, previousIndex: number): void {
+    const newImageSrc = this.getImagePathByIndex(newIndex);
+    
+    // Don't transition if it's the same image
+    if (this.currentImageSrc === newImageSrc) {
+      return;
+    }
+    
+    // Start transition animation
+    this.imageChanging = true;
+    this.imageLoading = true;
+    
+    // Preload the new image for smoother transition
+    const img = new Image();
+    img.onload = () => {
+      // Small delay to ensure smooth animation
+      setTimeout(() => {
+        this.currentImageSrc = newImageSrc;
+        this.imageLoading = false;
+        
+        // End transition animation after image loads
+        setTimeout(() => {
+          this.imageChanging = false;
+        }, 100);
+      }, 150);
+    };
+    
+    img.onerror = () => {
+      // Handle error case - still update but without smooth transition
+      console.warn(`Failed to load image: ${newImageSrc}`);
+      this.imageLoading = false;
+      this.imageChanging = false;
+      this.currentImageSrc = newImageSrc; // Still update even on error
+    };
+    
+    img.src = newImageSrc;
+  }
+
+  // Helper method to get image path by index (used internally for transitions)
+  private getImagePathByIndex(index: number): string {
+    if (index === -1) {
+      return 'assets/imgs/section2/pic7.png'; // Default image when nothing is selected
+    }
+    return `assets/imgs/section2/pic${index + 1}.png`;
+  }
+
+  // Original getImagePath method (keeping for compatibility)
   getImagePath(): string {
     if (this.activeIndex === -1) {
       return 'assets/imgs/section2/pic7.png'; // Default image when nothing is selected
     }
     return `assets/imgs/section2/pic${this.activeIndex + 1}.png`;
+  }
+
+  // Optional: Preload all images for instant transitions
+  private preloadImages(): void {
+    // Preload default image
+    const defaultImg = new Image();
+    defaultImg.src = 'assets/imgs/section2/pic7.png';
+    
+    // Preload all section images
+    this.titles.forEach((_, index) => {
+      const img = new Image();
+      img.src = `assets/imgs/section2/pic${index + 1}.png`;
+    });
   }
 
   onLearnMore(): void {

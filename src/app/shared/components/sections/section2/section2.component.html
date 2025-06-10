@@ -30,13 +30,18 @@
     </div>
 
     <div class="image-column">
-      <img
-        [src]="getImagePath()"
-        [alt]="
-          activeIndex >= 0 ? getTitle(titles[activeIndex]) : 'Default image'
-        "
-        class="feature-image"
-      />
+      <div class="image-wrapper" [class.loading]="imageLoading">
+        <img
+          [src]="currentImageSrc || getImagePath()"
+          [alt]="
+            activeIndex >= 0 ? getTitle(titles[activeIndex]) : 'Default image'
+          "
+          class="feature-image"
+          [class.loading]="imageLoading"
+          [class.changing]="imageChanging"
+          [class.fade-in]="!imageLoading && !imageChanging"
+        />
+      </div>
     </div>
   </div>
 </section>
