@@ -53,6 +53,7 @@ export class FooterComponent {
   
   // Keep the existing openEmail for desktop
   openEmail(): void {
-    window.open('https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSHxwLZqNrbcwTrFHTwvTtRNgfcNmLgSZLsTqXchhRHWFwmlXfwfjvtFsLFvxrbwMgGXMQCS');
-  }
+  window.open('https://mail.google.com/mail/?view=cm&fs=1&to=ugt@ugt.ge', '_blank');
+}
+
 }
