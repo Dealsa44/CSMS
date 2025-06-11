@@ -8,7 +8,7 @@ export const sectionHeadingsMocks: any[] = [
         order: 1,
     },
     {
-        title:["რას გთავაზობთ VMS?", "What VMS offers?", "Что предлагает VMS?"],
+        title:["რას გთავაზობთ CSMS?", "What CSMS offers?", "Что предлагает CSMS?"],
         order: 2,
     },
     {

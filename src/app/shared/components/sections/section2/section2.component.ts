@@ -3,13 +3,15 @@ import { LanguageService } from '../../../../core/services/language.service';
 import { sectionHeadingsMocks } from '../../../../core/mocks/sections/sectionheadings';
 import { section2Mocks } from '../../../../core/mocks/sections/section2mock';
 import { CommonModule } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { ImageModalComponent } from '../../image-modal/image-modal.component';
 
 @Component({
   selector: 'app-section2',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './section2.component.html',
-  styleUrls: ['./section2.component.scss']
+  styleUrls: ['./section2.component.scss'],
 })
 export class Section2Component implements OnInit {
   @Output() requestModalTrigger = new EventEmitter<void>();
@@ -25,18 +27,21 @@ export class Section2Component implements OnInit {
   imageChanging = false;
   currentImageSrc = '';
 
-  constructor(private languageService: LanguageService) {}
+  constructor(
+    private languageService: LanguageService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
-    this.languageService.currentLanguage$.subscribe(index => {
+    this.languageService.currentLanguage$.subscribe((index) => {
       this.currentLanguageIndex = index;
     });
     // Initialize all items as collapsed
     this.expandedItems = new Array(this.titles.length).fill(false);
-    
+
     // Set initial image
     this.currentImageSrc = this.getImagePath();
-    
+
     // Preload all images for better performance
     this.preloadImages();
   }
@@ -70,7 +75,7 @@ export class Section2Component implements OnInit {
   toggleItem(index: number): void {
     // Store the previous activeIndex to determine if image should change
     const previousActiveIndex = this.activeIndex;
-    
+
     // If clicking the currently active item, just toggle its expanded state
     if (this.activeIndex === index) {
       this.expandedItems[index] = !this.expandedItems[index];
@@ -93,16 +98,16 @@ export class Section2Component implements OnInit {
   // New method to handle smooth image transitions
   private handleImageTransition(newIndex: number, previousIndex: number): void {
     const newImageSrc = this.getImagePathByIndex(newIndex);
-    
+
     // Don't transition if it's the same image
     if (this.currentImageSrc === newImageSrc) {
       return;
     }
-    
+
     // Start transition animation
     this.imageChanging = true;
     this.imageLoading = true;
-    
+
     // Preload the new image for smoother transition
     const img = new Image();
     img.onload = () => {
@@ -110,14 +115,14 @@ export class Section2Component implements OnInit {
       setTimeout(() => {
         this.currentImageSrc = newImageSrc;
         this.imageLoading = false;
-        
+
         // End transition animation after image loads
         setTimeout(() => {
           this.imageChanging = false;
         }, 100);
       }, 150);
     };
-    
+
     img.onerror = () => {
       // Handle error case - still update but without smooth transition
       console.warn(`Failed to load image: ${newImageSrc}`);
@@ -125,7 +130,7 @@ export class Section2Component implements OnInit {
       this.imageChanging = false;
       this.currentImageSrc = newImageSrc; // Still update even on error
     };
-    
+
     img.src = newImageSrc;
   }
 
@@ -150,7 +155,7 @@ export class Section2Component implements OnInit {
     // Preload default image
     const defaultImg = new Image();
     defaultImg.src = 'assets/imgs/section2/pic7.png';
-    
+
     // Preload all section images
     this.titles.forEach((_, index) => {
       const img = new Image();
@@ -160,5 +165,21 @@ export class Section2Component implements OnInit {
 
   onLearnMore(): void {
     this.requestModalTrigger.emit();
+  }
+  openImageModal(): void {
+    if (!this.currentImageSrc) return;
+
+    this.dialog.open(ImageModalComponent, {
+      data: {
+        imageSrc: this.currentImageSrc,
+        imageAlt:
+          this.activeIndex >= 0
+            ? this.getTitle(this.titles[this.activeIndex])
+            : 'Default image',
+      },
+      panelClass: 'image-modal',
+      maxWidth: '90vw',
+      maxHeight: '90vh',
+    });
   }
 }

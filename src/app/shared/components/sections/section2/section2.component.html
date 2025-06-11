@@ -30,7 +30,11 @@
     </div>
 
     <div class="image-column">
-      <div class="image-wrapper" [class.loading]="imageLoading">
+      <div
+        class="image-wrapper"
+        [class.loading]="imageLoading"
+        (click)="openImageModal()"
+      >
         <img
           [src]="currentImageSrc || getImagePath()"
           [alt]="
