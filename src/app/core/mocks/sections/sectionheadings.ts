@@ -1,6 +1,6 @@
 export const sectionHeadingsMocks: any[] = [
     {
-        title: ["ავტომობილების სერვისის მართვის სისტემა", "car service management system", "система управления автосервисом"],
+        title: ["ავტომობილების სერვისის მართვის სისტემა", "Car Service Management System", "Система Управления Автосервисом"],
         order: 0,
     },
     {
