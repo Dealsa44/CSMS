@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 export class FooterComponent {
   footerData = footerMock;
   currentYear = new Date().getFullYear();
+
   isMobileDevice(): boolean {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   }
@@ -24,23 +25,32 @@ export class FooterComponent {
   }
 
   getHeader(): string {
-    return this.footerData.header[this.getCurrentLanguageIndex()];
+    // Get the first item from footerMock (order: 0) and return the appropriate language
+    const headerItem = this.footerData.find(item => item.order === 0);
+    return headerItem ? headerItem.title[this.getCurrentLanguageIndex()] : '';
+  }
+
+  getAddress(): string {
+    // Get the second item from footerMock (order: 1) and return the appropriate language
+    const addressItem = this.footerData.find(item => item.order === 1);
+    return addressItem ? addressItem.title[this.getCurrentLanguageIndex()] : '';
   }
 
   openMap(): void {
     window.open('https://www.google.com/maps/place/UGT+Cloudforce/@41.7107022,44.76066,15z/data=!4m10!1m2!2m1!1sUGT!3m6!1s0x40447340ad02f8e7:0xcc3666222f873076!8m2!3d41.7107154!4d44.7709595!15sCgNVR1QiA4gBAZIBG2J1c2luZXNzX25ldHdvcmtpbmdfY29tcGFueaoBNBABKgciA3VndCgAMh4QASIaRKqMXp5C_g9cngE6X6yY7jdtupMXH4BPjd8yBxACIgN1Z3TgAQA!16s%2Fg%2F11flzg5fhc?entry=ttu&g_ep=EgoyMDI1MDQyMy4wIKXMDSoJLDEwMjExNDUzSAFQAw%3D%3D');
   }
 
-
   openSocial(url: string): void {
     window.open(url, '_blank');
   }
+
   handlePhoneClick(): void {
     if (this.isMobileDevice()) {
       window.location.href = 'tel:+995322220505';
     }
     // On desktop, do nothing (just the text will be displayed)
   }
+
   handleEmailClick(): void {
     if (this.isMobileDevice()) {
       // For mobile devices - open default email app
@@ -51,9 +61,7 @@ export class FooterComponent {
     }
   }
   
-  // Keep the existing openEmail for desktop
   openEmail(): void {
-  window.open('https://mail.google.com/mail/?view=cm&fs=1&to=ugt@ugt.ge', '_blank');
-}
-
+    window.open('https://mail.google.com/mail/?view=cm&fs=1&to=ugt@ugt.ge', '_blank');
+  }
 }

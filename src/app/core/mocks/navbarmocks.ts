@@ -24,7 +24,7 @@ export const navbarMocks: any[] = [
         order: 4,
     },
     {
-        title: ["მოითხოვე პრეზენტაცია", "Request a demo", "Запросить демонстрацию"],
+        title: ["მოითხოვე პრეზენტაცია", "Request a presentation", "Запросить презентацию"],
         order: 5,
     },
 ]

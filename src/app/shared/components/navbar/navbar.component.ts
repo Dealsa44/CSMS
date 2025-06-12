@@ -4,6 +4,7 @@ import { LanguageService } from '../../../core/services/language.service';
 import { CommonModule } from '@angular/common';
 import { RequestModalComponent } from '../request-modal/request-modal.component';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -35,8 +36,20 @@ export class NavbarComponent {
     );
   }
 
-  constructor(private languageService: LanguageService) {}
+  constructor(
+    private languageService: LanguageService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
   ngOnInit(): void {
+    // Subscribe to route params to detect language changes
+    this.route.paramMap.subscribe((params) => {
+      const langParam = params.get('lang');
+      if (langParam) {
+        this.languageService.setLanguageFromCode(langParam);
+      }
+    });
+
     // Initialize with current language
     this.currentLanguageIndex = this.languageService.getCurrentLanguage();
 

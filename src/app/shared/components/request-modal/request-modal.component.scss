@@ -262,29 +262,7 @@
     position: relative;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
-    &:focus-within label,
-    &.has-value label {
-      transform: translateY(-31px) scale(0.85);
-      opacity: 0.8;
-      background: #ececec;
-      padding: 0 0.5rem;
-      left: 0.8rem;
-    }
 
-    label {
-      color: #0b2833;
-      font-size: 0.95rem;
-      font-weight: 500;
-      padding-left: 0.8rem;
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      transform-origin: left center;
-      position: absolute;
-      top: 0.8rem;
-      left: 1.5rem;
-      z-index: 2;
-      pointer-events: none;
-      background: transparent;
-    }
 
     input {
       padding: 1rem 1.5rem;
@@ -308,25 +286,15 @@
         outline: none;
         border-color: #1a936f;
         box-shadow: 0 0 0 3px rgba(26, 147, 111, 0.2);
-        
-        + label {
-          color: #1a936f;
-          transform: translateY(-25px) scale(0.85);
-          opacity: 1;
-          background: #ececec;
-        }
+
+
 
         &::placeholder {
           opacity: 0.7;
         }
       }
     }
-    
-    &.has-value {
-      input::placeholder {
-        opacity: 0;
-      }
-    }
+
   }
 
   .submit-btn {
@@ -382,7 +350,7 @@
 
     &.loading {
       pointer-events: none;
-      
+
       &::after {
         content: "";
         width: 20px;
@@ -549,17 +517,7 @@
   }
 }
 
-.form-group:hover {
-  transform: translateX(5px);
 
-  label {
-    color: #1a936f;
-  }
-
-  input {
-    border-color: rgba(26, 147, 111, 0.4);
-  }
-}
 
 .form-group.success {
   input {
@@ -571,9 +529,7 @@
     }
   }
 
-  label {
-    color: #2a9d8f;
-  }
+
 }
 
 .form-group.error {
@@ -586,9 +542,6 @@
     }
   }
 
-  label {
-    color: #e63946;
-  }
 }
 
 @media (max-height: 700px) {
