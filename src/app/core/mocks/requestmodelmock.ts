@@ -1,55 +1,46 @@
 export const RequestModelMocks: any[] = [
     {   
-        title:["მოითხოვე პრეზენტაცია", "Request a demo", "Запросить демонстрацию"],
+        title:["მოითხოვე პრეზენტაცია", "Request a presentation", "Запросить презентацию"],
         order: 0,
     },
     {   
-        title:["სახელი", "Name", "Имя"],
+        title:["სახელი და გვარი", "Full Name", "Имя и Фамилия"],
         order: 1,
     },
     {   
-        title:["გვარი", "Surname", "Фамилия"],
+        title:["კომპანია", "Company", "Компания"],
         order: 2,
     },
     {   
-        title:["კომპანია", "Company", "Компания"],
+        title:["ტელეფონის ნომერი", "Phone number", "Номер телефона"],
         order: 3,
     },
     {   
-        title:["ტელეფონის ნომერი", "Phone number", "Номер телефона"],
+        title:["ელფოსტა", "Email", "Электронная почта"],
         order: 4,
     },
     {   
-        title:["ელფოსტა", "Email", "Электронная почта"],
-        order: 5,
-    },
-    {   
         title:["გაგზავნა", "Send", "Отправить"],
-        order: 6,
+        order: 5,
     },
     {
         title: ["მადლობას გიხდით დაინტერესებისთვის, ჩვენ მალე დაგიკავშირდებით!", "Thank you for your interest, we will contact you soon!", "Спасибо за ваш интерес, мы свяжемся с вами в ближайшее время!"],
+        order: 6,
+    },
+    {
+        title: ["სახელი და გვარი აუცილებელია", "Full name is required", "Имя и фамилия обязательны"],
         order: 7,
     },
     {
-        title: ["სახელი აუცილებელია", "Name is required", "Имя обязательно"],
+        title: ["ტელეფონი ან ელფოსტა აუცილებელია", "Phone or Email is required", "Телефон или email обязателен"],
         order: 8,
     },
     {
-        title: ["გვარი აუცილებელია", "Surname is required", "Фамилия обязательна"],
+        title: ["არასწორი ელფოსტის ფორმატი", "Invalid email format", "Неверный формат email"],
         order: 9,
     },
     {
-        title: ["ტელეფონი ან ელფოსტა აუცილებელია", "Phone or Email is required", "Телефон или email обязателен"],
-        order: 10,
-    },
-    {
-        title: ["არასწორი ელფოსტის ფორმატი", "Invalid email format", "Неверный формат email"],
-        order: 11,
-    },
-    {
         title: ["ტელეფონის ნომერი უნდა შეიცავდეს მხოლოდ ციფრებს", "Phone number must contain only digits", "Номер телефона должен содержать только цифры"],
-        order: 12,
+        order: 10,
     }
- 
 ]

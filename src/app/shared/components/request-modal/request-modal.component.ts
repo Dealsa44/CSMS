@@ -35,36 +35,31 @@ export class RequestModalComponent {
     this.visibleChange.emit(false);
     this.resetForm();
   }
+  
   validateForm(): boolean {
     this.formErrors = {};
     let isValid = true;
 
-    // Name validation
+    // Full Name validation (order: 1)
     if (!this.formData[1] || this.formData[1].trim() === '') {
-      this.formErrors.name = this.getText(this.contactData[8]);
+      this.formErrors.fullName = this.getText(this.contactData[7]);
       isValid = false;
     }
 
-    // Surname validation
-    if (!this.formData[2] || this.formData[2].trim() === '') {
-      this.formErrors.surname = this.getText(this.contactData[9]);
-      isValid = false;
-    }
-
-    // Phone (order: 4) or Email (order: 5) validation
-    const phone = this.formData[4] ? this.formData[4].trim() : '';
-    const email = this.formData[5] ? this.formData[5].trim() : '';
+    // Phone (order: 3) or Email (order: 4) validation
+    const phone = this.formData[3] ? this.formData[3].trim() : '';
+    const email = this.formData[4] ? this.formData[4].trim() : '';
 
     if (phone && !this.validatePhone(phone)) {
-      this.formErrors.phone = this.getText(this.contactData[12]);  // Use the new mock data
+      this.formErrors.phone = this.getText(this.contactData[10]);
       isValid = false;
     }
     if (email && !this.validateEmail(email)) {
-      this.formErrors.email = this.getText(this.contactData[11]);
+      this.formErrors.email = this.getText(this.contactData[9]);
       isValid = false;
     }
     if (!phone && !email) {
-      this.formErrors.contact = this.getText(this.contactData[10]);
+      this.formErrors.contact = this.getText(this.contactData[8]);
       isValid = false;
     }
 
@@ -75,6 +70,7 @@ export class RequestModalComponent {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
   }
+  
   validatePhone(phone: string): boolean {
     return /^\d+$/.test(phone); // Only digits allowed
   }
@@ -92,12 +88,14 @@ export class RequestModalComponent {
     }, 5000);
     // Here you would normally send data to backend
   }
+  
   dismissNotification(): void {
     this.showNotification = false;
     if (this.notificationTimeout) {
       clearTimeout(this.notificationTimeout);
     }
   }
+  
   resetForm(): void {
     this.formData = {};
     this.formErrors = {};

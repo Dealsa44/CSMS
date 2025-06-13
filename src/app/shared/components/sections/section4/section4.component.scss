@@ -68,16 +68,6 @@
       animation: expandLine 0.8s ease-out 0.5s both;
     }
 
-    &:hover {
-      animation: headingBounce 0.6s ease-in-out;
-      
-      &::after {
-        width: 120px;
-        background: linear-gradient(to right, #1a936f, #0b2833);
-        box-shadow: 0 2px 8px rgba(26, 147, 111, 0.3);
-      }
-    }
-
     @media (max-width: 480px) {
       font-size: 1.8rem;
     }
@@ -470,15 +460,6 @@
   }
   to {
     width: 80px;
-  }
-}
-
-@keyframes headingBounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
   }
 }
 

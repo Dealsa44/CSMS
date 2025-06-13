@@ -153,7 +153,6 @@
   }
 
   .close-btn {
-    position: absolute;
     top: 1.2rem;
     right: 1.2rem;
     background: none;
@@ -171,7 +170,7 @@
     z-index: 10;
     line-height: 1;
     padding: 0;
-    position: relative;
+    position: absolute;
     overflow: hidden;
 
     &::after {
@@ -262,8 +261,6 @@
     position: relative;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
-
-
     input {
       padding: 1rem 1.5rem;
       border: 1px solid rgba(18, 66, 85, 0.2);
@@ -287,14 +284,11 @@
         border-color: #1a936f;
         box-shadow: 0 0 0 3px rgba(26, 147, 111, 0.2);
 
-
-
         &::placeholder {
           opacity: 0.7;
         }
       }
     }
-
   }
 
   .submit-btn {
@@ -517,8 +511,6 @@
   }
 }
 
-
-
 .form-group.success {
   input {
     border-color: #2a9d8f;
@@ -528,8 +520,6 @@
       box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.2);
     }
   }
-
-
 }
 
 .form-group.error {
@@ -541,7 +531,6 @@
       box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.2);
     }
   }
-
 }
 
 @media (max-height: 700px) {
