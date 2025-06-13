@@ -10,6 +10,6 @@ export const routes: Routes = [
       // Add other routes here if needed
     ]
   },
-  { path: '', redirectTo: '/en', pathMatch: 'full' }, // Default to English
-  { path: '**', redirectTo: '/en' } // Fallback to English
+  { path: '', redirectTo: '/ka', pathMatch: 'full' }, // Default to English
+  { path: '**', redirectTo: '/ka' } // Fallback to English
 ];
