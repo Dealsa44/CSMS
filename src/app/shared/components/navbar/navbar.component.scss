@@ -203,6 +203,36 @@
         justify-content: center;
         transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
+        .language-flag-icon {
+          width: 20px;
+          height: 15px;
+          border-radius: 2px;
+          margin-left: 8px;
+          margin-right: 5px;
+          object-fit: cover;
+          transition: all 0.3s ease;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          display: inline-block;
+
+          @media (max-width: 1050px) {
+            display: none; // Hide flag on mobile, show only globe
+          }
+        }
+
+        .language-icon {
+          display: none; // Hidden by default on desktop
+          font-size: 1.2rem;
+
+          @media (max-width: 1050px) {
+            display: inline-block; // Show only globe on mobile
+          }
+        }
+
+        &:hover .language-flag-icon {
+          transform: scale(1.1);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
         .language-text {
           display: inline-block;
         }
@@ -252,7 +282,12 @@
         margin-left: 5px;
         transition: transform 0.4s ease;
       }
-
+      &:hover {
+        .language-flag-icon {
+          transform: scale(1.1) translateY(-1px);
+          box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+        }
+      }
       &:hover .dropdown-arrow {
         transform: rotate(180deg);
       }
@@ -272,6 +307,40 @@
         animation: dropdownSlide 0.4s ease-out;
         transform-origin: top right;
 
+        .language-option {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 12px;
+          padding: 0.8rem 1.2rem;
+
+          .language-flag {
+            width: 24px;
+            height: 18px;
+            border-radius: 3px;
+            object-fit: cover;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+          }
+
+          .language-name {
+            flex: 1;
+            text-align: left;
+          }
+
+          &:hover .language-flag {
+            transform: scale(1.05);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            border-color: rgba(26, 147, 111, 0.3);
+          }
+
+          &.active .language-flag {
+            border-color: rgba(26, 147, 111, 0.5);
+            box-shadow: 0 2px 8px rgba(26, 147, 111, 0.3);
+          }
+        }
         &.show {
           display: block;
         }
@@ -326,11 +395,16 @@
             color: #ffffff;
 
             &::after {
-              content: "✓";
               position: absolute;
               right: 1rem;
               top: 50%;
               transform: translateY(-50%);
+              opacity: 0;
+              transition: opacity 0.3s ease;
+            }
+
+            &.active::after {
+              opacity: 1;
             }
           }
         }
@@ -984,6 +1058,56 @@ body {
   100% {
     width: 60px;
     opacity: 1;
+  }
+}
+
+@keyframes flagSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.language-flag,
+.language-flag-icon {
+  animation: flagSlideIn 0.4s ease-out;
+}
+
+// Responsive adjustments for flags
+@media (max-width: 1050px) {
+  .language-dropdown {
+    .dropdown-content {
+      .language-option {
+        .language-flag {
+          width: 20px;
+          height: 15px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .language-dropdown {
+    .dropdown-content {
+      .language-option {
+        padding: 0.7rem 1rem;
+        gap: 10px;
+
+        .language-flag {
+          width: 18px;
+          height: 14px;
+        }
+
+        .language-name {
+          font-size: 0.85rem;
+        }
+      }
+    }
   }
 }
 

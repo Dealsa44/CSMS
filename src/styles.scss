@@ -12,3 +12,14 @@ html {
   overflow-x: hidden;
 }
 
+@font-face {
+  font-family: "Asomtavruli";
+  src: url("/assets/fonts/asomtavruli.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Apply font only to elements with class "heading" */
+.heading {
+  font-family: "Asomtavruli", sans-serif;
+}

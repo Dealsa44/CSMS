@@ -26,6 +26,13 @@ export class NavbarComponent {
   ];
   isLanguageDropdownOpen = false;
 
+  // Language flag paths
+  private languageFlags = [
+    'assets/imgs/navbar/pic1.svg', // Georgian flag
+    'assets/imgs/navbar/pic2.svg', // English flag
+    'assets/imgs/navbar/pic3.svg', // Russian flag
+  ];
+
   // Filter out non-regular nav items
   get regularNavItems() {
     return this.navItems.filter(
@@ -41,6 +48,7 @@ export class NavbarComponent {
     private route: ActivatedRoute,
     private router: Router
   ) {}
+
   ngOnInit(): void {
     // Subscribe to route params to detect language changes
     this.route.paramMap.subscribe((params) => {
@@ -67,6 +75,16 @@ export class NavbarComponent {
       this.languageSubscription.unsubscribe();
     }
   }
+
+  // Flag-related methods
+  getCurrentLanguageFlag(): string {
+    return this.languageFlags[this.currentLanguageIndex];
+  }
+
+  getLanguageFlag(index: number): string {
+    return this.languageFlags[index];
+  }
+
   // Your existing methods...
   isLanguageItem(item: any): boolean {
     return item.order === 4;
@@ -135,6 +153,7 @@ export class NavbarComponent {
   onDemoClick(): void {
     this.requestModalTrigger.emit();
   }
+
   setLanguage(index: number): void {
     this.languageService.setLanguage(index);
     this.mobileMenuOpen = false; // Close mobile menu if open

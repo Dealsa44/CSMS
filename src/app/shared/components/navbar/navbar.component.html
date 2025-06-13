@@ -21,6 +21,11 @@
         (click)="isLanguageDropdownOpen = !isLanguageDropdownOpen"
       >
         <span class="language-text">{{ getCurrentLanguageText() }}</span>
+        <img 
+          class="language-flag-icon" 
+          [src]="getCurrentLanguageFlag()" 
+          [alt]="getCurrentLanguageText()"
+        >
         <span class="language-icon">🌐</span>
         <span class="dropdown-arrow">▼</span>
       </button>
@@ -33,8 +38,14 @@
           *ngFor="let lang of availableLanguages; let i = index"
           (click)="setLanguage(i)"
           [class.active]="currentLanguageIndex === i"
+          class="language-option"
         >
-          {{ lang.name }}
+          <img 
+            class="language-flag" 
+            [src]="getLanguageFlag(i)" 
+            [alt]="lang.name"
+          >
+          <span class="language-name">{{ lang.name }}</span>
         </button>
       </div>
     </div>
