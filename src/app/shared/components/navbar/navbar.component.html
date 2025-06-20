@@ -5,7 +5,7 @@
   <div class="nav-links">
     <a
       *ngFor="let item of regularNavItems"
-      class="nav-link"
+      class="nav-link heading"
       (click)="scrollToSection(getSectionForNavItem(item.order))"
     >
       {{ getNavItemTitle(item) }}
@@ -17,7 +17,7 @@
     <!-- Language dropdown -->
     <div class="language-dropdown">
       <button
-        class="nav-action-btn language-btn"
+        class="nav-action-btn language-btn heading"
         (click)="isLanguageDropdownOpen = !isLanguageDropdownOpen"
       >
         <span class="language-text">{{ getCurrentLanguageText() }}</span>
@@ -38,7 +38,7 @@
           *ngFor="let lang of availableLanguages; let i = index"
           (click)="setLanguage(i)"
           [class.active]="currentLanguageIndex === i"
-          class="language-option"
+          class="language-option heading"
         >
           <img 
             class="language-flag" 
@@ -51,7 +51,7 @@
     </div>
 
     <!-- Request Demo button (turns into mail icon on mobile) -->
-    <button class="nav-action-btn demo-btn" (click)="onDemoClick()">
+    <button class="nav-action-btn demo-btn heading" (click)="onDemoClick()">
       <span class="demo-text">{{ getDemoButtonText() }}</span>
       <span class="demo-icon">✉</span>
     </button>
@@ -68,7 +68,7 @@
   <div class="mobile-menu" [class.open]="mobileMenuOpen">
     <a
       *ngFor="let item of regularNavItems"
-      class="mobile-nav-link"
+      class="mobile-nav-link heading"
       (click)="
         scrollToSection(getSectionForNavItem(item.order));
         mobileMenuOpen = false

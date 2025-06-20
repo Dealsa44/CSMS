@@ -8,11 +8,11 @@ export const sectionHeadingsMocks: any[] = [
         order: 1,
     },
     {
-        title:["რას გთავაზობთ CSMS?", "What CSMS offers?", "Что предлагает CSMS?"],
+        title:["ძირითადი ფუნქციონალი", "Main functionality", "Основной функционал"],
         order: 2,
     },
     {
-        title:["ძირითადი ფუნქციონალი", "Main functionality", "Основной функционал"],
+        title:["დამატებითი ფუნქციონალი", "Additional functionality", "Дополнительный функционал"],
         order: 3,
     },
     {
