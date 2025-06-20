@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RequestModelMocks } from '../../../core/mocks/requestmodelmock';
 import { LanguageService } from '../../../core/services/language.service';
+import { ApiService } from '../../../core/services/api.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -20,8 +21,10 @@ export class RequestModalComponent {
   formErrors: any = {};
   private notificationTimeout: any;
 
-  constructor(private languageService: LanguageService) {}
-
+  constructor(
+    private languageService: LanguageService,
+    private apiService: ApiService
+  ) {}
   getCurrentLanguageIndex(): number {
     return this.languageService.getCurrentLanguage();
   }
@@ -35,7 +38,7 @@ export class RequestModalComponent {
     this.visibleChange.emit(false);
     this.resetForm();
   }
-  
+
   validateForm(): boolean {
     this.formErrors = {};
     let isValid = true;
@@ -70,32 +73,47 @@ export class RequestModalComponent {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
   }
-  
+
   validatePhone(phone: string): boolean {
     return /^\d+$/.test(phone); // Only digits allowed
   }
 
-  onSubmit(): void {
+ onSubmit(): void {
     if (!this.validateForm()) {
       return;
     }
-    console.log('Form submitted:', this.formData);
-    this.showNotification = true;
 
-    // Auto-dismiss after 5 seconds
-    this.notificationTimeout = setTimeout(() => {
-      this.dismissNotification();
-    }, 5000);
-    // Here you would normally send data to backend
+    const userData = {
+      name: this.formData[1],
+      company: this.formData[2] || undefined,
+      email: this.formData[4] || undefined,
+      phone: this.formData[3] || undefined
+    };
+
+    this.apiService.registerUser(userData).subscribe({
+      next: (response) => {
+        console.log('Registration successful:', response);
+        this.showNotification = true;
+        this.resetForm();
+        
+        this.notificationTimeout = setTimeout(() => {
+          this.dismissNotification();
+        }, 5000);
+      },
+      error: (error) => {
+        console.error('Registration failed:', error);
+        // Handle error (show error message)
+      }
+    });
   }
-  
+
   dismissNotification(): void {
     this.showNotification = false;
     if (this.notificationTimeout) {
       clearTimeout(this.notificationTimeout);
     }
   }
-  
+
   resetForm(): void {
     this.formData = {};
     this.formErrors = {};

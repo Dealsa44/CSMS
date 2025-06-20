@@ -1,6 +1,6 @@
-// app.routes.ts
 import { Routes } from '@angular/router';
 import { CsmsComponent } from './pages/csms/csms.component';
+import { AdminDashboardComponent } from './shared/components/admin-dashboard/admin-dashboard.component';
 
 export const routes: Routes = [
   { 
@@ -10,6 +10,10 @@ export const routes: Routes = [
       // Add other routes here if needed
     ]
   },
-  { path: '', redirectTo: '/ka', pathMatch: 'full' }, // Default to English
-  { path: '**', redirectTo: '/ka' } // Fallback to English
+  // { 
+  //   path: ':lang/admin-dashboard', 
+  //   component: AdminDashboardComponent 
+  // },
+  { path: '', redirectTo: '/ka', pathMatch: 'full' }, // Default to Georgian
+  { path: '**', redirectTo: '/ka' }, // Fallback to Georgian
 ];

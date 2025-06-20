@@ -28,6 +28,8 @@
     </div>
     <div class="notification" *ngIf="showNotification">
       <span class="notification-message">{{ notificationMessage }}</span>
-      <button class="close-notification" (click)="dismissNotification()">×</button>
+      <button class="close-notification" (click)="dismissNotification()">
+        {{ getText(content[7]) }}
+      </button>
     </div>
 </section>
