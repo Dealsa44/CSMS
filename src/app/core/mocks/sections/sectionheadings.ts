@@ -3,20 +3,24 @@ export const sectionHeadingsMocks: any[] = [
         title: ["ავტომობილების სერვისის მართვის სისტემა", "Car Service Management System", "Система Управления Автосервисом"],
         order: 0,
     },
-    {
-        title:["გამოწვევები ავტოსერვისის მართვაში", "Challenges in auto service management", "Проблемы управления автосервисом"],
+        {
+        title: ["ფასები", "Prices", "Цены"],
         order: 1,
     },
     {
-        title:["ძირითადი ფუნქციონალი", "Main functionality", "Основной функционал"],
+        title:["გამოწვევები ავტოსერვისის მართვაში", "Challenges in auto service management", "Проблемы управления автосервисом"],
         order: 2,
     },
     {
-        title:["დამატებითი ფუნქციონალი", "Additional functionality", "Дополнительный функционал"],
+        title:["ძირითადი ფუნქციონალი", "Main functionality", "Основной функционал"],
         order: 3,
     },
     {
-        title:["კონტაქტი", "Contact", "Контакт"],
+        title:["დამატებითი ფუნქციონალი", "Additional functionality", "Дополнительный функционал"],
         order: 4,
+    },
+    {
+        title:["კონტაქტი", "Contact", "Контакт"],
+        order: 5,
     }
 ]

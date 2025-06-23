@@ -1,38 +1,101 @@
-export const section1Mocks: any[]= [
+// D:\ZURIKO\WORK\CAR SERVICE MANAGEMENT SYSTEM\CSMS\SRC\app\core\mocks\sections\section1mock.ts
+
+export const section1Mocks = {
+  header: {
+    functions: ["ფუნქციები", "Features", "Функции"],
+    basic: {
+      name: ["საბაზისო", "Basic", "Базовый"],
+      price: "$900",
+      perMonth: ["/თვეში", "/month", "/месяц"],
+      button: ["დემოს ნახვა", "View Demo", "Смотреть демо"],
+    },
+    standard: {
+      name: ["სტანდარტი", "Standard", "Стандартный"],
+      price: "$1100",
+      perMonth: ["/თვეში", "/month", "/месяц"],
+      button: ["დემოს ნახვა", "View Demo", "Смотреть демо"],
+    },
+    premium: {
+      name: ["პრემიუმი", "Premium", "Премиум"],
+      price: "$1500",
+      perMonth: ["/თვეში", "/month", "/месяц"],
+      button: ["დემოს ნახვა", "View Demo", "Смотреть демо"],
+    },
+  },
+  rows: [
     {
-        title: ["მომსახურების გახანგრძლივებული პროცესი", "Extended service process", "Продленный процесс обслуживания"],
-        order: 0,
+      type: "header",
+      text: ["მონიტორინგის დაფა", "Monitoring Dashboard", "Панель мониторинга"],
+      basic: null,
+      standard: null,
+      premium: null,
     },
     {
-        title:["ფრაგმენტირებული ინფორმაცია ავტომოვილებზე", "Fragmented information about cars", "Фрагментированная информация об автомобилях"],
-        order: 1,
+      type: "feature",
+      text: ["ზოგადი სტატისტიკა", "General Statistics", "Общая статистика"],
+      basic: true,
+      standard: true,
+      premium: true,
     },
     {
-        title:["ოსტატების დროის აღრიცხვის ცდომილებები", "Errors in recording the time of craftsmen", "Ошибки в учете времени мастеров"],
-        order: 2,
+      type: "feature",
+      text: ["სიახლეები და შეტყობინებები", "News and Notifications", "Новости и уведомления"],
+      basic: false,
+      standard: true,
+      premium: true,
     },
     {
-        title:["კონტროლის მექანიზმების არარსებობა", "Lack of control mechanisms", "Отсутствие механизмов контроля"],
-        order: 3,
+      type: "header",
+      text: ["ცნობარები", "Directories", "Справочники"],
+      basic: null,
+      standard: null,
+      premium: null,
     },
     {
-        title:["მომხმარებელთან არაეფექტური კომუნიკაცია", "Ineffective communication with the customer", "Неэффективная коммуникация с клиентом"],
-        order: 4,
+      type: "feature",
+      text: ["სასაქონლო ნომეკლატურა", "Product Nomenclature", "Номенклатура товаров"],
+      basic: true,
+      standard: true,
+      premium: true,
     },
     {
-        title:["დოკუმენტების არაეფექტური მართვა (ფურცლომანია)", "Ineffective document management (paper mania)", "Неэффективное управление документами (бумажная мания)"],
-        order: 5,
+      type: "feature",
+      text: ["სატრანსპორტო საშუალებები", "Vehicles", "Транспортные средства"],
+      basic: true,
+      standard: true,
+      premium: true,
     },
     {
-        title:["ცდომილებები მარაგების აღრიცხვაში", "Errors in inventory accounting", "Ошибки в учете запасов"],
-        order: 6,
+      type: "feature",
+      text: ["კლიენტები", "Clients", "Клиенты"],
+      basic: true,
+      standard: true,
+      premium: true,
     },
     {
-        title:["რიგები სერვისის გაწევის პროცესში", "Queues in the service delivery process", "Очереди в процессе предоставления услуги"],
-        order: 7,
+      type: "feature",
+      text: ["საწყობები", "Warehouses", "Склады"],
+      basic: true,
+      standard: true,
+      premium: true,
     },
     {
-        title:["პრეისკურანტებში ფასების მოძიების სირთულეები", "Difficulties in finding prices in price lists", "Трудности в поиске цен в прейскурантах"],
-        order: 8,
+      type: "feature",
+      text: ["კომპანიის მანქანები", "Company Cars", "Автомобили компании"],
+      basic: false,
+      standard: true,
+      premium: true,
     },
-]
+    {
+      type: "feature",
+      text: ["ძირითადი საშუალებები", "Fixed Assets", "Основные средства"],
+      basic: false,
+      standard: false,
+      premium: true,
+    },
+  ],
+  footer: {
+    text: ["ერთჯერადი დანერგვის ღირებულება", "One-time implementation cost", "Единоразовая стоимость внедрения"],
+    price: "$1500"
+  }
+};

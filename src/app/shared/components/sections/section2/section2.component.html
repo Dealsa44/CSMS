@@ -1,51 +1,12 @@
 <section class="section2">
-  <h2 class="section-heading heading">{{ getHeading() }}</h2>
-
-  <div class="content-container">
-    <div class="text-column">
-      <div
-        *ngFor="let title of titles; let i = index"
-        class="text-item"
-        [class.active]="activeIndex === i"
-        [class.expanded]="expandedItems[i]"
-      >
-        <div class="title-row" (click)="toggleItem(i)">
-          <h3 class="item-title">{{ getTitle(title) }}</h3>
-          <button class="toggle-btn">
-            <span class="material-icons">
-              {{
-                expandedItems[i] ? "keyboard_arrow_up" : "keyboard_arrow_down"
-              }}
-            </span>
-          </button>
+    <h2 class="section-heading heading">{{ getHeading() }}</h2>
+    
+    <div class="challenges-container">
+      <div *ngFor="let challenge of challenges; let i = index" class="challenge-card">
+        <div class="challenge-image-container">
+          <img [src]="getImagePath(i)" [alt]="getChallengeTitle(challenge)" class="challenge-image">
         </div>
-
-        <div *ngIf="expandedItems[i]" class="content-details">
-          <p>{{ getContent(contents[i]) }}</p>
-          <button class="learn-more-btn" (click)="onLearnMore()">
-            {{ getLinkText(contents[i]) }}
-          </button>
-        </div>
+        <h3 class="challenge-title">{{ getChallengeTitle(challenge) }}</h3>
       </div>
     </div>
-
-    <div class="image-column">
-      <div
-        class="image-wrapper"
-        [class.loading]="imageLoading"
-        (click)="openImageModal()"
-      >
-        <img
-          [src]="currentImageSrc || getImagePath()"
-          [alt]="
-            activeIndex >= 0 ? getTitle(titles[activeIndex]) : 'Default image'
-          "
-          class="feature-image"
-          [class.loading]="imageLoading"
-          [class.changing]="imageChanging"
-          [class.fade-in]="!imageLoading && !imageChanging"
-        />
-      </div>
-    </div>
-  </div>
-</section>
+  </section>

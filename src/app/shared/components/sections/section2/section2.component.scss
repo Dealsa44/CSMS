@@ -1,603 +1,440 @@
 .section2 {
   padding: 5rem 2rem;
-  background-color: #ececec;
+  background: linear-gradient(135deg, #ececec 0%, #f5f5f5 50%, #ececec 100%);
   position: relative;
+  overflow: hidden;
+}
 
-  .section-heading {
-    font-size: 2.5rem;
-    text-align: center;
-    margin-bottom: 3rem;
-    color: #124255;
-    font-weight: 700;
-    position: relative;
+/* Animated background particles (kept as requested) */
+.section2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(
+      circle at 20% 80%,
+      rgba(26, 147, 111, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(18, 66, 85, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 40%,
+      rgba(26, 147, 111, 0.05) 0%,
+      transparent 50%
+    );
+  animation: floatingParticles 20s ease-in-out infinite;
+  will-change: transform;
+  pointer-events: none;
+}
 
-    &::after {
-      content: "";
-      display: block;
-      width: 80px;
-      height: 4px;
-      background: linear-gradient(to right, #1a936f, #124255);
-      margin: 1rem auto 0;
-      border-radius: 2px;
-      transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
-      box-shadow: 0 1px 3px rgba(26, 147, 111, 0.2);
-    }
+.section2 .section-heading {
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  text-align: center;
+  margin-bottom: 4rem;
+  color: #124255;
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  animation: smoothFadeIn 1.2s ease-out 0.2s forwards;
+  background: linear-gradient(135deg, #124255 0%, #1a936f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-    &:hover {
-      transform: translateY(-1px);
-      transition: transform 0.3s ease;
-      
-      &::after {
-        width: 120px;
-        background: linear-gradient(to right, #1a936f, #0b2833);
-        box-shadow: 0 2px 6px rgba(26, 147, 111, 0.3);
-      }
-    }
-  }
+.section2 .section-heading::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 110%;
+  height: 110%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(26, 147, 111, 0.08) 0%,
+    transparent 70%
+  );
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
 
-  .content-container {
-    display: flex;
-    max-width: 1200px;
-    margin: 0 auto;
-    gap: 2rem;
-    align-items: flex-start;
+.section2 .section-heading::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #1a936f, transparent);
+  margin: 1rem auto 0;
+  transition: width 0.8s ease 0.5s;
+  animation: expandUnderline 1s ease 1s forwards;
+}
 
-    @media (max-width: 768px) {
-      flex-direction: column;
-      gap: 1rem;
-    }
-  }
+.section2 .section-heading:hover::before {
+  opacity: 1;
+}
 
-  .text-column {
-    flex: 0 0 50%;
-    min-width: 0;
-    @media (max-width: 768px) {
-      flex: 0 0 100%;
-      min-width: 100%;
-    }
-  }
+.section2 .challenges-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  justify-content: center;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
-  .text-item {
-    background: white;
-    border-radius: 12px;
-    margin-bottom: 1rem;
-    
-    // Much lighter shadow - barely visible
-    box-shadow: 0 1px 4px rgba(11, 40, 51, 0.04);
-    border: 1px solid rgba(18, 66, 85, 0.06);
-    
-    transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
-    overflow: hidden;
-    border-left: 3px solid transparent;
-    position: relative;
-    
-    // Subtle gradient background that appears on interaction
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, 
-        rgba(26, 147, 111, 0.01) 0%, 
-        rgba(18, 66, 85, 0.01) 100%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
-    }
+.section2 .challenge-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  box-shadow: 
+    0 4px 20px rgba(11, 40, 51, 0.08),
+    0 1px 3px rgba(11, 40, 51, 0.12);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(26, 147, 111, 0.12);
+  transform: translateY(20px);
+  opacity: 0;
+  animation: smoothSlideIn 0.8s ease-out forwards;
+}
 
-    &:hover {
-      // Very subtle lift instead of heavy shadow
-      transform: translateY(-1px);
-      box-shadow: 0 2px 8px rgba(11, 40, 51, 0.06);
-      border-color: rgba(26, 147, 111, 0.12);
-      
-      &::before {
-        opacity: 1;
-      }
-    }
+/* Staggered animation delays */
+.section2 .challenge-card:nth-child(1) { animation-delay: 0.12s; }
+.section2 .challenge-card:nth-child(2) { animation-delay: 0.24s; }
+.section2 .challenge-card:nth-child(3) { animation-delay: 0.36s; }
+.section2 .challenge-card:nth-child(4) { animation-delay: 0.48s; }
+.section2 .challenge-card:nth-child(5) { animation-delay: 0.60s; }
+.section2 .challenge-card:nth-child(6) { animation-delay: 0.72s; }
+.section2 .challenge-card:nth-child(7) { animation-delay: 0.84s; }
+.section2 .challenge-card:nth-child(8) { animation-delay: 0.96s; }
+.section2 .challenge-card:nth-child(9) { animation-delay: 1.08s; }
+.section2 .challenge-card:nth-child(10) { animation-delay: 1.20s; }
 
-    &.active {
-      border-left-color: #1a936f;
-      // Subtle active shadow instead of heavy one
-      box-shadow: 0 2px 12px rgba(26, 147, 111, 0.08);
-      background: linear-gradient(135deg, 
-        rgba(255, 255, 255, 1) 0%, 
-        rgba(26, 147, 111, 0.02) 100%);
-      
-      // Active state glow effect
-      &::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 3px;
-        height: 100%;
-        background: linear-gradient(180deg, #1a936f, #124255);
-        box-shadow: 0 0 8px rgba(26, 147, 111, 0.4);
-      }
-    }
+/* Glowing border effect */
+.section2 .challenge-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 16px;
+  padding: 1px;
+  background: linear-gradient(
+    45deg,
+    rgba(26, 147, 111, 0.1),
+    rgba(18, 66, 85, 0.2),
+    rgba(26, 147, 111, 0.1)
+  );
+  background-size: 200% 200%;
+  animation: borderGlow 3s ease-in-out infinite;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: xor;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
 
-    &.expanded {
-      .title-row {
-        background-color: rgba(18, 66, 85, 0.03);
-        
-        .toggle-btn {
-          transform: rotate(180deg);
-          background-color: rgba(26, 147, 111, 0.08);
-        }
-      }
-    }
-    
-    // Smooth entrance animation for each item
-    animation: slideInFromLeft 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
-    
-    // Stagger animation delays
-    &:nth-child(1) { animation-delay: 0.1s; }
-    &:nth-child(2) { animation-delay: 0.2s; }
-    &:nth-child(3) { animation-delay: 0.3s; }
-    &:nth-child(4) { animation-delay: 0.4s; }
-    &:nth-child(5) { animation-delay: 0.5s; }
-  }
+/* Enhanced shine effect */
+.section2 .challenge-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.15) 45%,
+    rgba(26, 147, 111, 0.1) 50%,
+    rgba(255, 255, 255, 0.15) 55%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  z-index: 1;
+}
 
-  .title-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.2rem 1.5rem;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
-    position: relative;
-    
-    // Subtle highlight effect on hover
-    &::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 0;
-      height: 100%;
-      background: linear-gradient(90deg, 
-        rgba(26, 147, 111, 0.03), 
-        transparent);
-      transition: width 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
-    }
+.section2 .challenge-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 12px 32px rgba(11, 40, 51, 0.12),
+    0 4px 8px rgba(26, 147, 111, 0.08),
+    0 0 20px rgba(26, 147, 111, 0.15);
+}
 
-    &:hover {
-      background-color: rgba(18, 66, 85, 0.03);
-      
-      &::before {
-        width: 100%;
-      }
+.section2 .challenge-card:hover::after {
+  opacity: 1;
+  animation-duration: 2s;
+}
 
-      .item-title {
-        color: #124255;
-        transform: translateX(2px);
-      }
+.section2 .challenge-card:hover::before {
+  opacity: 1;
+  transform: translateX(100%) translateY(100%) rotate(45deg);
+  transition-duration: 1.2s;
+}
 
-      .toggle-btn {
-        background-color: rgba(26, 147, 111, 0.1);
-        transform: scale(1.05);
-      }
-    }
-  }
+.section2 .challenge-image-container {
+  width: 64px;
+  height: 64px;
+  min-width: 64px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #124255 0%, #0b2833 100%);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 4px 12px rgba(18, 66, 85, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
 
-  .item-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #0b2833;
-    margin: 0;
-    transition: all 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
-    flex: 1;
-    position: relative;
-    
-    // Subtle underline effect
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: linear-gradient(90deg, #1a936f, #124255);
-      transition: width 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
-      border-radius: 1px;
-    }
-    
-    .title-row:hover &::after {
-      width: 30px;
-    }
-  }
+.section2 .challenge-image-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 14px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.1) 30%,
+    rgba(26, 147, 111, 0.1) 70%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
 
-  .toggle-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(18, 66, 85, 0.05);
-    border: 1px solid rgba(18, 66, 85, 0.08);
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
-    color: #124255;
-    position: relative;
-    overflow: hidden;
-    
-    // Ripple effect background
-    &::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      background: rgba(26, 147, 111, 0.2);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      transition: all 0.3s ease;
-    }
+.section2 .challenge-image-container::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  border-radius: 12px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(26, 147, 111, 0.05) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
 
-    &:hover {
-      background-color: rgba(26, 147, 111, 0.12);
-      border-color: rgba(26, 147, 111, 0.2);
-      transform: scale(1.05);
-      
-      &::before {
-        width: 100%;
-        height: 100%;
-      }
-    }
+.section2 .challenge-card:hover .challenge-image-container {
+  transform: scale(1.05);
+  box-shadow: 
+    0 8px 16px rgba(18, 66, 85, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(26, 147, 111, 0.3);
+}
 
-    .material-icons {
-      font-size: 1.4rem;
-      transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
-      z-index: 1;
-    }
-  }
+.section2 .challenge-card:hover .challenge-image-container::before {
+  opacity: 1;
+  animation: mirrorPulse 2s ease-in-out infinite;
+}
 
-  .content-details {
-    padding: 0 1.5rem 1.5rem;
-    animation: expandContent 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
-    position: relative;
-    
-    // Subtle top border
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 1.5rem;
-      right: 1.5rem;
-      height: 1px;
-      background: linear-gradient(90deg, 
-        transparent, 
-        rgba(26, 147, 111, 0.2), 
-        transparent);
-    }
+.section2 .challenge-image {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
+  position: relative;
+}
 
-    p {
-      color: #0b2833;
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      transform: translateY(10px);
-      animation: fadeInText 0.5s 0.1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
-    }
-  }
+.section2 .challenge-title {
+  color: #0b2833;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+  padding-top: 0.5rem;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  line-height: 1.4;
+}
 
-  .learn-more-btn {
-    background-color: transparent;
-    color: #1a936f;
-    border: 1px solid #1a936f;
-    padding: 0.6rem 1.4rem;
-    border-radius: 24px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    position: relative;
-    overflow: hidden;
+.section2 .challenge-title::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #1a936f, #124255);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  border-radius: 1px;
+}
+
+.section2 .challenge-card:hover .challenge-title {
+  color: #1a936f;
+  text-shadow: 0 0 10px rgba(26, 147, 111, 0.3);
+}
+
+.section2 .challenge-card:hover .challenge-title::after {
+  width: 50px;
+  opacity: 1;
+  box-shadow: 0 0 8px rgba(26, 147, 111, 0.5);
+}
+
+/* Animations */
+@keyframes smoothFadeIn {
+  from {
     opacity: 0;
-    transform: translateY(10px);
-    animation: fadeInText 0.5s 0.2s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
-    
-    // Button background fill effect
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, #1a936f, #124255);
-      transition: left 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
-      z-index: -1;
-    }
-
-    &:hover {
-      color: white;
-      transform: translateY(-2px);
-      // Lighter shadow instead of heavy one
-      box-shadow: 0 2px 8px rgba(26, 147, 111, 0.15);
-      border-color: #124255;
-      
-      &::before {
-        left: 0;
-      }
-    }
-
-    &::after {
-      content: "→";
-      transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
-      z-index: 1;
-    }
-
-    &:hover::after {
-      transform: translateX(3px);
-    }
+    transform: translateX(-50%) translateY(10px);
   }
-
-  .image-column {
-    flex: 0 0 48%;
-    position: sticky;
-    top: 120px;
-    width: 350px;
-    height: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #f8f9fa, #f1f3f4);
-    border-radius: 16px;
-    margin-left: auto;
-    overflow: hidden; // Important for smooth transitions
-    
-    // Much lighter shadow
-    box-shadow: 0 2px 12px rgba(11, 40, 51, 0.06);
-    border: 1px solid rgba(18, 66, 85, 0.08);
-    
-    // Subtle glow effect
-    &::before {
-      content: '';
-      position: absolute;
-      inset: -1px;
-      background: linear-gradient(135deg, 
-        rgba(26, 147, 111, 0.1), 
-        rgba(18, 66, 85, 0.05));
-      border-radius: 16px;
-      z-index: -1;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
-    
-    &:hover::before {
-      opacity: 1;
-    }
-
-    @media (max-width: 768px) {
-      position: static;
-      width: 100%;
-      height: 300px;
-      margin: 2rem auto 0;
-    }
-    
-  }
-
-  .feature-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-    border-radius: 12px;
-    
-    // Much lighter shadow
-    box-shadow: 0 3px 12px rgba(11, 40, 51, 0.08);
-    
-    // Smooth image transitions with multiple effects
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  to {
     opacity: 1;
-    transform: scale(1);
-    filter: brightness(1) contrast(1) saturate(1);
-    
-    // Image loading state
-    &.loading {
-      opacity: 0;
-      transform: scale(0.95);
-      filter: brightness(0.8) blur(2px);
-    }
-    
-    // Image fade-in effect
-    &.fade-in {
-      animation: smoothImageFade 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-    }
-    
-    // Subtle zoom on hover
-    &:hover {
-      cursor: pointer;
-      transform: scale(1.02);
-      filter: brightness(1.05) contrast(1.1) saturate(1.1);
-      box-shadow: 0 4px 16px rgba(11, 40, 51, 0.12);
-    }
-    
-    // Enhanced transition for image changes
-    &.changing {
-      animation: imageTransition 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-  }
-  
-  // Image container enhancement for smoother transitions
-  .image-wrapper {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border-radius: 12px;
-    overflow: hidden;
-    
-    // Shimmer loading effect
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.3),
-        transparent
-      );
-      z-index: 2;
-      transition: left 0.8s ease;
-    }
-    
-    &.loading::before {
-      left: 100%;
-    }
+    transform: translateX(-50%) translateY(0);
   }
 }
 
-// Enhanced animations for smooth image transitions
-@keyframes smoothImageFade {
-  0% {
-    opacity: 0;
-    transform: scale(0.95) translateY(10px);
-    filter: brightness(0.8) blur(3px);
-  }
-  50% {
-    opacity: 0.5;
-    transform: scale(0.98) translateY(5px);
-    filter: brightness(0.9) blur(1px);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-    filter: brightness(1) blur(0);
+@keyframes expandUnderline {
+  to {
+    width: 60px;
   }
 }
 
-@keyframes imageTransition {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-    filter: brightness(1) contrast(1);
+@keyframes smoothSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  25% {
-    opacity: 0.7;
-    transform: scale(0.98);
-    filter: brightness(0.9) contrast(0.9);
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes borderGlow {
+  0%, 100% {
+    background-position: 0% 50%;
   }
   50% {
-    opacity: 0;
-    transform: scale(0.95);
-    filter: brightness(0.7) blur(2px);
+    background-position: 100% 50%;
   }
-  75% {
+}
+
+@keyframes mirrorPulse {
+  0%, 100% {
+    transform: scale(1);
     opacity: 0.3;
-    transform: scale(0.98);
-    filter: brightness(0.9) blur(1px);
   }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-    filter: brightness(1) contrast(1) blur(0);
+  50% {
+    transform: scale(1.02);
+    opacity: 0.6;
   }
 }
 
-// Crossfade effect for seamless image transitions
-@keyframes crossfadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-    filter: blur(1px);
+/* Keep the background particle animation */
+@keyframes floatingParticles {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
   }
-  to {
-    opacity: 1;
-    transform: scale(1);
-    filter: blur(0);
+  50% {
+    transform: translateY(-20px) rotate(180deg);
   }
 }
 
-@keyframes crossfadeOut {
-  from {
-    opacity: 1;
-    transform: scale(1);
-    filter: blur(0);
-  }
-  to {
-    opacity: 0;
-    transform: scale(1.05);
-    filter: blur(1px);
-  }
-}
-
-// Existing animations (keeping for compatibility)
-@keyframes slideInFromLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-30px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-  }
-}
-
-@keyframes expandContent {
-  from {
-    opacity: 0;
-    max-height: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    max-height: 300px;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInText {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInScale {
-  from {
-    opacity: 0;
-    transform: scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-// Respect reduced motion preferences
-@media (prefers-reduced-motion: reduce) {
+/* Responsive Design */
+@media (max-width: 768px) {
   .section2 {
-    *, *::before, *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
+    padding: 3rem 1rem;
+  }
+
+  .section2 .section-heading {
+    margin-bottom: 3rem;
+    font-size: clamp(1.75rem, 5vw, 2.25rem);
+  }
+
+  .section2 .challenges-container {
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+  }
+
+  .section2 .challenge-card {
+    padding: 1.5rem;
+    gap: 1rem;
+  }
+
+  .section2 .challenge-image-container {
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+  }
+
+  .section2 .challenge-image {
+    width: 26px;
+    height: 26px;
+  }
+
+  .section2 .challenge-title {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section2 {
+    padding: 2rem 0.75rem;
+  }
+
+  .section2 .section-heading {
+    margin-bottom: 2rem;
+  }
+
+  .section2 .challenges-container {
+    gap: 1rem;
+  }
+
+  .section2 .challenge-card {
+    padding: 1.25rem;
+    border-radius: 12px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .section2 * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .section2 .section-heading,
+  .section2 .challenge-card {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .section2::before {
+    animation: floatingParticles 20s ease-in-out infinite;
   }
 }

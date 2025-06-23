@@ -1,12 +1,108 @@
 <section class="section1">
-    <h2 class="section-heading heading">{{ getHeading() }}</h2>
-    
-    <div class="challenges-container">
-      <div *ngFor="let challenge of challenges; let i = index" class="challenge-card">
-        <div class="challenge-image-container">
-          <img [src]="getImagePath(i)" [alt]="getChallengeTitle(challenge)" class="challenge-image">
-        </div>
-        <h3 class="challenge-title">{{ getChallengeTitle(challenge) }}</h3>
+  <h2 class="section-heading heading">{{ getHeading() }}</h2>
+
+  <div class="pricing-table">
+    <div class="header-row">
+      <div class="cell feature-header">
+        {{ getTranslatedText(pricingData.header.functions) }}
+      </div>
+      <div class="cell plan-column basic">
+        <h3 class="plan-name">
+          {{ getTranslatedText(pricingData.header.basic.name) }}
+        </h3>
+        <p class="plan-price">
+          {{ pricingData.header.basic.price }}<span class="per-month">{{
+            getTranslatedText(pricingData.header.basic.perMonth)
+          }}</span>
+        </p>
+        <button
+          class="demo-button"
+          (click)="onDemo()"
+          aria-label="View demo for Basic plan"
+        >
+          {{ getTranslatedText(pricingData.header.basic.button) }}
+        </button>
+      </div>
+      <div class="cell plan-column standard">
+        <h3 class="plan-name">
+          {{ getTranslatedText(pricingData.header.standard.name) }}
+        </h3>
+        <p class="plan-price">
+          {{ pricingData.header.standard.price }}<span class="per-month">{{
+            getTranslatedText(pricingData.header.standard.perMonth)
+          }}</span>
+        </p>
+        <button
+          class="demo-button"
+          (click)="onDemo()"
+          aria-label="View demo for Standard plan"
+        >
+          {{ getTranslatedText(pricingData.header.standard.button) }}
+        </button>
+      </div>
+      <div class="cell plan-column premium">
+        <h3 class="plan-name">
+          {{ getTranslatedText(pricingData.header.premium.name) }}
+        </h3>
+        <p class="plan-price">
+          {{ pricingData.header.premium.price }}<span class="per-month">{{
+            getTranslatedText(pricingData.header.premium.perMonth)
+          }}</span>
+        </p>
+        <button
+          class="demo-button"
+          (click)="onDemo()"
+          aria-label="View demo for Premium plan"
+        >
+          {{ getTranslatedText(pricingData.header.premium.button) }}
+        </button>
       </div>
     </div>
-  </section>
+
+    <ng-container *ngFor="let row of pricingData.rows">
+      <div class="table-row" [ngClass]="{ 'merged-header': row.type === 'header' }">
+        <div class="cell" [class.feature-cell]="row.type === 'feature'" [attr.colspan]="row.type === 'header' ? 4 : 1">
+          <ng-container *ngIf="row.type === 'header'; else featureContent">
+            <h4 class="row-header">{{ getTranslatedText(row.text) }}</h4>
+          </ng-container>
+          <ng-template #featureContent>
+            {{ getTranslatedText(row.text) }}
+          </ng-template>
+        </div>
+        <ng-container *ngIf="row.type === 'feature'">
+          <div class="cell checkmark-cell">
+            <ng-container *ngIf="row.basic">
+              <span class="checkmark">&#10003;</span>
+            </ng-container>
+            <ng-container *ngIf="!row.basic">
+              <span class="crossmark">&#x2715;</span>
+            </ng-container>
+          </div>
+          <div class="cell checkmark-cell">
+            <ng-container *ngIf="row.standard">
+              <span class="checkmark">&#10003;</span>
+            </ng-container>
+            <ng-container *ngIf="!row.standard">
+              <span class="crossmark">&#x2715;</span>
+            </ng-container>
+          </div>
+          <div class="cell checkmark-cell">
+            <ng-container *ngIf="row.premium">
+              <span class="checkmark">&#10003;</span>
+            </ng-container>
+            <ng-container *ngIf="!row.premium">
+              <span class="crossmark">&#x2715;</span>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+
+    <div class="footer-row">
+      <div class="cell merged-footer" colspan="4">
+        {{ getTranslatedText(pricingData.footer.text) }}
+        <span class="footer-price">{{ pricingData.footer.price }}</span>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,90 +1,200 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { LanguageService } from '../../../../core/services/language.service';
-import { ApiService } from '../../../../core/services/api.service';
 import { sectionHeadingsMocks } from '../../../../core/mocks/sections/sectionheadings';
 import { section4Mocks } from '../../../../core/mocks/sections/section4mock';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-section4',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [CommonModule],
   templateUrl: './section4.component.html',
   styleUrls: ['./section4.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Section4Component implements OnInit {
-  heading = sectionHeadingsMocks[4]; // Contact heading
-  content = section4Mocks;
+export class Section4Component implements OnInit, OnDestroy {
+  @Output() requestModalTrigger = new EventEmitter<void>();
+  
+  heading = sectionHeadingsMocks[4];
+  items = section4Mocks[0];
+  contents = section4Mocks[1];
   currentLanguageIndex = 0;
-  phoneNumber = '+995';
-  showNotification = false;
-  notificationMessage = '';
-  private notificationTimeout: any;
-
+  activeItemIndex = 0;
+  
+  // Cache for preloaded content
+  private imageCache: Map<number, HTMLImageElement> = new Map();
+  private contentCache: Map<number, any> = new Map();
+  private imagesPreloaded = false;
+  private destroy$ = new Subject<void>();
+  
+  // Loading state
+  isLoading = false;
+  
   constructor(
     private languageService: LanguageService,
-    private apiService: ApiService
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    this.languageService.currentLanguage$.subscribe((index) => {
-      this.currentLanguageIndex = index;
-    });
+    this.languageService.currentLanguage$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(index => {
+        this.currentLanguageIndex = index;
+        this.preloadContent(); // Preload content when language changes
+        this.cdr.markForCheck();
+      });
+    
+    // Start preloading immediately
+    this.preloadAllContent();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.imageCache.clear();
+    this.contentCache.clear();
+  }
+
+  private preloadAllContent(): void {
+    // Preload all images and content immediately
+    this.preloadImages();
+    this.preloadContent();
+  }
+
+  private preloadImages(): void {
+    const totalImages = this.items.length;
+    let loadedCount = 0;
+
+    for (let i = 0; i < totalImages; i++) {
+      if (this.imageCache.has(i)) {
+        loadedCount++;
+        continue;
+      }
+
+      const img = new Image();
+      
+      // Set loading attributes for better performance
+      img.loading = 'eager';
+      img.decoding = 'async';
+      
+      img.onload = () => {
+        this.imageCache.set(i, img);
+        loadedCount++;
+        
+        if (loadedCount === totalImages) {
+          this.imagesPreloaded = true;
+          this.cdr.markForCheck();
+        }
+      };
+      
+      img.onerror = () => {
+        console.warn(`Failed to preload image ${i + 1}`);
+        loadedCount++;
+        
+        if (loadedCount === totalImages) {
+          this.imagesPreloaded = true;
+          this.cdr.markForCheck();
+        }
+      };
+      
+      // Use higher priority for first few images
+      if (i < 3) {
+        img.fetchPriority = 'high';
+      }
+      
+      img.src = `assets/imgs/section4/pic${i + 1}.png`;
+    }
+  }
+
+  private preloadContent(): void {
+    // Pre-process all content to avoid computation during switching
+    for (let i = 0; i < this.contents.length; i++) {
+      const content = {
+        title: this.contents[i].title[this.currentLanguageIndex],
+        link: this.contents[i].link[this.currentLanguageIndex]
+      };
+      this.contentCache.set(i, content);
+    }
   }
 
   getText(item: any): string {
     return item.title[this.currentLanguageIndex];
   }
 
-  onSubmit(): void {
-    // Basic validation
-    if (!this.phoneNumber || this.phoneNumber.length < 4) {
-      this.notificationMessage = this.getText(this.content[6]); // Invalid phone number message
-      this.showNotification = true;
-      this.resetNotification();
+  getContent(item: any): string {
+    return item.title[this.currentLanguageIndex];
+  }
+
+  getLinkText(item: any): string {
+    return item.link[this.currentLanguageIndex];
+  }
+
+  // Optimized content getters using cache
+  getActiveContent(): string {
+    const cached = this.contentCache.get(this.activeItemIndex);
+    return cached ? cached.title : this.contents[this.activeItemIndex]?.title[this.currentLanguageIndex] || '';
+  }
+
+  getActiveLinkText(): string {
+    const cached = this.contentCache.get(this.activeItemIndex);
+    return cached ? cached.link : this.contents[this.activeItemIndex]?.link[this.currentLanguageIndex] || '';
+  }
+
+  setActiveItem(index: number): void {
+    if (this.activeItemIndex === index || this.isLoading) {
       return;
     }
 
-    // Remove any non-digit characters (except + if present)
-    const cleanedPhone = this.phoneNumber.replace(/[^\d+]/g, '');
-
-    this.apiService.savePhoneNumber(cleanedPhone).subscribe({
-      next: (response) => {
-        console.log('Phone number saved:', response);
-        this.notificationMessage = this.getText(this.content[4]); // Success message
-        this.showNotification = true;
-        this.phoneNumber = '+995'; // Reset to default
-        this.resetNotification();
-      },
-      error: (error) => {
-        console.error('Failed to save phone number:', error);
-        this.notificationMessage = this.getText(this.content[5]); // Error message
-        this.showNotification = true;
-        this.resetNotification();
-      },
+    // Use requestAnimationFrame for smoother transitions
+    requestAnimationFrame(() => {
+      this.activeItemIndex = index;
+      
+      // Trigger immediate change detection
+      this.cdr.detectChanges();
+      
+      // Preload next/previous images for even smoother navigation
+      this.preloadAdjacentImages(index);
     });
   }
 
-  private resetNotification(): void {
-    if (this.notificationTimeout) {
-      clearTimeout(this.notificationTimeout);
-    }
-    this.notificationTimeout = setTimeout(() => {
-      this.dismissNotification();
-    }, 5000);
+  private preloadAdjacentImages(currentIndex: number): void {
+    const nextIndex = (currentIndex + 1) % this.items.length;
+    const prevIndex = (currentIndex - 1 + this.items.length) % this.items.length;
+    
+    [nextIndex, prevIndex].forEach(idx => {
+      if (!this.imageCache.has(idx)) {
+        const img = new Image();
+        img.loading = 'eager';
+        img.onload = () => this.imageCache.set(idx, img);
+        img.src = `assets/imgs/section4/pic${idx + 1}.png`;
+      }
+    });
   }
 
-  dismissNotification(): void {
-    this.showNotification = false;
-    if (this.notificationTimeout) {
-      clearTimeout(this.notificationTimeout);
-    }
+  getImagePath(): string {
+    return `assets/imgs/section4/pic${this.activeItemIndex + 1}.png`;
   }
 
-  ngOnDestroy(): void {
-    if (this.notificationTimeout) {
-      clearTimeout(this.notificationTimeout);
-    }
+  isImageReady(index: number): boolean {
+    const img = this.imageCache.get(index);
+    return img ? img.complete && img.naturalHeight !== 0 : false;
+  }
+
+  isCurrentImageReady(): boolean {
+    return this.isImageReady(this.activeItemIndex);
+  }
+
+  onLearnMore(): void {
+    this.requestModalTrigger.emit();
+  }
+
+  trackByIndex(index: number): number {
+    return index;
+  }
+
+  // Method to get all images for template preloading
+  getAllImagePaths(): string[] {
+    return this.items.map((_, index) => `assets/imgs/section4/pic${index + 1}.png`);
   }
 }

@@ -1,7 +1,6 @@
 <nav class="navbar">
   <div class="navbar-brand" (click)="scrollToSection('main')">CSMS</div>
 
-  <!-- Regular navigation (visible on larger screens) -->
   <div class="nav-links">
     <a
       *ngFor="let item of regularNavItems"
@@ -12,20 +11,18 @@
     </a>
   </div>
 
-  <!-- Action buttons (always visible) -->
   <div class="nav-actions">
-    <!-- Language dropdown -->
     <div class="language-dropdown">
       <button
         class="nav-action-btn language-btn heading"
         (click)="isLanguageDropdownOpen = !isLanguageDropdownOpen"
       >
         <span class="language-text">{{ getCurrentLanguageText() }}</span>
-        <img 
-          class="language-flag-icon" 
-          [src]="getCurrentLanguageFlag()" 
+        <img
+          class="language-flag-icon"
+          [src]="getCurrentLanguageFlag()"
           [alt]="getCurrentLanguageText()"
-        >
+        />
         <span class="language-icon">🌐</span>
         <span class="dropdown-arrow">▼</span>
       </button>
@@ -40,20 +37,37 @@
           [class.active]="currentLanguageIndex === i"
           class="language-option heading"
         >
-          <img 
-            class="language-flag" 
-            [src]="getLanguageFlag(i)" 
+          <img
+            class="language-flag"
+            [src]="getLanguageFlag(i)"
             [alt]="lang.name"
-          >
+          />
           <span class="language-name">{{ lang.name }}</span>
         </button>
       </div>
     </div>
 
-    <!-- Request Demo button (turns into mail icon on mobile) -->
     <button class="nav-action-btn demo-btn heading" (click)="onDemoClick()">
       <span class="demo-text">{{ getDemoButtonText() }}</span>
       <span class="demo-icon">✉</span>
+    </button>
+
+    <button
+      *ngIf="!(isAuthenticated$ | async)"
+      class="nav-action-btn login-btn heading"
+      (click)="openLoginModal()"
+    >
+      <span class="login-text">{{ getLoginButtonText() }}</span>
+      <span class="login-icon">🔑</span>
+    </button>
+
+    <button
+      *ngIf="isAuthenticated$ | async"
+      class="nav-action-btn login-btn heading"
+      (click)="logout()"
+    >
+      <span class="login-text">Logout</span>
+      <span class="login-icon">🚪</span>
     </button>
   </div>
 
@@ -78,3 +92,10 @@
     </a>
   </div>
 </nav>
+
+
+
+<app-login-modal
+  [isOpen]="isLoginModalOpen"
+  (close)="closeLoginModal()"
+></app-login-modal>

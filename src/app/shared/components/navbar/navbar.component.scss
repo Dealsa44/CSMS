@@ -216,7 +216,7 @@
           border: 1px solid rgba(255, 255, 255, 0.1);
           display: inline-block;
 
-          @media (max-width: 1050px) {
+          @media (max-width: 1350px) {
             display: none; // Hide flag on mobile, show only globe
           }
         }
@@ -225,7 +225,7 @@
           display: none; // Hidden by default on desktop
           font-size: 1.2rem;
 
-          @media (max-width: 1050px) {
+          @media (max-width: 1350px) {
             display: inline-block; // Show only globe on mobile
           }
         }
@@ -243,7 +243,7 @@
           display: none; // Hidden by default on desktop
           font-size: 1.2rem;
         }
-        @media (max-width: 1050px) {
+        @media (max-width: 1350px) {
           padding: 0.8rem;
           width: 42px;
           height: 42px;
@@ -524,7 +524,7 @@
           }
         }
 
-        @media (max-width: 1050px) {
+        @media (max-width: 1350px) {
           padding: 0.8rem;
           width: 42px;
           height: 42px;
@@ -537,6 +537,53 @@
           .demo-icon {
             display: inline-block;
           }
+        }
+      }
+    }
+    .login-btn {
+      background: transparent;
+      border: 2px solid #1a936f;
+      color: #f3e9d2;
+
+      .login-text {
+        display: inline-block;
+        transition: all 0.4s ease;
+        margin-top: 4px;
+      }
+
+      .login-icon {
+        display: none;
+        font-size: 1.2rem;
+      }
+
+      &:hover {
+        background-color: rgba(26, 147, 111, 0.2);
+        border-color: #22b885;
+        color: #ffffff;
+        transform: translateY(-4px) scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+      }
+
+      @media (max-width: 1350px) {
+        padding: 0.8rem;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+
+        display: flex; // Ensure the button itself is a flex container
+        align-items: center; // Center vertically
+        justify-content: center; // Center horizontally
+
+        .login-text {
+          display: none;
+        }
+
+        .login-icon {
+          display: block;
+          margin: 0;
+          padding: 0;
+          line-height: 1;
+          font-size: 1.2rem;
         }
       }
     }

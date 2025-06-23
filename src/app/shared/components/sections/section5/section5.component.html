@@ -1,0 +1,35 @@
+<section class="section5" id="section5">
+    <h2 class="section-heading heading">{{ getText(heading) }}</h2>
+    
+    <div class="content-container">
+      <div class="left-content">
+        <h3 class="sub-heading">{{ getText(content[0]) }}</h3>
+        <p class="statement">{{ getText(content[1]) }}</p>
+        
+        <form (ngSubmit)="onSubmit()" class="phone-form">
+          <div class="input-group">
+            <input type="tel" 
+                   [(ngModel)]="phoneNumber" 
+                   name="phoneNumber"
+                   class="phone-input"
+                   required>
+            <button type="submit" class="submit-btn">
+              {{ getText(content[2]) }}
+            </button>
+          </div>
+        </form>
+      </div>
+      
+      <div class="right-content">
+        <img src="assets/imgs/section5/pic1.png" 
+             alt="Contact image" 
+             class="contact-image">
+      </div>
+    </div>
+    <div class="notification" *ngIf="showNotification">
+      <span class="notification-message">{{ notificationMessage }}</span>
+      <button class="close-notification" (click)="dismissNotification()">
+        {{ getText(content[7]) }}
+      </button>
+    </div>
+</section>

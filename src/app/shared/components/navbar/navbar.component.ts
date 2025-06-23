@@ -1,67 +1,65 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { navbarMocks } from '../../../core/mocks/navbarmocks';
-import { LanguageService } from '../../../core/services/language.service';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RequestModalComponent } from '../request-modal/request-modal.component';
-import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription, Observable } from 'rxjs';
+
+import { navbarMocks } from '../../../core/mocks/navbarmocks';
+import { loginModalMocks } from '../../../core/mocks/login-modal-mocks';
+import { LanguageService } from '../../../core/services/language.service';
+import { AuthService } from '../../../core/services/auth.service';
+
+// Import the new Login Modal Component
+import { LoginModalComponent } from '../login-modal/login-modal.component';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule], // Add any necessary imports here
+  imports: [CommonModule, LoginModalComponent], // Add LoginModalComponent here
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit, OnDestroy {
   @Output() requestModalTrigger = new EventEmitter<void>();
+
   navItems = navbarMocks;
+  loginTexts = loginModalMocks;
   currentLanguageIndex = 0;
   mobileMenuOpen = false;
+  isLanguageDropdownOpen = false;
+
+  // --- NEW ---
+  isLoginModalOpen = false;
+  isAuthenticated$: Observable<boolean>;
+  // --- END NEW ---
+
   private languageSubscription!: Subscription;
+
   availableLanguages = [
     { code: 'ka', name: 'ქართული' },
     { code: 'en', name: 'English' },
     { code: 'ru', name: 'Русский' },
   ];
-  isLanguageDropdownOpen = false;
-
-  // Language flag paths
+  
   private languageFlags = [
-    'assets/imgs/navbar/pic1.svg', // Georgian flag
-    'assets/imgs/navbar/pic2.svg', // English flag
-    'assets/imgs/navbar/pic3.svg', // Russian flag
+    'assets/imgs/navbar/pic1.svg',
+    'assets/imgs/navbar/pic2.svg',
+    'assets/imgs/navbar/pic3.svg',
   ];
-
-  // Filter out non-regular nav items
-  get regularNavItems() {
-    return this.navItems.filter(
-      (item) =>
-        !this.isLanguageItem(item) &&
-        !this.isDemoButton(item) &&
-        item.order !== -1
-    );
-  }
 
   constructor(
     private languageService: LanguageService,
+    private authService: AuthService, // Inject AuthService
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+    // --- NEW ---
+    this.isAuthenticated$ = this.authService.isAuthenticated$;
+    // --- END NEW ---
+  }
 
   ngOnInit(): void {
-    // Subscribe to route params to detect language changes
-    this.route.paramMap.subscribe((params) => {
-      const langParam = params.get('lang');
-      if (langParam) {
-        this.languageService.setLanguageFromCode(langParam);
-      }
-    });
-
-    // Initialize with current language
+    // ... your existing ngOnInit logic ...
     this.currentLanguageIndex = this.languageService.getCurrentLanguage();
-
-    // Subscribe to language changes
     this.languageSubscription = this.languageService.currentLanguage$.subscribe(
       (index) => {
         this.currentLanguageIndex = index;
@@ -70,28 +68,44 @@ export class NavbarComponent {
   }
 
   ngOnDestroy(): void {
-    // Clean up subscription
     if (this.languageSubscription) {
       this.languageSubscription.unsubscribe();
     }
   }
-
-  // Flag-related methods
-  getCurrentLanguageFlag(): string {
-    return this.languageFlags[this.currentLanguageIndex];
+  
+  // --- NEW METHODS for Login Modal ---
+  openLoginModal(): void {
+    this.isLoginModalOpen = true;
   }
 
-  getLanguageFlag(index: number): string {
-    return this.languageFlags[index];
+  closeLoginModal(): void {
+    this.isLoginModalOpen = false;
   }
 
-  // Your existing methods...
-  isLanguageItem(item: any): boolean {
-    return item.order === 4;
+  getLoginButtonText(): string {
+    return this.loginTexts.loginButton[this.currentLanguageIndex];
+  }
+  
+  logout(): void {
+    this.authService.logout();
+  }
+  // --- END NEW ---
+
+  // ... all your other existing methods (getRegularNavItems, getNavItemTitle, etc.) ...
+  get regularNavItems() {
+    return this.navItems.filter(
+      (item) =>
+        !this.isLanguageItem(item) &&
+        !this.isDemoButton(item) &&
+        item.order !== -1
+    );
+  }
+   isLanguageItem(item: any): boolean {
+    return item.order === 5;
   }
 
   isDemoButton(item: any): boolean {
-    return item.order === 5;
+    return item.order === 6;
   }
 
   getNavItemTitle(item: any): string {
@@ -130,33 +144,29 @@ export class NavbarComponent {
         return 'section3';
       case 3:
         return 'section4';
+      case 4:
+        return 'section5'
       default:
         return 'main';
     }
   }
-
-  changeLanguage(): void {
-    const nextLanguage = this.languageService.getNextLanguage();
-    this.languageService.setLanguage(nextLanguage);
+  getCurrentLanguageFlag(): string {
+    return this.languageFlags[this.currentLanguageIndex];
   }
 
+  getLanguageFlag(index: number): string {
+    return this.languageFlags[index];
+  }
   toggleMobileMenu(): void {
     this.mobileMenuOpen = !this.mobileMenuOpen;
   }
-
-  showRequestModal = false;
-
-  openRequestModal(): void {
-    this.showRequestModal = true;
-  }
-
   onDemoClick(): void {
     this.requestModalTrigger.emit();
   }
 
   setLanguage(index: number): void {
     this.languageService.setLanguage(index);
-    this.mobileMenuOpen = false; // Close mobile menu if open
-    this.isLanguageDropdownOpen = false; // Close the dropdown
+    this.mobileMenuOpen = false;
+    this.isLanguageDropdownOpen = false;
   }
 }
