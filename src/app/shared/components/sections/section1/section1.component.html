@@ -10,11 +10,13 @@
         <h3 class="plan-name">
           {{ getTranslatedText(pricingData.header.basic.name) }}
         </h3>
-        <p class="plan-price">
-          {{ pricingData.header.basic.price }}<span class="per-month">{{
+        <div class="plan-price">
+          <span class="price">{{ pricingData.header.basic.price }}</span>
+          <span class="per-month">{{
             getTranslatedText(pricingData.header.basic.perMonth)
           }}</span>
-        </p>
+        </div>
+
         <button
           class="demo-button"
           (click)="onDemo()"
@@ -27,11 +29,13 @@
         <h3 class="plan-name">
           {{ getTranslatedText(pricingData.header.standard.name) }}
         </h3>
-        <p class="plan-price">
-          {{ pricingData.header.standard.price }}<span class="per-month">{{
+        <div class="plan-price">
+          <span class="price">{{ pricingData.header.standard.price }}</span>
+          <span class="per-month">{{
             getTranslatedText(pricingData.header.standard.perMonth)
           }}</span>
-        </p>
+        </div>
+
         <button
           class="demo-button"
           (click)="onDemo()"
@@ -44,11 +48,13 @@
         <h3 class="plan-name">
           {{ getTranslatedText(pricingData.header.premium.name) }}
         </h3>
-        <p class="plan-price">
-          {{ pricingData.header.premium.price }}<span class="per-month">{{
+        <div class="plan-price">
+          <span class="price">{{ pricingData.header.premium.price }}</span>
+          <span class="per-month">{{
             getTranslatedText(pricingData.header.premium.perMonth)
           }}</span>
-        </p>
+        </div>
+
         <button
           class="demo-button"
           (click)="onDemo()"
@@ -60,8 +66,15 @@
     </div>
 
     <ng-container *ngFor="let row of pricingData.rows">
-      <div class="table-row" [ngClass]="{ 'merged-header': row.type === 'header' }">
-        <div class="cell" [class.feature-cell]="row.type === 'feature'" [attr.colspan]="row.type === 'header' ? 4 : 1">
+      <div
+        class="table-row"
+        [ngClass]="{ 'merged-header': row.type === 'header' }"
+      >
+        <div
+          class="cell"
+          [class.feature-cell]="row.type === 'feature'"
+          [attr.colspan]="row.type === 'header' ? 4 : 1"
+        >
           <ng-container *ngIf="row.type === 'header'; else featureContent">
             <h4 class="row-header">{{ getTranslatedText(row.text) }}</h4>
           </ng-container>
