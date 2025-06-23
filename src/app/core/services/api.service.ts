@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private apiUrl = 'http://172.20.2.203:5000'; // Change to your Flask server URL
+  private apiUrl = 'https://csms-backend-28kw.onrender.com'; // Change to your Flask server URL
 
   constructor(private http: HttpClient) {}
 

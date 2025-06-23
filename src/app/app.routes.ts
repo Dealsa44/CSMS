@@ -10,10 +10,10 @@ export const routes: Routes = [
       // Add other routes here if needed
     ]
   },
-  // { 
-  //   path: ':lang/admin-dashboard', 
-  //   component: AdminDashboardComponent 
-  // },
+  { 
+    path: ':lang/admin-dashboard', 
+    component: AdminDashboardComponent 
+  },
   { path: '', redirectTo: '/ka', pathMatch: 'full' }, // Default to Georgian
   { path: '**', redirectTo: '/ka' }, // Fallback to Georgian
 ];

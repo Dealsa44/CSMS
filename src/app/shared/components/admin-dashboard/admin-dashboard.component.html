@@ -1,4 +1,3 @@
-<!-- admin-dashboard.component.html -->
 <div class="dashboard-container">
   <h1 class="dashboard-title">{{ texts.title[currentLanguageIndex] }}</h1>
   
@@ -15,7 +14,12 @@
   <div *ngIf="!loading && !error" class="data-container">
     <!-- Users Section -->
     <div class="data-section users-section">
-      <h2>{{ texts.usersSection.title[currentLanguageIndex] }} ({{ users.length }})</h2>
+      <div class="section-header">
+        <h2>{{ texts.usersSection.title[currentLanguageIndex] }} ({{ users.length }})</h2>
+        <button *ngIf="users.length > 0" class="clear-all-btn" (click)="confirmClearAll('users')">
+          {{ texts.actions.clearAll[currentLanguageIndex] }}
+        </button>
+      </div>
       <div class="data-table">
         <div class="table-header">
           <div>{{ texts.usersSection.columns.id[currentLanguageIndex] }}</div>
@@ -24,6 +28,7 @@
           <div>{{ texts.usersSection.columns.email[currentLanguageIndex] }}</div>
           <div>{{ texts.usersSection.columns.phone[currentLanguageIndex] }}</div>
           <div>{{ texts.usersSection.columns.registered[currentLanguageIndex] }}</div>
+          <div>{{ texts.actions.title[currentLanguageIndex] }}</div>
         </div>
         <div class="table-body">
           <div class="table-row" *ngFor="let user of users">
@@ -33,6 +38,11 @@
             <div>{{ user.email || '-' }}</div>
             <div>{{ user.phone || '-' }}</div>
             <div>{{ user.created_at | date:'medium' }}</div>
+            <div class="action-cell">
+              <button class="delete-btn" (click)="confirmDelete(user.id, 'user')">
+                {{ texts.actions.delete[currentLanguageIndex] }}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -40,20 +50,47 @@
 
     <!-- Phone Numbers Section -->
     <div class="data-section numbers-section">
-      <h2>{{ texts.numbersSection.title[currentLanguageIndex] }} ({{ phoneNumbers.length }})</h2>
+      <div class="section-header">
+        <h2>{{ texts.numbersSection.title[currentLanguageIndex] }} ({{ phoneNumbers.length }})</h2>
+        <button *ngIf="phoneNumbers.length > 0" class="clear-all-btn" (click)="confirmClearAll('numbers')">
+          {{ texts.actions.clearAll[currentLanguageIndex] }}
+        </button>
+      </div>
       <div class="data-table">
         <div class="table-header">
           <div>{{ texts.numbersSection.columns.id[currentLanguageIndex] }}</div>
           <div>{{ texts.numbersSection.columns.number[currentLanguageIndex] }}</div>
           <div>{{ texts.numbersSection.columns.registered[currentLanguageIndex] }}</div>
+          <div>{{ texts.actions.title[currentLanguageIndex] }}</div>
         </div>
         <div class="table-body">
           <div class="table-row" *ngFor="let number of phoneNumbers">
             <div>{{ number.id }}</div>
             <div>{{ number.details_number }}</div>
             <div>{{ number.created_at | date:'medium' }}</div>
+            <div class="action-cell">
+              <button class="delete-btn" (click)="confirmDelete(number.id, 'number')">
+                {{ texts.actions.delete[currentLanguageIndex] }}
+              </button>
+            </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Dialog -->
+  <div *ngIf="showConfirmation" class="confirmation-overlay">
+    <div class="confirmation-dialog">
+      <h3>{{ confirmationTitle }}</h3>
+      <p>{{ confirmationMessage }}</p>
+      <div class="confirmation-buttons">
+        <button class="confirm-btn" (click)="executeConfirmedAction()">
+          {{ texts.actions.confirm[currentLanguageIndex] }}
+        </button>
+        <button class="cancel-btn" (click)="cancelConfirmation()">
+          {{ texts.actions.cancel[currentLanguageIndex] }}
+        </button>
       </div>
     </div>
   </div>
