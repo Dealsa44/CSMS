@@ -18,6 +18,7 @@ export class Section1Component implements OnInit {
   pricingData = section1Mocks;
   currentLanguageIndex = 0;
   heading = sectionHeadingsMocks[1]; // Index 1 for the new pricing section heading
+  isCollapsed = false;
 
   constructor(private languageService: LanguageService) {}
 
@@ -39,4 +40,8 @@ export class Section1Component implements OnInit {
   onDemo(): void {
     this.requestModalTrigger.emit();
   }
+
+  toggleCollapse() {
+  this.isCollapsed = !this.isCollapsed;
+}
 }

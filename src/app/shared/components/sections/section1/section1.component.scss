@@ -20,7 +20,7 @@
   left: 50%;
   transform: translateX(-50%);
   transition: all 0.3s ease;
-  
+
   &::after {
     content: "";
     display: block;
@@ -35,7 +35,7 @@
 
   &:hover {
     transform: translateX(-50%) translateY(-1px);
-    
+
     &::after {
       width: 120px;
       background: linear-gradient(to right, #1a936f, #0b2833);
@@ -43,8 +43,6 @@
     }
   }
 }
-
-
 
 .section1 .pricing-table {
   max-width: 1000px;
@@ -266,8 +264,6 @@
   transition: all 0.3s ease;
 }
 
-
-
 /* Footer Row */
 .section1 .footer-row {
   display: grid;
@@ -469,5 +465,79 @@
   .section1 .demo-button {
     background: #333 !important;
     color: white !important;
+  }
+}
+.collapse-control {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.collapse-button {
+  background: linear-gradient(135deg, #1a936f 0%, #124255 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(26, 147, 111, 0.3);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(26, 147, 111, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Add this to your existing .pricing-table class
+.pricing-table {
+  transition: max-height 0.5s ease, opacity 0.3s ease;
+  overflow: hidden;
+
+  &.collapsed {
+    max-height: 500px; // Adjust this value based on how much you want to show when collapsed
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100px;
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0),
+        rgba(245, 245, 245, 1)
+      );
+      pointer-events: none;
+    }
+  }
+}
+@media (max-width: 768px) {
+  .pricing-table {
+    &.collapsed {
+      max-height: 300px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .pricing-table {
+    &.collapsed {
+      max-height: 250px;
+    }
+  }
+
+  .collapse-button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
   }
 }

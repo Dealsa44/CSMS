@@ -1,7 +1,7 @@
 <section class="section1">
   <h2 class="section-heading heading">{{ getHeading() }}</h2>
 
-  <div class="pricing-table">
+  <div class="pricing-table"  [class.collapsed]="isCollapsed">
     <div class="header-row">
       <div class="cell feature-header">
         {{ getTranslatedText(pricingData.header.functions) }}
@@ -118,4 +118,10 @@
       </div>
     </div>
   </div>
+  <div class="collapse-control">
+  <button class="collapse-button" (click)="toggleCollapse()" aria-label="Toggle table collapse">
+   <span *ngIf="isCollapsed">↓ {{ getTranslatedText(pricingData.collapseText) }}</span>
+<span *ngIf="!isCollapsed">↑ {{ getTranslatedText(pricingData.expandText) }}</span>
+  </button>
+</div>
 </section>

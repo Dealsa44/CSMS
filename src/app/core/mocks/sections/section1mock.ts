@@ -300,61 +300,72 @@ export const section1Mocks = {
     },
     {
       type: 'feature',
-      text: ["გარე სისტემებთან ინტეგრაცია", "Integration with External Systems", "Интеграция с внешними системами"],
+      text: [
+        'გარე სისტემებთან ინტეგრაცია',
+        'Integration with External Systems',
+        'Интеграция с внешними системами',
+      ],
       basic: false,
       standard: false,
       premium: true,
     },
     {
       type: 'header',
-      text: ["მხარდაჭერა", "Support", "Поддержка"],
+      text: ['მხარდაჭერა', 'Support', 'Поддержка'],
       basic: null,
       standard: null,
       premium: null,
     },
     {
       type: 'feature',
-      text: ["მხარდაჭერა ელფოსტით", "Email Support", "Поддержка по электронной почте"],
+      text: [
+        'მხარდაჭერა ელფოსტით',
+        'Email Support',
+        'Поддержка по электронной почте',
+      ],
       basic: true,
       standard: true,
       premium: true,
     },
     {
       type: 'header',
-      text: ["სხვადასხვა", "Miscellaneous", "Прочее"],
+      text: ['სხვადასხვა', 'Miscellaneous', 'Прочее'],
       basic: null,
       standard: null,
       premium: null,
     },
     {
       type: 'feature',
-      text: ["Cloud-ში განთავსება", "Cloud Hosting", "Хостинг в облаке"],
+      text: ['Cloud-ში განთავსება', 'Cloud Hosting', 'Хостинг в облаке'],
       basic: true,
       standard: true,
       premium: true,
     },
     {
       type: 'feature',
-      text: ["500GB", "500GB", "500GB"],
+      text: ['500GB', '500GB', '500GB'],
       basic: true,
       standard: true,
       premium: true,
     },
     {
       type: 'feature',
-      text: ["Back-up Policy", "Back-up Policy", "Политика резервного копирования"],
+      text: [
+        'Back-up Policy',
+        'Back-up Policy',
+        'Политика резервного копирования',
+      ],
       basic: true,
       standard: true,
       premium: true,
     },
     {
       type: 'feature',
-      text: ["განახლებები", "Updates", "Обновления"],
+      text: ['განახლებები', 'Updates', 'Обновления'],
       basic: true,
       standard: true,
       premium: true,
     },
-    
   ],
   footer: {
     text: [
@@ -364,4 +375,6 @@ export const section1Mocks = {
     ],
     price: '$1500',
   },
+  collapseText: ['გაშლა', 'Expand', 'Развернуть'],
+  expandText: ['დახურვა', 'Collapse', 'Свернуть'],
 };
