@@ -75,10 +75,13 @@ export class RequestModalComponent {
   }
 
   validatePhone(phone: string): boolean {
-    return /^\d+$/.test(phone); // Only digits allowed
+    // Remove all non-digit characters
+    const cleanedPhone = phone.replace(/\D/g, '');
+    // Check for at least 7 digits (same as backend)
+    return cleanedPhone.length >= 7;
   }
 
- onSubmit(): void {
+  onSubmit(): void {
     if (!this.validateForm()) {
       return;
     }
@@ -87,7 +90,7 @@ export class RequestModalComponent {
       name: this.formData[1],
       company: this.formData[2] || undefined,
       email: this.formData[4] || undefined,
-      phone: this.formData[3] || undefined
+      phone: this.formData[3] || undefined,
     };
 
     this.apiService.registerUser(userData).subscribe({
@@ -95,7 +98,7 @@ export class RequestModalComponent {
         console.log('Registration successful:', response);
         this.showNotification = true;
         this.resetForm();
-        
+
         this.notificationTimeout = setTimeout(() => {
           this.dismissNotification();
         }, 5000);
@@ -103,7 +106,7 @@ export class RequestModalComponent {
       error: (error) => {
         console.error('Registration failed:', error);
         // Handle error (show error message)
-      }
+      },
     });
   }
 

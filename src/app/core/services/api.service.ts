@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private apiUrl = 'https://csms-backend-production.up.railway.app'; // Your Flask server URL
+  private apiUrl = 'https://csms-backend-production.up.railway.app';
 
   constructor(private http: HttpClient) {}
 
@@ -15,12 +15,15 @@ export class ApiService {
     return this.http.get(`${this.apiUrl}/health`);
   }
   
-  // --- NEW ---
   // Authenticate an admin user
   login(credentials: { username: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/auth/login`, credentials);
   }
-  // --- END NEW ---
+
+  // Refresh access token
+  refreshToken(data: { refresh_token: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/auth/refresh`, data);
+  }
 
   // Register a new user
   registerUser(userData: {
