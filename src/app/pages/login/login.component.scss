@@ -2,9 +2,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  height: 100vh; /* Use viewport height */
+  width: 100vw; /* Use viewport width */
   background: linear-gradient(135deg, #0b2833 0%, #124255 100%);
   padding: 2rem;
+  box-sizing: border-box; /* Include padding in height calculation */
+  overflow: hidden; /* Prevent any content from causing scroll */
 }
 
 .login-container {

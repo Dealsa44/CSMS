@@ -7,19 +7,19 @@ export const section1Mocks = {
       name: ['საბაზისო', 'Basic', 'Базовый'],
       price: '$900',
       perMonth: ['/თვეში', '/month', '/месяц'],
-      button: ['დემოს ნახვა', 'View Demo', 'Смотреть демо'],
+      button: ['პრეზენტაცია', 'Presentation', 'Презентация'],
     },
     standard: {
       name: ['სტანდარტი', 'Standard', 'Стандартный'],
       price: '$1100',
       perMonth: ['/თვეში', '/month', '/месяц'],
-      button: ['დემოს ნახვა', 'View Demo', 'Смотреть демо'],
+      button: ['პრეზენტაცია', 'Presentation', 'Презентация'],
     },
     premium: {
       name: ['პრემიუმი', 'Premium', 'Премиум'],
       price: '$1500',
       perMonth: ['/თვეში', '/month', '/месяц'],
-      button: ['დემოს ნახვა', 'View Demo', 'Смотреть демо'],
+      button: ['პრეზენტაცია', 'Presentation', 'Презентация'],
     },
   },
   rows: [

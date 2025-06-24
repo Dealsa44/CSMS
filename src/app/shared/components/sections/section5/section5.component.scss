@@ -5,19 +5,36 @@
   overflow: hidden;
   animation: sectionFadeIn 1s ease-out;
 
-  // Enhanced background effects
+  /* Animated background particles from section2 */
   &::before {
-    content: '';
+    content: "";
     position: absolute;
-    top: -50%;
-    right: -10%;
-    width: 60%;
-    height: 200%;
-    background: radial-gradient(circle at center, rgba(26, 147, 111, 0.05) 0%, transparent 70%);
-    z-index: 0;
-    animation: floatBackground 6s ease-in-out infinite;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(
+        circle at 20% 80%,
+        rgba(26, 147, 111, 0.1) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 80% 20%,
+        rgba(18, 66, 85, 0.1) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 40% 40%,
+        rgba(26, 147, 111, 0.05) 0%,
+        transparent 50%
+      );
+    animation: floatingParticles 20s ease-in-out infinite;
+    will-change: transform;
+    pointer-events: none;
+    z-index: 0; /* Ensure it stays in the background */
   }
 
+  /* Original ::after from section5 - adjust z-index if needed */
   &::after {
     content: '';
     position: absolute;
@@ -94,7 +111,7 @@
     padding: 2rem;
     background: linear-gradient(145deg, #ffffff, #f8f9fa);
     border-radius: 20px;
-    box-shadow: 
+    box-shadow:
       0 8px 24px rgba(11, 40, 51, 0.08),
       0 0 0 1px rgba(255, 255, 255, 0.8),
       inset 0 1px 0 rgba(255, 255, 255, 0.9);
@@ -118,7 +135,7 @@
 
     &:hover {
       transform: translateY(-8px) scale(1.02);
-      box-shadow: 
+      box-shadow:
         0 20px 40px rgba(11, 40, 51, 0.15),
         0 0 0 1px rgba(26, 147, 111, 0.2),
         inset 0 1px 0 rgba(255, 255, 255, 0.9);
@@ -197,7 +214,7 @@
       display: flex;
       border-radius: 50px;
       overflow: hidden;
-      box-shadow: 
+      box-shadow:
         0 4px 12px rgba(11, 40, 51, 0.1),
         0 0 0 1px rgba(255, 255, 255, 0.8);
       transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -219,7 +236,7 @@
       }
 
       &:hover {
-        box-shadow: 
+        box-shadow:
           0 8px 24px rgba(11, 40, 51, 0.15),
           0 0 0 2px rgba(26, 147, 111, 0.3);
         transform: translateY(-2px);
@@ -230,7 +247,7 @@
       }
 
       &:focus-within {
-        box-shadow: 
+        box-shadow:
           0 0 0 3px rgba(26, 147, 111, 0.3),
           0 8px 24px rgba(11, 40, 51, 0.15);
         transform: translateY(-2px);
@@ -271,7 +288,7 @@
 
       &:focus {
         background: rgba(26, 147, 111, 0.05);
-        
+
         &::placeholder {
           color: rgba(18, 66, 85, 0.7);
           transform: translateX(5px);
@@ -369,7 +386,7 @@
     max-width: 100%;
     height: auto;
     border-radius: 20px;
-    box-shadow: 
+    box-shadow:
       0 20px 50px rgba(11, 40, 51, 0.15),
       0 0 0 1px rgba(255, 255, 255, 0.8);
     transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -392,10 +409,10 @@
 
     &:hover {
       transform: translateY(-10px) scale(1.05) rotate(1deg);
-      box-shadow: 
+      box-shadow:
         0 30px 60px rgba(11, 40, 51, 0.25),
         0 0 0 2px rgba(26, 147, 111, 0.3);
-      
+
       &::before {
         opacity: 1;
       }
@@ -411,7 +428,7 @@
   }
 }
 
-// Keyframe animations
+// Keyframe animations (add the floatingParticles keyframe)
 @keyframes sectionFadeIn {
   from {
     opacity: 0;
@@ -431,6 +448,17 @@
     transform: translateY(-20px) rotate(2deg);
   }
 }
+
+/* Add the floatingParticles keyframe animation */
+@keyframes floatingParticles {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+  }
+}
+
 
 @keyframes slideInFromTop {
   from {
@@ -601,7 +629,7 @@
       background: rgba(255, 255, 255, 0.15);
     }
   }
-  
+
 }
 
 @keyframes slideIn {
