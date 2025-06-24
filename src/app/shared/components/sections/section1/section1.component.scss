@@ -56,6 +56,10 @@
   transform: translateY(30px);
   opacity: 0;
   animation: tableSlideIn 1s ease-out 0.4s forwards;
+
+  // Smooth transition for max-height
+  transition: max-height 0.7s ease-in-out, opacity 0.5s ease;
+  will-change: max-height; // Optimize for animation
 }
 
 /* Remove glowing border effect */
@@ -497,14 +501,30 @@
   }
 }
 
-// Add this to your existing .pricing-table class
+// Styling for the SVG icon
+.collapse-icon {
+  width: 24px;
+  height: 24px;
+  fill: currentColor; // Inherit color from the button text
+  transition: transform 0.3s ease-in-out;
+}
+
+.collapse-icon.collapsed-icon {
+  transform: rotate(0deg); // Down arrow
+}
+
+.collapse-icon:not(.collapsed-icon) {
+  transform: rotate(180deg); // Up arrow
+}
+
 .pricing-table {
-  transition: max-height 0.5s ease, opacity 0.3s ease;
-  overflow: hidden;
+  max-height: 3700px; // A large enough value for the uncollapsed state
+  opacity: 1;
 
   &.collapsed {
     max-height: 760px; // Adjust this value based on how much you want to show when collapsed
     position: relative;
+    opacity: 1;
 
     &::after {
       content: "";

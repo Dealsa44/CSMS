@@ -1,7 +1,7 @@
 <section class="section1">
   <h2 class="section-heading heading">{{ getHeading() }}</h2>
 
-  <div class="pricing-table"  [class.collapsed]="isCollapsed">
+  <div class="pricing-table" [class.collapsed]="isCollapsed">
     <div class="header-row">
       <div class="cell feature-header">
         {{ getTranslatedText(pricingData.header.functions) }}
@@ -119,9 +119,27 @@
     </div>
   </div>
   <div class="collapse-control">
-  <button class="collapse-button" (click)="toggleCollapse()" aria-label="Toggle table collapse">
-   <span *ngIf="isCollapsed">↓ {{ getTranslatedText(pricingData.collapseText) }}</span>
-<span *ngIf="!isCollapsed">↑ {{ getTranslatedText(pricingData.expandText) }}</span>
-  </button>
-</div>
+    <button
+      #collapseButton
+      class="collapse-button"
+      (click)="toggleCollapse()"
+      aria-label="Toggle table collapse"
+    >
+      <svg
+        class="collapse-icon"
+        [class.collapsed-icon]="isCollapsed"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M12 16l-6-6h12z" />
+      </svg>
+      <span *ngIf="isCollapsed">
+        {{ getTranslatedText(pricingData.collapseText) }}</span
+      >
+      <span *ngIf="!isCollapsed">
+        {{ getTranslatedText(pricingData.expandText) }}</span
+      >
+    </button>
+  </div>
 </section>

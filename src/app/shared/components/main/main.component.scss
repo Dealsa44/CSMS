@@ -1,29 +1,40 @@
 .main-section {
-  min-height: 100vh;
+  // Using fit-content allows the section to naturally size based on its children,
+  // which is better for preventing overall page overflow if content is tall.
+  // If you *insist* it always fills the screen initially, revert to min-height: 100vh,
+  // but be aware it will require even more aggressive shrinking of children.
+  min-height: fit-content;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  padding: 2rem;
+  // Use clamp for responsive padding: min 2rem, preferred 5vw, max 4rem
+  padding: clamp(2rem, 5vw, 4rem);
   background-color: #f5f9fa;
   position: relative;
-  overflow: hidden;
+  overflow: auto; // Keep this to allow scrolling if content still exceeds viewport
   color: #124255;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
+  // Use clamp for responsive gap: min 1rem, preferred 2vw, max 2rem
+  gap: clamp(1rem, 2vw, 2rem);
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(18, 66, 85, 0.03) 0%, rgba(26, 147, 111, 0.03) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(18, 66, 85, 0.03) 0%,
+      rgba(26, 147, 111, 0.03) 100%
+    );
     z-index: 0;
   }
 
   .content-wrapper {
-    max-width: 1200px;
+    max-width: 1600px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -33,9 +44,9 @@
   }
 
   .main-heading {
-    font-size: 3.5rem;
+    // Use clamp for responsive font size: min 2.5rem, preferred 8vw, max 5rem
+    font-size: clamp(2.5rem, 8vw, 5rem);
     font-weight: 800;
-    margin-bottom: 3rem;
     text-align: center;
     position: relative;
     z-index: 1;
@@ -48,57 +59,65 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    padding: 0 1rem;
+    // Use clamp for responsive horizontal padding: min 0.5rem, preferred 2vw, max 2rem
+    padding: 0 clamp(0.5rem, 2vw, 2rem);
     text-shadow: 0 4px 6px rgba(18, 66, 85, 0.1);
-    
+    // Add a responsive margin-bottom
+    margin-bottom: clamp(1.5rem, 3vw, 3rem); // min 1.5rem, preferred 3vw, max 3rem
+
     &::after {
-      content: '';
+      content: "";
       position: absolute;
-      bottom: -15px;
+      bottom: -20px;
       left: 50%;
       transform: translateX(-50%);
       width: 0;
-      height: 4px;
+      height: 6px;
       background: linear-gradient(to right, #1a936f, #124255);
       border-radius: 3px;
       animation: lineExpand 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) 1s forwards;
       opacity: 0;
     }
 
+    // Keep specific media queries for adjustments not easily handled by clamp,
+    // or for overriding clamp behavior if necessary.
     @media (max-width: 768px) {
-      font-size: 2.5rem;
-      margin-bottom: 2rem;
+      // Font size is largely handled by clamp now, but you can override here
+      // if you need a specific size at this breakpoint.
+      // font-size: 3rem; // Removed as clamp handles it
+      margin-bottom: 2rem; // Slightly reduce margin for this breakpoint
     }
   }
 
   .main-image-container {
     position: relative;
     z-index: 1;
-    max-width: 900px;
+    max-width: 1200px;
     width: 100%;
-    border-radius: 16px;
+    // Use clamp for responsive max-height: min 40vh, preferred 50vw, max 60vh
+    max-height: clamp(40vh, 50vw, 60vh);
+    border-radius: 20px;
     overflow: hidden;
-    box-shadow: 
-      0 20px 40px rgba(11, 40, 51, 0.15),
-      0 5px 15px rgba(11, 40, 51, 0.1);
+    box-shadow: 0 30px 60px rgba(11, 40, 51, 0.2),
+      0 10px 20px rgba(11, 40, 51, 0.15);
     transform: scale(0.95) translateY(20px);
     opacity: 0;
     animation: fadeInScale 1s cubic-bezier(0.22, 0.61, 0.36, 1) 0.6s forwards;
     transition: all 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
     background-color: white;
-    padding: 1.5rem;
+    // Use clamp for responsive padding: min 1rem, preferred 3vw, max 2.5rem
+    padding: clamp(1rem, 3vw, 2.5rem);
     border: none;
     perspective: 1000px;
 
     &:hover {
       transform: scale(0.98) translateY(-10px);
-      box-shadow: 
-        0 30px 60px rgba(11, 40, 51, 0.2),
-        0 10px 20px rgba(11, 40, 51, 0.15);
+      box-shadow: 0 40px 80px rgba(11, 40, 51, 0.25),
+        0 15px 30px rgba(11, 40, 51, 0.2);
     }
 
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       top: 0;
       left: 0;
@@ -113,15 +132,19 @@
     }
 
     &::after {
-      content: '';
+      content: "";
       position: absolute;
-      top: -5px;
-      left: -5px;
-      right: -5px;
-      bottom: -5px;
-      background: linear-gradient(45deg, rgba(18, 66, 85, 0.1), rgba(26, 147, 111, 0.1));
+      top: -8px;
+      left: -8px;
+      right: -8px;
+      bottom: -8px;
+      background: linear-gradient(
+        45deg,
+        rgba(18, 66, 85, 0.1),
+        rgba(26, 147, 111, 0.1)
+      );
       z-index: -1;
-      border-radius: 20px;
+      border-radius: 28px;
       opacity: 0;
       transition: opacity 0.5s ease, transform 0.5s ease;
       transform: scale(0.95);
@@ -131,13 +154,17 @@
       opacity: 1;
       transform: scale(1);
     }
+
+    @media (max-width: 768px) {
+      border-radius: 16px;
+    }
   }
 
   .main-image {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
-    border-radius: 12px;
+    border-radius: 16px;
     transition: all 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
     position: relative;
     z-index: 2;
@@ -146,9 +173,13 @@
     transform: translateZ(0);
 
     &:hover {
-      transform: scale(1.01) translateZ(10px);
-      box-shadow: 0 15px 35px rgba(11, 40, 51, 0.2);
+      transform: scale(1.02) translateZ(20px);
+      box-shadow: 0 20px 50px rgba(11, 40, 51, 0.3);
       filter: brightness(1) contrast(1.1) saturate(1.2);
+    }
+
+    @media (max-width: 768px) {
+      border-radius: 12px;
     }
   }
 
@@ -293,7 +324,8 @@
 }
 
 @keyframes float-1 {
-  0%, 100% {
+  0%,
+  100% {
     transform: translate(0, 0);
   }
   50% {
@@ -302,7 +334,8 @@
 }
 
 @keyframes float-2 {
-  0%, 100% {
+  0%,
+  100% {
     transform: translate(0, 0);
   }
   50% {
@@ -311,7 +344,8 @@
 }
 
 @keyframes float-3 {
-  0%, 100% {
+  0%,
+  100% {
     transform: translate(0, 0);
   }
   50% {
@@ -348,41 +382,48 @@ html {
   scroll-behavior: smooth;
 }
 
-// Responsive adjustments
-@media (max-width: 1024px) {
-  .main-section {
-    .main-heading {
-      font-size: 3rem;
-    }
-    
+/*
+  Removed the specific media queries for font-size and padding
+  where clamp() is now being used, as clamp() provides a more fluid
+  and often sufficient level of responsiveness.
+  Kept original structure for clarity if you wish to re-introduce specific overrides.
+*/
+.main-section {
+  @media (min-width: 1920px) {
+    // Only adjust where clamp might not be sufficient or you need specific overrides
+    // padding: 6rem; // Handled by clamp(2rem, 5vw, 4rem) which will max out at 4rem at 1920px (5vw * 1920 = 96px ~ 6rem)
+    // .main-heading { font-size: 6rem; } // clamp will max out at 5rem. Override if 6rem is a hard requirement.
     .main-image-container {
-      max-width: 700px;
-      padding: 1rem;
+      max-width: 1400px; // This is still a good specific max-width for very large screens.
+      // padding: 3rem; // Handled by clamp(1rem, 3vw, 2.5rem)
     }
   }
-}
 
-@media (max-width: 768px) {
-  .main-section {
-    min-height: 90vh;
-    padding: 1.5rem;
-    
+  @media (max-width: 1024px) {
+    // .main-heading { font-size: 4rem; } // Handled by clamp.
+    // .main-image-container { max-width: 900px; padding: 2rem; } // max-width remains, padding handled by clamp
+  }
+
+  @media (max-width: 768px) {
+    // padding: 3rem; // Handled by clamp.
     .main-heading {
-      font-size: 2.2rem;
-      margin-bottom: 2rem;
+      // font-size: 3.5rem; // Handled by clamp.
+      margin-bottom: 2rem; // Keep specific margin reduction
     }
-    
     .main-image-container {
-      border-radius: 12px;
-      padding: 0.8rem;
-      
-      &::after {
-        border-radius: 16px;
-      }
+      max-width: 100%; // Important for filling width on smaller screens
+      // padding: 1.5rem; // Handled by clamp.
+      border-radius: 16px; // Keep specific border-radius
+      max-height: 50vh; // More aggressive max-height reduction
     }
-    
-    .main-image {
-      border-radius: 8px;
+  }
+
+  @media (max-width: 480px) {
+    // padding: 2rem; // Handled by clamp.
+    // .main-heading { font-size: 2.5rem; } // Handled by clamp.
+    .main-image-container {
+      // padding: 1rem; // Handled by clamp.
+      max-height: 40vh; // Further aggressive max-height reduction
     }
   }
 }
