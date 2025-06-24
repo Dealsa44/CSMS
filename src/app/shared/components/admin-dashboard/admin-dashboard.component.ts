@@ -65,11 +65,11 @@ export class AdminDashboardComponent implements OnInit {
     this.loading = true;
     this.error = null;
 
-    this.http.get<User[]>('https://csms-backend-28kw.onrender.com/users/all').subscribe({
+    this.http.get<User[]>('https://csms-backend-production.up.railway.app/users/all').subscribe({
       next: (users) => {
         this.users = users;
         this.http
-          .get<PhoneNumber[]>('https://csms-backend-28kw.onrender.com/numbers/all')
+          .get<PhoneNumber[]>('https://csms-backend-production.up.railway.app/numbers/all')
           .subscribe({
             next: (numbers) => {
               this.phoneNumbers = numbers;
@@ -134,7 +134,7 @@ export class AdminDashboardComponent implements OnInit {
   deleteItem(id: number, type: 'user' | 'number'): void {
     const endpoint = type === 'user' ? 'users' : 'numbers';
     
-    this.http.delete(`https://csms-backend-28kw.onrender.com/${endpoint}/delete/${id}`).subscribe({
+    this.http.delete(`https://csms-backend-production.up.railway.app/${endpoint}/delete/${id}`).subscribe({
       next: () => {
         if (type === 'user') {
           this.users = this.users.filter(user => user.id !== id);
@@ -153,7 +153,7 @@ export class AdminDashboardComponent implements OnInit {
   clearAll(type: 'users' | 'numbers'): void {
     const endpoint = type === 'users' ? 'users/delete_all' : 'numbers/delete_all';
     
-    this.http.delete(`https://csms-backend-28kw.onrender.com/${endpoint}`).subscribe({
+    this.http.delete(`https://csms-backend-production.up.railway.app/${endpoint}`).subscribe({
       next: () => {
         if (type === 'users') {
           this.users = [];
