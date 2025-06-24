@@ -24,21 +24,19 @@ export class AuthService {
     return !!localStorage.getItem(this.AUTH_TOKEN_KEY);
   }
 
-  login(credentials: { username: string; password: string }): Observable<any> {
-    return this.apiService.login(credentials).pipe(
-      tap((response: any) => {
-        // Changed from { token: string } to any
-        // Store either the token or a flag in localStorage
-        localStorage.setItem(
-          this.AUTH_TOKEN_KEY,
-          response.token || 'authenticated'
-        );
-        this.isAuthenticatedSubject.next(true);
-        const lang = this.languageService.getCurrentLanguageCode();
-        this.router.navigate([`/${lang}/admin-dashboard`]);
-      })
-    );
-  }
+  // auth.service.ts
+login(credentials: { username: string; password: string }): Observable<any> {
+  return this.apiService.login(credentials).pipe(
+    tap((response: any) => {
+      localStorage.setItem(
+        this.AUTH_TOKEN_KEY,
+        response.token || 'authenticated'
+      );
+      this.isAuthenticatedSubject.next(true);
+      // The navigation is now handled by the LoginComponent
+    })
+  );
+}
 
   logout(): void {
     localStorage.removeItem(this.AUTH_TOKEN_KEY);

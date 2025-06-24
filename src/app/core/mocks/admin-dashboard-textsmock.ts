@@ -26,7 +26,8 @@ export const adminDashboardTexts = {
         delete: ["წაშლა", "Delete", "Удалить"],
         confirm: ["დადასტურება", "Confirm", "Подтвердить"],
         cancel: ["გაუქმება", "Cancel", "Отмена"],
-        clearAll: ["ყველას წაშლა", "Clear All", "Удалить все"]
+        clearAll: ["ყველას წაშლა", "Clear All", "Удалить все"],
+        logout: ["გამოსვლა", "Logout", "Выйти"],
     },
     confirmation: {
         deleteUserTitle: ["მომხმარებლის წაშლა", "Delete User", "Удаление пользователя"],

@@ -52,23 +52,6 @@
       <span class="demo-icon">✉</span>
     </button>
 
-    <button
-      *ngIf="!(isAuthenticated$ | async)"
-      class="nav-action-btn login-btn heading"
-      (click)="openLoginModal()"
-    >
-      <span class="login-text">{{ getLoginButtonText() }}</span>
-      <span class="login-icon">🔑</span>
-    </button>
-
-    <button
-      *ngIf="isAuthenticated$ | async"
-      class="nav-action-btn login-btn heading"
-      (click)="logout()"
-    >
-      <span class="login-text">Logout</span>
-      <span class="login-icon">🚪</span>
-    </button>
   </div>
 
   <!-- Mobile menu toggle (hidden on larger screens) -->
@@ -94,8 +77,3 @@
 </nav>
 
 
-
-<app-login-modal
-  [isOpen]="isLoginModalOpen"
-  (close)="closeLoginModal()"
-></app-login-modal>

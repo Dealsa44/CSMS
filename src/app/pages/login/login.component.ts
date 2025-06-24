@@ -1,24 +1,22 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
 
-import { AuthService } from '../../../core/services/auth.service';
-import { LanguageService } from '../../../core/services/language.service';
-import { loginModalMocks } from '../../../core/mocks/login-modal-mocks';
+import { AuthService } from '../../core/services/auth.service';
+import { LanguageService } from '../../core/services/language.service';
+import { loginModalMocks } from '../../core/mocks/login-modal-mocks';
 
 @Component({
-  selector: 'app-login-modal',
+  selector: 'app-login',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './login-modal.component.html',
-  styleUrls: ['./login-modal.component.scss']
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
-export class LoginModalComponent implements OnInit, OnDestroy {
-  @Input() isOpen = false;
-  @Output() close = new EventEmitter<void>();
-
+export class LoginComponent implements OnInit, OnDestroy {
   credentials = { username: '', password: '' };
   isLoading = false;
   errorMessage = '';
@@ -29,10 +27,20 @@ export class LoginModalComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {
+   ngOnInit(): void {
+    // Initialize language from route parameter
+    this.route.paramMap.subscribe(params => {
+      const langCode = params.get('lang');
+      if (langCode) {
+        this.languageService.setLanguageFromCode(langCode);
+      }
+    });
+
     this.langSub = this.languageService.currentLanguage$.subscribe(index => {
       this.currentLangIndex = index;
     });
@@ -48,12 +56,6 @@ export class LoginModalComponent implements OnInit, OnDestroy {
     return this.texts[key][this.currentLangIndex];
   }
 
-  closeModal() {
-    this.errorMessage = '';
-    this.credentials = { username: '', password: '' };
-    this.close.emit();
-  }
-
   onSubmit(): void {
     if (!this.credentials.username || !this.credentials.password) {
       this.errorMessage = this.getLoginText('errorRequired');
@@ -66,7 +68,8 @@ export class LoginModalComponent implements OnInit, OnDestroy {
     this.authService.login(this.credentials).subscribe({
       next: () => {
         this.isLoading = false;
-        this.closeModal();
+        const lang = this.languageService.getCurrentLanguageCode();
+        this.router.navigate([`/${lang}/admin-dashboard`]);
       },
       error: (err: HttpErrorResponse) => {
         this.isLoading = false;

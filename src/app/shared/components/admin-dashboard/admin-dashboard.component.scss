@@ -715,6 +715,59 @@
   }
 }
 
+.logout-container {
+  position: absolute;
+  top: 3rem;
+  right: 2rem;
+  
+  @media (max-width: 768px) {
+    top: 2rem;
+    right: 1rem;
+  }
+}
+
+.logout-btn {
+  background-color: transparent;
+  color: #124255;
+  border: 1px solid rgba(18, 66, 85, 0.3);
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.7s ease;
+  }
+
+  &:hover {
+    background-color: rgba(18, 66, 85, 0.05);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(18, 66, 85, 0.1);
+    border-color: rgba(18, 66, 85, 0.5);
+
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
 // Respect reduced motion preferences
 @media (prefers-reduced-motion: reduce) {
   * {

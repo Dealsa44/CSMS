@@ -266,12 +266,7 @@
   transition: all 0.3s ease;
 }
 
-/* Only style the checkmark/crossmark being hovered */
-.section1 .checkmark-cell:hover .checkmark,
-.section1 .checkmark-cell:hover .crossmark {
-  transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
+
 
 /* Footer Row */
 .section1 .footer-row {

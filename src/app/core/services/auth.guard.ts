@@ -24,7 +24,7 @@ export class AuthGuard implements CanActivate {
     }
 
     // Redirect to home page if not authenticated
-    const lang = this.languageService.getCurrentLanguageCode();
+    const lang = route.paramMap.get('lang') || this.languageService.getCurrentLanguageCode();
     this.router.navigate([`/${lang}`]);
     return false;
   }

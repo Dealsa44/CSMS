@@ -1,10 +1,7 @@
-<div class="modal-overlay" [class.show]="isOpen" (click)="closeModal()">
-  <div class="modal-content" [class.show]="isOpen" (click)="$event.stopPropagation()">
-    <button class="close-btn" (click)="closeModal()">
-      <span class="icon">&times;</span>
-    </button>
-    
-    <h2 class="modal-title heading">{{ getLoginText('modalTitle') }}</h2>
+<!-- login.component.html -->
+<div class="login-page">
+  <div class="login-container">
+    <h1 class="login-title heading">{{ getLoginText('modalTitle') }}</h1>
 
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm" novalidate>
       <div class="form-group">

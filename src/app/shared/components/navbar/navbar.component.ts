@@ -9,12 +9,10 @@ import { LanguageService } from '../../../core/services/language.service';
 import { AuthService } from '../../../core/services/auth.service';
 
 // Import the new Login Modal Component
-import { LoginModalComponent } from '../login-modal/login-modal.component';
-
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, LoginModalComponent], // Add LoginModalComponent here
+  imports: [CommonModule], // Add LoginModalComponent here
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
@@ -28,7 +26,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
   isLanguageDropdownOpen = false;
 
   // --- NEW ---
-  isLoginModalOpen = false;
   isAuthenticated$: Observable<boolean>;
   // --- END NEW ---
 
@@ -74,17 +71,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
   
   // --- NEW METHODS for Login Modal ---
-  openLoginModal(): void {
-    this.isLoginModalOpen = true;
-  }
 
-  closeLoginModal(): void {
-    this.isLoginModalOpen = false;
-  }
 
-  getLoginButtonText(): string {
-    return this.loginTexts.loginButton[this.currentLanguageIndex];
-  }
+
   
   logout(): void {
     this.authService.logout();

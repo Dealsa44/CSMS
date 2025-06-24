@@ -22,7 +22,17 @@ export class LanguageService {
   private currentLanguageIndex = this.getSavedLanguageIndex();
   public currentLanguage$ = new BehaviorSubject<number>(this.currentLanguageIndex);
 
-  constructor(private router: Router) {}
+   constructor(private router: Router) {
+    // Initialize language from URL if present
+    this.initializeLanguageFromUrl();
+  }
+
+  private initializeLanguageFromUrl(): void {
+    const urlLang = this.router.url.split('/')[1];
+    if (urlLang && this.languageMap[urlLang] !== undefined) {
+      this.setLanguage(this.languageMap[urlLang]);
+    }
+  }
 
   private getSavedLanguageIndex(): number {
     const saved = localStorage.getItem(this.STORAGE_KEY);
