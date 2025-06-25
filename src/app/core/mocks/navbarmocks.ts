@@ -13,7 +13,7 @@ export const navbarMocks: any[] = [
         order: 1,
     },
     {
-        title: ["ფუნქციონალი", "Functionality", "Функционал"],
+        title: ["ფუნქციები", "Features", "Функции"],
         order: 2,
     },
     {

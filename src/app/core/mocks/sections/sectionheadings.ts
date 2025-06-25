@@ -17,22 +17,18 @@ export const sectionHeadingsMocks: any[] = [
     order: 1,
   },
   {
-    title: [
-      'ძირითადი ფუნქციონალი',
-      'Main functionality',
-      'Основной функционал',
-    ],
+    title: ['ძირითადი ფუნქციები', 'Core features', 'Основные функции'],
     order: 2,
   },
   {
     title: [
-      'დამატებითი ფუნქციონალი',
-      'Additional functionality',
-      'Дополнительный функционал',
+      'დამატებითი ფუნქციები',
+      'Additional features',
+      'Дополнительные функции',
     ],
     order: 3,
   },
-    {
+  {
     title: ['ფასები', 'Prices', 'Цены'],
     order: 4,
   },
