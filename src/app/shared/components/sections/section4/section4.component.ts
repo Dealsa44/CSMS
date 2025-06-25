@@ -1,24 +1,24 @@
-// D:\ZURIKO\WORK\CAR SERVICE MANAGEMENT SYSTEM\CSMS\SRC\app\shared\components\sections\section4\section4.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LanguageService } from '../../../../core/services/language.service';
 import { section4Mocks } from '../../../../core/mocks/sections/section4mock';
 import { sectionHeadingsMocks } from '../../../../core/mocks/sections/sectionheadings';
-import { EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-section4',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './section4.component.html',
-  styleUrls: ['./section4.component.scss'],
+  styleUrls: ['./section4.component.scss'], // Ensure this path is correct
 })
 export class section4Component implements OnInit {
   @Output() requestModalTrigger = new EventEmitter<void>();
   pricingData = section4Mocks;
   currentLanguageIndex = 0;
-  heading = sectionHeadingsMocks[4]; // Index 1 for the new pricing section heading
+  heading = sectionHeadingsMocks[4]; // Index 4 for the pricing section heading
   isCollapsed = true;
+  selectedPlan: 'basic' | 'standard' | 'premium' = 'basic'; // Default to 'basic'
+  isSmallScreen: boolean = false; // To track screen size
 
   constructor(private languageService: LanguageService) {}
 
@@ -26,6 +26,21 @@ export class section4Component implements OnInit {
     this.languageService.currentLanguage$.subscribe((index) => {
       this.currentLanguageIndex = index;
     });
+
+    // Initial check for screen size
+    this.checkScreenSize();
+  }
+
+  // Listen for window resize events to update isSmallScreen
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.checkScreenSize();
+  }
+
+  // Method to determine if the screen is small
+  checkScreenSize(): void {
+    // You can adjust this breakpoint (750) to match your SCSS media query breakpoint
+    this.isSmallScreen = window.innerWidth <= 815;
   }
 
   getTranslatedText(textArray: string[]): string {
@@ -36,12 +51,17 @@ export class section4Component implements OnInit {
     return this.heading.title[this.currentLanguageIndex];
   }
 
-  // Method to handle button click (e.g., navigate to a demo page)
   onDemo(): void {
     this.requestModalTrigger.emit();
   }
 
   toggleCollapse() {
-  this.isCollapsed = !this.isCollapsed;
-}
+    this.isCollapsed = !this.isCollapsed;
+  }
+
+  // New method to select the active plan
+  selectPlan(plan: 'basic' | 'standard' | 'premium'): void {
+    this.selectedPlan = plan;
+    // When a plan is selected on a small screen, ensure it's not collapse
+  }
 }

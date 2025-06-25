@@ -542,23 +542,145 @@
     }
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 815px) {
   .pricing-table {
     &.collapsed {
-      max-height: 300px;
+      max-height: 480px;
     }
   }
 }
 
-@media (max-width: 480px) {
-  .pricing-table {
-    &.collapsed {
-      max-height: 250px;
+/* Default styles for large screens */
+.plan-selector-buttons {
+  display: none; // Hidden by default on large screens
+}
+
+.pricing-table .header-row.large-screen-header {
+  display: grid; // Visible by default on large screens
+}
+
+.pricing-table .table-row {
+  grid-template-columns: 1fr 1fr 1fr 1fr; // Default 4 columns
+}
+
+/* Media query for small screens (e.g., < 750px) */
+@media (max-width: 815px) {
+  .plan-selector-buttons {
+    display: flex; // Show buttons on small screens
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 0 1rem; // Add some padding
+    flex-wrap: wrap; // Allow buttons to wrap
+  }
+
+  .pricing-table .header-row.large-screen-header {
+    display: none; // Hide the multi-column header on small screens
+  }
+
+  .pricing-table .table-row {
+    // For small screens, we only need 2 columns: feature name and selected plan's checkmark
+    grid-template-columns: 3fr 1fr;
+  }
+
+  // Hide the individual plan columns within feature rows on small screens
+  .pricing-table .table-row .checkmark-cell:nth-child(2), /* basic */
+  .pricing-table .table-row .checkmark-cell:nth-child(3) /* standard */ {
+    display: none;
+  }
+
+  // Ensure the third checkmark-cell (which will be the only one visible due to ngIf logic) is always shown
+  .pricing-table .table-row .checkmark-cell:last-child {
+    display: flex; // Ensure it's visible and centered
+  }
+
+  .section4 .feature-header {
+    border-right: none; // Remove border for single column
+  }
+
+  .section4 .cell {
+    border-right: none; // Remove borders between data columns
+  }
+
+  .section4 .table-row.merged-header {
+    grid-template-columns: 1fr; // Ensure headers span full width
+  }
+}
+/* Plan Selector Buttons Styling */
+.plan-button {
+  background: #f8f8f8;
+  color: #333;
+  border: 1px solid #e0e0e0;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  min-width: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  position: relative;
+  
+  &:hover {
+    background: #f0f0f0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  &.active {
+    background: linear-gradient(135deg, #1a936f 0%, #124255 100%);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 6px 20px rgba(26, 147, 111, 0.3);
+    
+    .plan-price-mobile {
+      color: rgba(255, 255, 255, 0.9);
+    }
+    
+    .per-month-mobile {
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .demo-indicator svg {
+      fill: white;
     }
   }
 
-  .collapse-button {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.9rem;
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus {
+    outline: 2px solid #1a936f;
+    outline-offset: 2px;
+  }
+}
+
+.plan-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.plan-price-mobile {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #124255;
+  display: flex;
+  align-items: baseline;
+  gap: 0.15rem;
+}
+
+.per-month-mobile {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #666;
+}
+@media (max-width: 815px) {
+  .pricing-table {
+    margin-top: 0.5rem !important;
   }
 }

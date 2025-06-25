@@ -1,8 +1,47 @@
 <section class="section4">
   <h2 class="section-heading heading">{{ getHeading() }}</h2>
 
+  <!-- Plan selection buttons for small screens -->
+  <!-- This div will be shown only on screens smaller than approx 750px via CSS -->
+  <div class="plan-selector-buttons">
+    <button
+    class="plan-button"
+    [class.active]="selectedPlan === 'basic'"
+    (click)="selectPlan('basic')"
+  >
+    <span class="plan-name">{{ getTranslatedText(pricingData.header.basic.name) }}</span>
+    <span class="plan-price-mobile">
+      {{ pricingData.header.basic.price }}
+      <span class="per-month-mobile">{{ getTranslatedText(pricingData.header.basic.perMonth) }}</span>
+    </span>
+  </button>
+    <button
+    class="plan-button"
+    [class.active]="selectedPlan === 'standard'"
+    (click)="selectPlan('standard')"
+  >
+    <span class="plan-name">{{ getTranslatedText(pricingData.header.standard.name) }}</span>
+    <span class="plan-price-mobile">
+      {{ pricingData.header.standard.price }}
+      <span class="per-month-mobile">{{ getTranslatedText(pricingData.header.standard.perMonth) }}</span>
+    </span>
+  </button>
+  <button
+    class="plan-button"
+    [class.active]="selectedPlan === 'premium'"
+    (click)="selectPlan('premium')"
+  >
+    <span class="plan-name">{{ getTranslatedText(pricingData.header.premium.name) }}</span>
+    <span class="plan-price-mobile">
+      {{ pricingData.header.premium.price }}
+      <span class="per-month-mobile">{{ getTranslatedText(pricingData.header.premium.perMonth) }}</span>
+    </span>
+  </button>
+  </div>
+
   <div class="pricing-table" [class.collapsed]="isCollapsed">
-    <div class="header-row">
+    <!-- Header Row - Visible on large screens, hidden on small screens via CSS -->
+    <div class="header-row large-screen-header">
       <div class="cell feature-header">
         {{ getTranslatedText(pricingData.header.functions) }}
       </div>
@@ -73,7 +112,7 @@
         <div
           class="cell"
           [class.feature-cell]="row.type === 'feature'"
-          [attr.colspan]="row.type === 'header' ? 4 : 1"
+          [attr.colspan]="row.type === 'header' ? (isSmallScreen ? 2 : 4) : 1"
         >
           <ng-container *ngIf="row.type === 'header'; else featureContent">
             <h4 class="row-header">{{ getTranslatedText(row.text) }}</h4>
@@ -83,27 +122,40 @@
           </ng-template>
         </div>
         <ng-container *ngIf="row.type === 'feature'">
-          <div class="cell checkmark-cell">
-            <ng-container *ngIf="row.basic">
+          <!-- Checkmark cells for large screens (all three) and small screens (only selected plan) -->
+          <ng-container *ngIf="!isSmallScreen">
+            <div class="cell checkmark-cell">
+              <ng-container *ngIf="row.basic">
+                <span class="checkmark">&#10003;</span>
+              </ng-container>
+              <ng-container *ngIf="!row.basic">
+                <span class="crossmark">&#x2715;</span>
+              </ng-container>
+            </div>
+            <div class="cell checkmark-cell">
+              <ng-container *ngIf="row.standard">
+                <span class="checkmark">&#10003;</span>
+              </ng-container>
+              <ng-container *ngIf="!row.standard">
+                <span class="crossmark">&#x2715;</span>
+              </ng-container>
+            </div>
+            <div class="cell checkmark-cell">
+              <ng-container *ngIf="row.premium">
+                <span class="checkmark">&#10003;</span>
+              </ng-container>
+              <ng-container *ngIf="!row.premium">
+                <span class="crossmark">&#x2715;</span>
+              </ng-container>
+            </div>
+          </ng-container>
+
+          <!-- Only show the checkmark for the selected plan on small screens -->
+          <div *ngIf="isSmallScreen" class="cell checkmark-cell">
+            <ng-container *ngIf="row[selectedPlan]">
               <span class="checkmark">&#10003;</span>
             </ng-container>
-            <ng-container *ngIf="!row.basic">
-              <span class="crossmark">&#x2715;</span>
-            </ng-container>
-          </div>
-          <div class="cell checkmark-cell">
-            <ng-container *ngIf="row.standard">
-              <span class="checkmark">&#10003;</span>
-            </ng-container>
-            <ng-container *ngIf="!row.standard">
-              <span class="crossmark">&#x2715;</span>
-            </ng-container>
-          </div>
-          <div class="cell checkmark-cell">
-            <ng-container *ngIf="row.premium">
-              <span class="checkmark">&#10003;</span>
-            </ng-container>
-            <ng-container *ngIf="!row.premium">
+            <ng-container *ngIf="!row[selectedPlan]">
               <span class="crossmark">&#x2715;</span>
             </ng-container>
           </div>
