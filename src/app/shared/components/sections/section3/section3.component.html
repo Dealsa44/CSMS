@@ -1,50 +1,50 @@
-<section class="section3">
-  <h2 class="section-heading heading">{{ getHeading() }}</h2>
+<section class="section3" id="section3">
+  <!-- Preload all images invisibly -->
+  <div class="image-preloader" style="position: absolute; left: -9999px; top: -9999px; visibility: hidden; pointer-events: none;">
+    <img *ngFor="let imagePath of getAllImagePaths(); trackBy: trackByIndex" 
+         [src]="imagePath" 
+         [alt]="'Preload image'"
+         loading="eager"
+         decoding="async">
+  </div>
 
+  <h2 class="section-heading heading">{{ getText(heading) }}</h2>
+  
   <div class="content-container">
-    <div class="text-column">
-      <div
-        *ngFor="let title of titles; let i = index"
-        class="text-item"
-        [class.active]="activeIndex === i"
-        [class.expanded]="expandedItems[i]"
-      >
-        <div class="title-row" (click)="toggleItem(i)">
-          <h3 class="item-title">{{ getTitle(title) }}</h3>
-          <button class="toggle-btn">
-            <span class="material-icons">
-              {{
-                expandedItems[i] ? "keyboard_arrow_up" : "keyboard_arrow_down"
-              }}
-            </span>
-          </button>
-        </div>
-
-        <div *ngIf="expandedItems[i]" class="content-details">
-          <p>{{ getContent(contents[i]) }}</p>
-          <button class="learn-more-btn" (click)="onLearnMore()">
-            {{ getLinkText(contents[i]) }}
-          </button>
-        </div>
+    <div class="items-container">
+      <div *ngFor="let item of items; let i = index; trackBy: trackByIndex" 
+           class="item-card"
+           [class.active]="activeItemIndex === i"
+           [style.--i]="i"
+           (click)="setActiveItem(i)">
+        <h3 class="item-title">{{ getText(item) }}</h3>
       </div>
     </div>
 
-    <div class="image-column">
-      <div
-        class="image-wrapper"
-        [class.loading]="imageLoading"
-        (click)="openImageModal()"
-      >
-        <img
-          [src]="currentImageSrc || getImagePath()"
-          [alt]="
-            activeIndex >= 0 ? getTitle(titles[activeIndex]) : 'Default image'
-          "
-          class="feature-image"
-          [class.loading]="imageLoading"
-          [class.changing]="imageChanging"
-          [class.fade-in]="!imageLoading && !imageChanging"
-        />
+    <div class="details-container">
+      <div class="text-content">
+        <!-- Use optimized content getters -->
+        <p>{{ getActiveContent() }}</p>
+        <button class="learn-more-btn" 
+                (click)="onLearnMore()">
+          {{ getActiveLinkText() }}
+        </button>
+      </div>
+      <div class="image-container">
+        <!-- Main image with loading optimization -->
+        <img [src]="getImagePath()" 
+             [alt]="getText(items[activeItemIndex])" 
+             class="feature-image"
+             [class.loaded]="isCurrentImageReady()"
+             loading="eager"
+             decoding="async">
+        
+        <!-- Loading placeholder -->
+        <div class="image-placeholder" 
+             *ngIf="!isCurrentImageReady()"
+             [style.background]="'linear-gradient(135deg, #f0f0f0, #e0e0e0)'">
+          <div class="loading-spinner"></div>
+        </div>
       </div>
     </div>
   </div>

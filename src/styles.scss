@@ -7,6 +7,7 @@ html {
   // overflow-x: hidden; // Prevents horizontal scrolling
   margin: 0;
   padding: 0;
+  font-family: Arial;
 }
 .layout-wrapper {
   overflow-x: hidden;
@@ -22,4 +23,5 @@ html {
 /* Apply font only to elements with class "heading" */
 .heading {
   font-family: "Asomtavruli", sans-serif;
+  text-transform: uppercase;
 }

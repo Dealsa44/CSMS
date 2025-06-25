@@ -1,51 +1,145 @@
-<section class="section4" id="section4">
-  <!-- Preload all images invisibly -->
-  <div class="image-preloader" style="position: absolute; left: -9999px; top: -9999px; visibility: hidden; pointer-events: none;">
-    <img *ngFor="let imagePath of getAllImagePaths(); trackBy: trackByIndex" 
-         [src]="imagePath" 
-         [alt]="'Preload image'"
-         loading="eager"
-         decoding="async">
-  </div>
+<section class="section4">
+  <h2 class="section-heading heading">{{ getHeading() }}</h2>
 
-  <h2 class="section-heading heading">{{ getText(heading) }}</h2>
-  
-  <div class="content-container">
-    <div class="items-container">
-      <div *ngFor="let item of items; let i = index; trackBy: trackByIndex" 
-           class="item-card"
-           [class.active]="activeItemIndex === i"
-           [style.--i]="i"
-           (click)="setActiveItem(i)">
-        <h3 class="item-title">{{ getText(item) }}</h3>
+  <div class="pricing-table" [class.collapsed]="isCollapsed">
+    <div class="header-row">
+      <div class="cell feature-header">
+        {{ getTranslatedText(pricingData.header.functions) }}
       </div>
-    </div>
+      <div class="cell plan-column basic">
+        <h3 class="plan-name">
+          {{ getTranslatedText(pricingData.header.basic.name) }}
+        </h3>
+        <div class="plan-price">
+          <span class="price">{{ pricingData.header.basic.price }}</span>
+          <span class="per-month">{{
+            getTranslatedText(pricingData.header.basic.perMonth)
+          }}</span>
+        </div>
 
-    <div class="details-container">
-      <div class="text-content">
-        <!-- Use optimized content getters -->
-        <p>{{ getActiveContent() }}</p>
-        <button class="learn-more-btn" 
-                (click)="onLearnMore()">
-          {{ getActiveLinkText() }}
+        <button
+          class="demo-button"
+          (click)="onDemo()"
+          aria-label="View demo for Basic plan"
+        >
+          {{ getTranslatedText(pricingData.header.basic.button) }}
         </button>
       </div>
-      <div class="image-container">
-        <!-- Main image with loading optimization -->
-        <img [src]="getImagePath()" 
-             [alt]="getText(items[activeItemIndex])" 
-             class="feature-image"
-             [class.loaded]="isCurrentImageReady()"
-             loading="eager"
-             decoding="async">
-        
-        <!-- Loading placeholder -->
-        <div class="image-placeholder" 
-             *ngIf="!isCurrentImageReady()"
-             [style.background]="'linear-gradient(135deg, #f0f0f0, #e0e0e0)'">
-          <div class="loading-spinner"></div>
+      <div class="cell plan-column standard">
+        <h3 class="plan-name">
+          {{ getTranslatedText(pricingData.header.standard.name) }}
+        </h3>
+        <div class="plan-price">
+          <span class="price">{{ pricingData.header.standard.price }}</span>
+          <span class="per-month">{{
+            getTranslatedText(pricingData.header.standard.perMonth)
+          }}</span>
         </div>
+
+        <button
+          class="demo-button"
+          (click)="onDemo()"
+          aria-label="View demo for Standard plan"
+        >
+          {{ getTranslatedText(pricingData.header.standard.button) }}
+        </button>
+      </div>
+      <div class="cell plan-column premium">
+        <h3 class="plan-name">
+          {{ getTranslatedText(pricingData.header.premium.name) }}
+        </h3>
+        <div class="plan-price">
+          <span class="price">{{ pricingData.header.premium.price }}</span>
+          <span class="per-month">{{
+            getTranslatedText(pricingData.header.premium.perMonth)
+          }}</span>
+        </div>
+
+        <button
+          class="demo-button"
+          (click)="onDemo()"
+          aria-label="View demo for Premium plan"
+        >
+          {{ getTranslatedText(pricingData.header.premium.button) }}
+        </button>
       </div>
     </div>
+
+    <ng-container *ngFor="let row of pricingData.rows">
+      <div
+        class="table-row"
+        [ngClass]="{ 'merged-header': row.type === 'header' }"
+      >
+        <div
+          class="cell"
+          [class.feature-cell]="row.type === 'feature'"
+          [attr.colspan]="row.type === 'header' ? 4 : 1"
+        >
+          <ng-container *ngIf="row.type === 'header'; else featureContent">
+            <h4 class="row-header">{{ getTranslatedText(row.text) }}</h4>
+          </ng-container>
+          <ng-template #featureContent>
+            {{ getTranslatedText(row.text) }}
+          </ng-template>
+        </div>
+        <ng-container *ngIf="row.type === 'feature'">
+          <div class="cell checkmark-cell">
+            <ng-container *ngIf="row.basic">
+              <span class="checkmark">&#10003;</span>
+            </ng-container>
+            <ng-container *ngIf="!row.basic">
+              <span class="crossmark">&#x2715;</span>
+            </ng-container>
+          </div>
+          <div class="cell checkmark-cell">
+            <ng-container *ngIf="row.standard">
+              <span class="checkmark">&#10003;</span>
+            </ng-container>
+            <ng-container *ngIf="!row.standard">
+              <span class="crossmark">&#x2715;</span>
+            </ng-container>
+          </div>
+          <div class="cell checkmark-cell">
+            <ng-container *ngIf="row.premium">
+              <span class="checkmark">&#10003;</span>
+            </ng-container>
+            <ng-container *ngIf="!row.premium">
+              <span class="crossmark">&#x2715;</span>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+
+    <div class="footer-row">
+      <div class="cell merged-footer" colspan="4">
+        {{ getTranslatedText(pricingData.footer.text) }}
+        <span class="footer-price">{{ pricingData.footer.price }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="collapse-control">
+    <button
+      #collapseButton
+      class="collapse-button"
+      (click)="toggleCollapse()"
+      aria-label="Toggle table collapse"
+    >
+      <svg
+        class="collapse-icon"
+        [class.collapsed-icon]="isCollapsed"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M12 16l-6-6h12z" />
+      </svg>
+      <span *ngIf="isCollapsed">
+        {{ getTranslatedText(pricingData.collapseText) }}</span
+      >
+      <span *ngIf="!isCollapsed">
+        {{ getTranslatedText(pricingData.expandText) }}</span
+      >
+    </button>
   </div>
 </section>

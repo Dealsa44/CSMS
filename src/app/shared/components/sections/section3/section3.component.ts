@@ -1,10 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { LanguageService } from '../../../../core/services/language.service';
 import { sectionHeadingsMocks } from '../../../../core/mocks/sections/sectionheadings';
 import { section3Mocks } from '../../../../core/mocks/sections/section3mock';
 import { CommonModule } from '@angular/common';
-import { MatDialog } from '@angular/material/dialog';
-import { ImageModalComponent } from '../../image-modal/image-modal.component';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-section3',
@@ -12,174 +11,190 @@ import { ImageModalComponent } from '../../image-modal/image-modal.component';
   imports: [CommonModule],
   templateUrl: './section3.component.html',
   styleUrls: ['./section3.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Section3Component implements OnInit {
+export class section3Component implements OnInit, OnDestroy {
   @Output() requestModalTrigger = new EventEmitter<void>();
-  heading = sectionHeadingsMocks[3]; // Third heading is for section3
-  titles = section3Mocks[0];
+  
+  heading = sectionHeadingsMocks[3];
+  items = section3Mocks[0];
   contents = section3Mocks[1];
   currentLanguageIndex = 0;
-  activeIndex = -1;
-  expandedItems: boolean[] = [];
-
-  // New properties for smooth image transitions
-  imageLoading = false;
-  imageChanging = false;
-  currentImageSrc = '';
-
+  activeItemIndex = 0;
+  
+  // Cache for preloaded content
+  private imageCache: Map<number, HTMLImageElement> = new Map();
+  private contentCache: Map<number, any> = new Map();
+  private imagesPreloaded = false;
+  private destroy$ = new Subject<void>();
+  
+  // Loading state
+  isLoading = false;
+  
   constructor(
     private languageService: LanguageService,
-    private dialog: MatDialog
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    this.languageService.currentLanguage$.subscribe((index) => {
-      this.currentLanguageIndex = index;
-    });
-    // Initialize all items as collapsed
-    this.expandedItems = new Array(this.titles.length).fill(false);
+    this.languageService.currentLanguage$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(index => {
+        this.currentLanguageIndex = index;
+        this.preloadContent(); // Preload content when language changes
+        this.cdr.markForCheck();
+      });
+    
+    // Start preloading immediately
+    this.preloadAllContent();
+  }
 
-    // Set initial image
-    this.currentImageSrc = this.getImagePath();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.imageCache.clear();
+    this.contentCache.clear();
+  }
 
-    // Preload all images for better performance
+  private preloadAllContent(): void {
+    // Preload all images and content immediately
     this.preloadImages();
+    this.preloadContent();
   }
 
-  getHeading(): string {
-    return this.heading.title[this.currentLanguageIndex];
-  }
+  private preloadImages(): void {
+    const totalImages = this.items.length;
+    let loadedCount = 0;
 
-  getTitle(item: any): string {
-    if (Array.isArray(item.title)) {
-      return item.title[this.currentLanguageIndex];
+    for (let i = 0; i < totalImages; i++) {
+      if (this.imageCache.has(i)) {
+        loadedCount++;
+        continue;
+      }
+
+      const img = new Image();
+      
+      // Set loading attributes for better performance
+      img.loading = 'eager';
+      img.decoding = 'async';
+      
+      img.onload = () => {
+        this.imageCache.set(i, img);
+        loadedCount++;
+        
+        if (loadedCount === totalImages) {
+          this.imagesPreloaded = true;
+          this.cdr.markForCheck();
+        }
+      };
+      
+      img.onerror = () => {
+        console.warn(`Failed to preload image ${i + 1}`);
+        loadedCount++;
+        
+        if (loadedCount === totalImages) {
+          this.imagesPreloaded = true;
+          this.cdr.markForCheck();
+        }
+      };
+      
+      // Use higher priority for first few images
+      if (i < 3) {
+        img.fetchPriority = 'high';
+      }
+      
+      img.src = `assets/imgs/section3/pic${i + 1}.png`;
     }
-    return item.title;
+  }
+
+  private preloadContent(): void {
+    // Pre-process all content to avoid computation during switching
+    for (let i = 0; i < this.contents.length; i++) {
+      const content = {
+        title: this.contents[i].title[this.currentLanguageIndex],
+        link: this.contents[i].link[this.currentLanguageIndex]
+      };
+      this.contentCache.set(i, content);
+    }
+  }
+
+  getText(item: any): string {
+    return item.title[this.currentLanguageIndex];
   }
 
   getContent(item: any): string {
-    if (Array.isArray(item.title)) {
-      return item.title[this.currentLanguageIndex];
-    }
-    return item.title;
+    return item.title[this.currentLanguageIndex];
   }
 
   getLinkText(item: any): string {
-    if (Array.isArray(item.link)) {
-      return item.link[this.currentLanguageIndex];
-    }
-    return item.link;
+    return item.link[this.currentLanguageIndex];
   }
 
-  // Enhanced toggleItem method with smooth image transition
-  toggleItem(index: number): void {
-    // Store the previous activeIndex to determine if image should change
-    const previousActiveIndex = this.activeIndex;
-
-    // If clicking the currently active item, just toggle its expanded state
-    if (this.activeIndex === index) {
-      this.expandedItems[index] = !this.expandedItems[index];
-      // If collapsing, set activeIndex to -1 and handle image transition
-      if (!this.expandedItems[index]) {
-        this.handleImageTransition(-1, previousActiveIndex);
-        this.activeIndex = -1;
-      }
-    } else {
-      // Set all items to collapsed
-      this.expandedItems.fill(false);
-      // Set the clicked item as active and expanded
-      this.activeIndex = index;
-      this.expandedItems[index] = true;
-      // Handle image transition to new index
-      this.handleImageTransition(index, previousActiveIndex);
-    }
+  // Optimized content getters using cache
+  getActiveContent(): string {
+    const cached = this.contentCache.get(this.activeItemIndex);
+    return cached ? cached.title : this.contents[this.activeItemIndex]?.title[this.currentLanguageIndex] || '';
   }
 
-  // New method to handle smooth image transitions
-  private handleImageTransition(newIndex: number, previousIndex: number): void {
-    const newImageSrc = this.getImagePathByIndex(newIndex);
+  getActiveLinkText(): string {
+    const cached = this.contentCache.get(this.activeItemIndex);
+    return cached ? cached.link : this.contents[this.activeItemIndex]?.link[this.currentLanguageIndex] || '';
+  }
 
-    // Don't transition if it's the same image
-    if (this.currentImageSrc === newImageSrc) {
+  setActiveItem(index: number): void {
+    if (this.activeItemIndex === index || this.isLoading) {
       return;
     }
 
-    // Start transition animation
-    this.imageChanging = true;
-    this.imageLoading = true;
-
-    // Preload the new image for smoother transition
-    const img = new Image();
-    img.onload = () => {
-      // Small delay to ensure smooth animation
-      setTimeout(() => {
-        this.currentImageSrc = newImageSrc;
-        this.imageLoading = false;
-
-        // End transition animation after image loads
-        setTimeout(() => {
-          this.imageChanging = false;
-        }, 100);
-      }, 150);
-    };
-
-    img.onerror = () => {
-      // Handle error case - still update but without smooth transition
-      console.warn(`Failed to load image: ${newImageSrc}`);
-      this.imageLoading = false;
-      this.imageChanging = false;
-      this.currentImageSrc = newImageSrc; // Still update even on error
-    };
-
-    img.src = newImageSrc;
-  }
-
-  // Helper method to get image path by index (used internally for transitions)
-  private getImagePathByIndex(index: number): string {
-    if (index === -1) {
-      return 'assets/imgs/section3/pic7.png'; // Default image when nothing is selected
-    }
-    return `assets/imgs/section3/pic${index + 1}.png`;
-  }
-
-  // Original getImagePath method (keeping for compatibility)
-  getImagePath(): string {
-    if (this.activeIndex === -1) {
-      return 'assets/imgs/section3/pic7.png'; // Default image when nothing is selected
-    }
-    return `assets/imgs/section3/pic${this.activeIndex + 1}.png`;
-  }
-
-  // Optional: Preload all images for instant transitions
-  private preloadImages(): void {
-    // Preload default image
-    const defaultImg = new Image();
-    defaultImg.src = 'assets/imgs/section3/pic7.png';
-
-    // Preload all section images
-    this.titles.forEach((_, index) => {
-      const img = new Image();
-      img.src = `assets/imgs/section3/pic${index + 1}.png`;
+    // Use requestAnimationFrame for smoother transitions
+    requestAnimationFrame(() => {
+      this.activeItemIndex = index;
+      
+      // Trigger immediate change detection
+      this.cdr.detectChanges();
+      
+      // Preload next/previous images for even smoother navigation
+      this.preloadAdjacentImages(index);
     });
+  }
+
+  private preloadAdjacentImages(currentIndex: number): void {
+    const nextIndex = (currentIndex + 1) % this.items.length;
+    const prevIndex = (currentIndex - 1 + this.items.length) % this.items.length;
+    
+    [nextIndex, prevIndex].forEach(idx => {
+      if (!this.imageCache.has(idx)) {
+        const img = new Image();
+        img.loading = 'eager';
+        img.onload = () => this.imageCache.set(idx, img);
+        img.src = `assets/imgs/section3/pic${idx + 1}.png`;
+      }
+    });
+  }
+
+  getImagePath(): string {
+    return `assets/imgs/section3/pic${this.activeItemIndex + 1}.png`;
+  }
+
+  isImageReady(index: number): boolean {
+    const img = this.imageCache.get(index);
+    return img ? img.complete && img.naturalHeight !== 0 : false;
+  }
+
+  isCurrentImageReady(): boolean {
+    return this.isImageReady(this.activeItemIndex);
   }
 
   onLearnMore(): void {
     this.requestModalTrigger.emit();
   }
-  openImageModal(): void {
-    if (!this.currentImageSrc) return;
 
-    this.dialog.open(ImageModalComponent, {
-      data: {
-        imageSrc: this.currentImageSrc,
-        imageAlt:
-          this.activeIndex >= 0
-            ? this.getTitle(this.titles[this.activeIndex])
-            : 'Default image',
-      },
-      panelClass: 'image-modal',
-      maxWidth: '90vw',
-      maxHeight: '90vh',
-    });
+  trackByIndex(index: number): number {
+    return index;
+  }
+
+  // Method to get all images for template preloading
+  getAllImagePaths(): string[] {
+    return this.items.map((_, index) => `assets/imgs/section3/pic${index + 1}.png`);
   }
 }

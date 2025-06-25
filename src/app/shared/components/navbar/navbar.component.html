@@ -15,7 +15,7 @@
     <div class="language-dropdown">
       <button
         class="nav-action-btn language-btn heading"
-        (click)="isLanguageDropdownOpen = !isLanguageDropdownOpen"
+        (click)="toggleLanguageDropdown($event)"
       >
         <span class="language-text">{{ getCurrentLanguageText() }}</span>
         <img
@@ -29,7 +29,6 @@
       <div
         class="dropdown-content"
         [class.show]="isLanguageDropdownOpen"
-        (mouseleave)="isLanguageDropdownOpen = false"
       >
         <button
           *ngFor="let lang of availableLanguages; let i = index"
@@ -55,14 +54,14 @@
   </div>
 
   <!-- Mobile menu toggle (hidden on larger screens) -->
-  <button class="mobile-menu-toggle" (click)="toggleMobileMenu()">
+  <button class="mobile-menu-toggle" (click)="toggleMobileMenu()" #mobileMenuToggle>
     <span class="icon-bar"></span>
     <span class="icon-bar"></span>
     <span class="icon-bar"></span>
   </button>
 
   <!-- Mobile menu dropdown (hidden on larger screens) -->
-  <div class="mobile-menu" [class.open]="mobileMenuOpen">
+  <div class="mobile-menu" [class.open]="mobileMenuOpen" #mobileMenu>
     <a
       *ngFor="let item of regularNavItems"
       class="mobile-nav-link heading"

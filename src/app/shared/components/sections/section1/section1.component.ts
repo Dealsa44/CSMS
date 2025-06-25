@@ -1,10 +1,8 @@
-// D:\ZURIKO\WORK\CAR SERVICE MANAGEMENT SYSTEM\CSMS\SRC\app\shared\components\sections\section1\section1.component.ts
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { LanguageService } from '../../../../core/services/language.service';
-import { section1Mocks } from '../../../../core/mocks/sections/section1mock';
 import { sectionHeadingsMocks } from '../../../../core/mocks/sections/sectionheadings';
-import { EventEmitter, Output } from '@angular/core';
+import { section1Mocks } from '../../../../core/mocks/sections/section1mock';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-section1',
@@ -13,35 +11,45 @@ import { EventEmitter, Output } from '@angular/core';
   templateUrl: './section1.component.html',
   styleUrls: ['./section1.component.scss'],
 })
-export class Section1Component implements OnInit {
-  @Output() requestModalTrigger = new EventEmitter<void>();
-  pricingData = section1Mocks;
+export class section1Component implements OnInit {
+  heading = sectionHeadingsMocks[1]; // Second heading is for section1
+  challenges = section1Mocks;
   currentLanguageIndex = 0;
-  heading = sectionHeadingsMocks[1]; // Index 1 for the new pricing section heading
-  isCollapsed = true;
 
   constructor(private languageService: LanguageService) {}
-
+  ngAfterViewInit() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('animate');
+          }, index * 100);
+        }
+      });
+    }, {threshold: 0.1});
+  
+    document.querySelectorAll('.challenge-card').forEach(card => {
+      observer.observe(card);
+    });
+  }
   ngOnInit(): void {
     this.languageService.currentLanguage$.subscribe((index) => {
       this.currentLanguageIndex = index;
     });
   }
 
-  getTranslatedText(textArray: string[]): string {
-    return textArray[this.currentLanguageIndex];
-  }
-
   getHeading(): string {
     return this.heading.title[this.currentLanguageIndex];
   }
 
-  // Method to handle button click (e.g., navigate to a demo page)
-  onDemo(): void {
-    this.requestModalTrigger.emit();
+  getChallengeTitle(challenge: any): string {
+    if (Array.isArray(challenge.title)) {
+      return challenge.title[this.currentLanguageIndex];
+    }
+    return challenge.title;
   }
 
-  toggleCollapse() {
-  this.isCollapsed = !this.isCollapsed;
-}
+  getImagePath(index: number): string {
+    return `assets/imgs/section1/pic${index + 1}.png`;
+  }
 }

@@ -3,20 +3,21 @@ export const navbarMocks: any[] = [
         title: 'CSMS',
         order: -1, // Special order for brand
     },
+    
     {
-        title: ['ფასები', "Prices", "Цены"],
+        title: ['გამოწვევები', "Challenges", "Вызовы"],
         order: 0,
     },
     {
-        title: ['გამოწვევები', "Challenges", "Вызовы"],
+        title: ["გადაწყვეტები" , "Solutions", "Решения"],
         order: 1,
     },
     {
-        title: ["გადაწყვეტები" , "Solutions", "Решения"],
+        title: ["ფუნქციონალი", "Functionality", "Функционал"],
         order: 2,
     },
     {
-        title: ["ფუნქციონალი", "Functionality", "Функционал"],
+        title: ['ფასები', "Prices", "Цены"],
         order: 3,
     },
     {

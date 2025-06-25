@@ -1,300 +1,308 @@
 .section1 {
   padding: 5rem 2rem;
-  background: #f5f5f5;
+  background: linear-gradient(135deg, #ececec 0%, #f5f5f5 50%, #ececec 100%);
   position: relative;
+  overflow: hidden;
 }
 
-/* Remove the animated background */
+/* Animated background particles (kept as requested) */
 .section1::before {
-  display: none;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(
+      circle at 20% 80%,
+      rgba(26, 147, 111, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(18, 66, 85, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 40%,
+      rgba(26, 147, 111, 0.05) 0%,
+      transparent 50%
+    );
+  animation: floatingParticles 20s ease-in-out infinite;
+  will-change: transform;
+  pointer-events: none;
 }
 
 .section1 .section-heading {
-  font-size: 2.5rem;
+  font-size: clamp(2rem, 4vw, 2.5rem);
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
   color: #124255;
   font-weight: 700;
   position: relative;
   display: inline-block;
   left: 50%;
   transform: translateX(-50%);
-  transition: all 0.3s ease;
-
-  &::after {
-    content: "";
-    display: block;
-    width: 80px;
-    height: 4px;
-    background: linear-gradient(to right, #1a936f, #124255);
-    margin: 1rem auto 0;
-    border-radius: 2px;
-    transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
-    box-shadow: 0 1px 3px rgba(26, 147, 111, 0.2);
-  }
-
-  &:hover {
-    transform: translateX(-50%) translateY(-1px);
-
-    &::after {
-      width: 120px;
-      background: linear-gradient(to right, #1a936f, #0b2833);
-      box-shadow: 0 2px 6px rgba(26, 147, 111, 0.3);
-    }
-  }
-}
-
-.section1 .pricing-table {
-  max-width: 1000px;
-  margin: 0 auto;
-  background: #ffffff;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  position: relative;
-  transform: translateY(30px);
   opacity: 0;
-  animation: tableSlideIn 1s ease-out 0.4s forwards;
-
-  // Smooth transition for max-height
-  transition: max-height 0.7s ease-in-out, opacity 0.5s ease;
-  will-change: max-height; // Optimize for animation
+  animation: smoothFadeIn 1.2s ease-out 0.2s forwards;
+  background: linear-gradient(135deg, #124255 0%, #1a936f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* Remove glowing border effect */
-.section1 .pricing-table::before {
-  display: none;
+.section1 .section-heading::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 110%;
+  height: 110%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(26, 147, 111, 0.08) 0%,
+    transparent 70%
+  );
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.6s ease;
 }
 
-/* Header Row */
-.section1 .header-row {
+.section1 .section-heading::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #1a936f, transparent);
+  margin: 1rem auto 0;
+  transition: width 0.8s ease 0.5s;
+  animation: expandUnderline 1s ease 1s forwards;
+}
+
+.section1 .section-heading:hover::before {
+  opacity: 1;
+}
+
+.section1 .challenges-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  background: #ffffff;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-/* Remove gradient line under header */
-.section1 .header-row::after {
-  display: none;
-}
-
-/* First column in header - remove background */
-.section1 .feature-header {
-  padding: 2rem 1.5rem;
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: #000000;
-  background: transparent !important; /* Remove background */
-  display: flex;
-  align-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   justify-content: center;
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.section1 .plan-column {
-  padding: 1.5rem;
-  text-align: center;
-  position: relative;
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+.section1 .challenge-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 2rem;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  background: #ffffff;
-}
-
-.section1 .plan-column:last-child {
-  border-right: none;
-}
-
-/* Remove special styling from standard plan */
-.section1 .plan-column.standard {
-  background: #ffffff;
-  transform: none;
-  box-shadow: none;
-  z-index: auto;
-}
-
-.section1 .plan-name {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #000000;
-  margin: 0;
-}
-
-.section1 .plan-price {
-  display: flex;
-  gap: 4px;
-  align-items: baseline;
-  justify-content: center;
-  font-size: 1.2rem;
-  .price {
-    font-weight: bold;
-  }
-}
-
-.section1 .per-month {
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: #666;
-  margin-top: 0.25rem;
-}
-
-/* Default button style - black with white text */
-.section1 .demo-button {
-  background: #000000;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 10px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  align-items: flex-start;
+  gap: 1.25rem;
+  box-shadow: 
+    0 4px 20px rgba(11, 40, 51, 0.08),
+    0 1px 3px rgba(11, 40, 51, 0.12);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
-  font-size: 0.9rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin-top: 0.5rem;
-  width: 95%;
+  border: 1px solid rgba(26, 147, 111, 0.12);
+  transform: translateY(20px);
+  opacity: 0;
+  animation: smoothSlideIn 0.8s ease-out forwards;
 }
 
-/* Remove special button styling for standard plan */
-.section1 .plan-column.standard .demo-button {
-  background: #000000;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transform: none;
+/* Staggered animation delays */
+.section1 .challenge-card:nth-child(1) { animation-delay: 0.12s; }
+.section1 .challenge-card:nth-child(2) { animation-delay: 0.24s; }
+.section1 .challenge-card:nth-child(3) { animation-delay: 0.36s; }
+.section1 .challenge-card:nth-child(4) { animation-delay: 0.48s; }
+.section1 .challenge-card:nth-child(5) { animation-delay: 0.60s; }
+.section1 .challenge-card:nth-child(6) { animation-delay: 0.72s; }
+.section1 .challenge-card:nth-child(7) { animation-delay: 0.84s; }
+.section1 .challenge-card:nth-child(8) { animation-delay: 0.96s; }
+.section1 .challenge-card:nth-child(9) { animation-delay: 1.08s; }
+.section1 .challenge-card:nth-child(10) { animation-delay: 1.20s; }
+
+/* Glowing border effect */
+.section1 .challenge-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 16px;
+  padding: 1px;
+  background: linear-gradient(
+    45deg,
+    rgba(26, 147, 111, 0.1),
+    rgba(18, 66, 85, 0.2),
+    rgba(26, 147, 111, 0.1)
+  );
+  background-size: 200% 200%;
+  animation: borderGlow 3s ease-in-out infinite;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: xor;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
 
-/* Hover effect for the whole plan column */
-.section1 .plan-column:hover {
-  background: rgba(26, 147, 111, 0.05);
+/* Enhanced shine effect */
+.section1 .challenge-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.15) 45%,
+    rgba(26, 147, 111, 0.1) 50%,
+    rgba(255, 255, 255, 0.15) 55%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  z-index: 1;
 }
 
-.section1 .plan-column:hover .demo-button {
-  background: linear-gradient(135deg, #1a936f 0%, #124255 100%);
-  box-shadow: 0 6px 20px rgba(26, 147, 111, 0.3);
+.section1 .challenge-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 12px 32px rgba(11, 40, 51, 0.12),
+    0 4px 8px rgba(26, 147, 111, 0.08),
+    0 0 20px rgba(26, 147, 111, 0.15);
 }
 
-/* Table Rows */
-.section1 .table-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+.section1 .challenge-card:hover::after {
+  opacity: 1;
+  animation-duration: 2s;
 }
 
-.section1 .table-row:hover {
-  background: rgba(0, 0, 0, 0.02);
+.section1 .challenge-card:hover::before {
+  opacity: 1;
+  transform: translateX(100%) translateY(100%) rotate(45deg);
+  transition-duration: 1.2s;
 }
 
-.section1 .table-row.merged-header {
-  grid-template-columns: 1fr;
-  background: rgba(26, 147, 111, 0.05); /* Same as hover state */
-}
-
-.section1 .cell {
-  padding: 1.25rem 1.5rem;
+.section1 .challenge-image-container {
+  width: 64px;
+  height: 64px;
+  min-width: 64px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
-  border-right: 1px solid rgba(0, 0, 0, 0.05);
+  justify-content: center;
+  background: linear-gradient(135deg, #124255 0%, #0b2833 100%);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 4px 12px rgba(18, 66, 85, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
   position: relative;
-  transition: all 0.3s ease;
+  overflow: hidden;
 }
 
-.section1 .cell:last-child {
-  border-right: none;
+.section1 .challenge-image-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 14px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.1) 30%,
+    rgba(26, 147, 111, 0.1) 70%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
 }
 
-.section1 .feature-cell {
-  justify-content: flex-start;
-  font-weight: 500;
-  color: #000000;
-  background: #ffffff;
+.section1 .challenge-image-container::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  border-radius: 12px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(26, 147, 111, 0.05) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
 }
 
-/* Remove underline from row headers */
-.section1 .row-header {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #000000;
-  margin: 0;
-  justify-content: flex-start;
-  width: 100%;
+.section1 .challenge-card:hover .challenge-image-container {
+  transform: scale(1.05);
+  box-shadow: 
+    0 8px 16px rgba(18, 66, 85, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(26, 147, 111, 0.3);
 }
 
-.section1 .row-header::after {
-  display: none;
+.section1 .challenge-card:hover .challenge-image-container::before {
+  opacity: 1;
+  animation: mirrorPulse 2s ease-in-out infinite;
 }
 
-.section1 .merged-header .cell {
-  justify-content: flex-start; // Change from center to flex-start
-  text-align: left;
-  padding-left: 1.5rem; // Add some left padding
+.section1 .challenge-image {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
+  position: relative;
 }
 
-.section1 .checkmark-cell {
-  background: #ffffff;
-  justify-content: center;
-}
-
-.section1 .checkmark {
-  color: #1a936f;
-  font-size: 1.25rem;
-  font-weight: 800;
-  background: rgba(26, 147, 111, 0.1);
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-.section1 .crossmark {
-  color: #dc3545;
-  font-size: 1.1rem;
-  font-weight: 700;
-  background: rgba(220, 53, 69, 0.1);
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-/* Footer Row */
-.section1 .footer-row {
-  display: grid;
-  grid-template-columns: 1fr;
-  background: rgba(26, 147, 111, 0.05); /* Same as hover state */
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.section1 .footer-row::before {
-  display: none;
-}
-
-.section1 .merged-footer {
-  padding: 2rem 1.5rem;
-  text-align: center;
-  justify-content: center;
+.section1 .challenge-title {
+  color: #0b2833;
+  font-size: 1.125rem;
   font-weight: 600;
-  color: #000000;
-  font-size: 1.1rem;
-  border: none;
+  margin: 0;
+  padding-top: 0.5rem;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  line-height: 1.4;
 }
 
-.section1 .footer-price {
+.section1 .challenge-title::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #1a936f, #124255);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  border-radius: 1px;
+}
+
+.section1 .challenge-card:hover .challenge-title {
   color: #1a936f;
-  font-weight: 800;
-  font-size: 1.25rem;
-  margin-left: 0.5rem;
+  text-shadow: 0 0 10px rgba(26, 147, 111, 0.3);
+}
+
+.section1 .challenge-card:hover .challenge-title::after {
+  width: 50px;
+  opacity: 1;
+  box-shadow: 0 0 8px rgba(26, 147, 111, 0.5);
 }
 
 /* Animations */
@@ -309,10 +317,16 @@
   }
 }
 
-@keyframes tableSlideIn {
+@keyframes expandUnderline {
+  to {
+    width: 60px;
+  }
+}
+
+@keyframes smoothSlideIn {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -320,21 +334,37 @@
   }
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .section1 .pricing-table {
-    margin: 0 1rem;
+@keyframes borderGlow {
+  0%, 100% {
+    background-position: 0% 50%;
   }
-
-  .section1 .plan-price {
-    font-size: 1.75rem;
-  }
-
-  .section1 .cell {
-    padding: 1rem;
+  50% {
+    background-position: 100% 50%;
   }
 }
 
+@keyframes mirrorPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.6;
+  }
+}
+
+/* Keep the background particle animation */
+@keyframes floatingParticles {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+  }
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
   .section1 {
     padding: 3rem 1rem;
@@ -345,87 +375,48 @@
     font-size: clamp(1.75rem, 5vw, 2.25rem);
   }
 
-  .section1 .pricing-table {
-    margin: 0 auto;
-    border-radius: 16px;
-    width: calc(100% - 2rem);
+  .section1 .challenges-container {
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
   }
 
-  .section1 .header-row,
-  .section1 .table-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    width: 100%;
+  .section1 .challenge-card {
+    padding: 1.5rem;
+    gap: 1rem;
   }
 
-  .section1 .plan-column {
-    padding: 1.5rem 1rem;
+  .section1 .challenge-image-container {
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
   }
 
-  .section1 .plan-name {
-    font-size: 1.1rem;
+  .section1 .challenge-image {
+    width: 26px;
+    height: 26px;
   }
 
-  .section1 .plan-price {
-    font-size: 1.5rem;
-  }
-
-  .section1 .per-month {
-    font-size: 0.8rem;
-  }
-
-  .section1 .demo-button {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.85rem;
-  }
-
-  .section1 .cell {
-    padding: 0.875rem 0.75rem;
+  .section1 .challenge-title {
+    font-size: 1rem;
   }
 }
 
 @media (max-width: 480px) {
   .section1 {
-    padding: 2rem 0.5rem;
+    padding: 2rem 0.75rem;
   }
 
   .section1 .section-heading {
     margin-bottom: 2rem;
   }
 
-  .section1 .pricing-table {
-    margin: 0 auto;
+  .section1 .challenges-container {
+    gap: 1rem;
+  }
+
+  .section1 .challenge-card {
+    padding: 1.25rem;
     border-radius: 12px;
-    width: calc(100% - 1rem);
-  }
-
-  .section1 .plan-column {
-    padding: 1rem 0.5rem;
-  }
-
-  .section1 .plan-name {
-    font-size: 1rem;
-  }
-
-  .section1 .plan-price {
-    font-size: 1.375rem;
-  }
-
-  .section1 .demo-button {
-    padding: 0.5rem 1rem;
-    font-size: 0.8rem;
-  }
-
-  .section1 .cell {
-    padding: 0.75rem 0.5rem;
-    font-size: 0.9rem;
-  }
-
-  .section1 .checkmark,
-  .section1 .crossmark {
-    width: 28px;
-    height: 28px;
-    font-size: 1rem;
   }
 }
 
@@ -438,127 +429,12 @@
   }
 
   .section1 .section-heading,
-  .section1 .pricing-table {
+  .section1 .challenge-card {
     opacity: 1 !important;
     transform: none !important;
   }
-}
 
-/* Focus states for accessibility */
-.section1 .demo-button:focus {
-  outline: 2px solid #1a936f;
-  outline-offset: 2px;
-}
-
-.section1 .demo-button:focus:not(:focus-visible) {
-  outline: none;
-}
-
-/* Print styles */
-@media print {
-  .section1 {
-    background: white !important;
-    color: black !important;
-  }
-
-  .section1 .pricing-table {
-    box-shadow: none !important;
-    border: 2px solid #ccc !important;
-  }
-
-  .section1 .demo-button {
-    background: #333 !important;
-    color: white !important;
-  }
-}
-.collapse-control {
-  text-align: center;
-  margin-top: 1rem;
-}
-
-.collapse-button {
-  background: linear-gradient(135deg, #1a936f 0%, #124255 100%);
-  color: white;
-  border: none;
-  padding: 1rem 4rem;
-  border-radius: 30px;
-  font-weight: 600;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  box-shadow: 0 4px 12px rgba(26, 147, 111, 0.3);
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(26, 147, 111, 0.4);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
-}
-
-// Styling for the SVG icon
-.collapse-icon {
-  width: 24px;
-  height: 24px;
-  fill: currentColor; // Inherit color from the button text
-  transition: transform 0.3s ease-in-out;
-}
-
-.collapse-icon.collapsed-icon {
-  transform: rotate(0deg); // Down arrow
-}
-
-.collapse-icon:not(.collapsed-icon) {
-  transform: rotate(180deg); // Up arrow
-}
-
-.pricing-table {
-  max-height: 3700px; // A large enough value for the uncollapsed state
-  opacity: 1;
-
-  &.collapsed {
-    max-height: 760px; // Adjust this value based on how much you want to show when collapsed
-    position: relative;
-    opacity: 1;
-
-    &::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 100px;
-      background: linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0),
-        rgba(245, 245, 245, 1)
-      );
-      pointer-events: none;
-    }
-  }
-}
-@media (max-width: 768px) {
-  .pricing-table {
-    &.collapsed {
-      max-height: 300px;
-    }
-  }
-}
-
-@media (max-width: 480px) {
-  .pricing-table {
-    &.collapsed {
-      max-height: 250px;
-    }
-  }
-
-  .collapse-button {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.9rem;
+  .section1::before {
+    animation: floatingParticles 20s ease-in-out infinite;
   }
 }

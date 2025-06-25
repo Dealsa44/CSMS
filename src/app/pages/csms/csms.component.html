@@ -2,23 +2,23 @@
   <app-navbar (requestModalTrigger)="openRequestModal()"></app-navbar>
   <app-main id="main"></app-main>
   
-  <app-section2 id="section2"></app-section2>
+  <app-section1 id="section1"></app-section1>
 </div>
 
-<app-section3
-  id="section3"
+<app-section2
+  id="section2"
   (requestModalTrigger)="openRequestModal()"
-></app-section3>
+></app-section2>
 
 <div class="layout-wrapper">
+  <app-section3
+    id="section3"
+    (requestModalTrigger)="openRequestModal()"
+  ></app-section3>
   <app-section4
     id="section4"
     (requestModalTrigger)="openRequestModal()"
   ></app-section4>
-  <app-section1
-    id="section1"
-    (requestModalTrigger)="openRequestModal()"
-  ></app-section1>
   <app-section5 id="section5"></app-section5>
   <app-footer></app-footer>
 </div>
