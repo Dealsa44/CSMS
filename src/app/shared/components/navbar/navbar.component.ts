@@ -133,11 +133,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
     );
   }
   isLanguageItem(item: any): boolean {
-    return item.order === 5;
+    return item.order === 4;
   }
 
   isDemoButton(item: any): boolean {
-    return item.order === 6;
+    return item.order === 5;
   }
 
   getNavItemTitle(item: any): string {
@@ -173,10 +173,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
       case 1:
         return 'section2';
       case 2:
-        return 'section3';
-      case 3:
         return 'section4';
-      case 4:
+      case 3:
         return 'section5';
       default:
         return 'main';

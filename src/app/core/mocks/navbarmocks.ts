@@ -9,27 +9,23 @@ export const navbarMocks: any[] = [
         order: 0,
     },
     {
-        title: ["გადაწყვეტები" , "Solutions", "Решения"],
+        title: ["ფუნქციები", "Features", "Функции"],
         order: 1,
     },
     {
-        title: ["ფუნქციები", "Features", "Функции"],
+        title: ['ფასები', "Prices", "Цены"],
         order: 2,
     },
     {
-        title: ['ფასები', "Prices", "Цены"],
+        title: ["კონტაქტი" , "Contact", "Контакт"],
         order: 3,
     },
     {
-        title: ["კონტაქტი" , "Contact", "Контакт"],
+        title:['ქარ', 'ENG', 'РУС'],
         order: 4,
     },
     {
-        title:['ქარ', 'ENG', 'РУС'],
-        order: 5,
-    },
-    {
         title: ["მოითხოვე პრეზენტაცია", "Request a presentation", "Запросить презентацию"],
-        order: 6,
+        order: 5,
     },
 ]
