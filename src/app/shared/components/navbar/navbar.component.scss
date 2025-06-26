@@ -217,7 +217,7 @@
           border: 1px solid rgba(255, 255, 255, 0.1);
           display: inline-block;
 
-          @media (max-width: 1350px) {
+          @media (max-width: 1150px) {
             display: none; // Hide flag on mobile, show only globe
           }
         }
@@ -226,7 +226,7 @@
           display: none; // Hidden by default on desktop
           font-size: 1.2rem;
 
-          @media (max-width: 1350px) {
+          @media (max-width: 1150px) {
             display: inline-block; // Show only globe on mobile
           }
         }
@@ -244,7 +244,7 @@
           display: none; // Hidden by default on desktop
           font-size: 1.2rem;
         }
-        @media (max-width: 1350px) {
+        @media (max-width: 1150px) {
           padding: 0.8rem;
           width: 42px;
           height: 42px;
@@ -525,7 +525,7 @@
           }
         }
 
-        @media (max-width: 1350px) {
+        @media (max-width: 1150px) {
           padding: 0.8rem;
           width: 42px;
           height: 42px;
