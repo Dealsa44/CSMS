@@ -1,18 +1,12 @@
 // app.component.ts
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CsmsComponent } from './pages/csms/csms.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    RouterOutlet
-],
-  template: `
-    <router-outlet></router-outlet>
-  `,
+  imports: [RouterOutlet],
+  templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
-}
+export class AppComponent {}
