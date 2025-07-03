@@ -1,11 +1,20 @@
 {
-  "routes": [
-    {
-      "route": "/*",
-      "serve": "/index.html"
-    }
-  ],
   "navigationFallback": {
-    "rewrite": "/index.html"
+    "rewrite": "/index.html",
+    "exclude": [
+      "/assets/*.{png,jpg,jpeg,svg,gif,webp,ico,json}",
+      "/*.{js,map}",
+      "/favicon.ico",
+      "/manifest.webmanifest",
+      "/*.txt",
+      "/3rdpartylicenses.txt",
+      "/ngsw-worker.js",
+      "/safety-worker.js",
+      "/worker-basic.min.js"
+    ]
+  },
+  "mimeTypes": {
+    ".json": "application/json",
+    ".webmanifest": "application/manifest+json"
   }
 }
