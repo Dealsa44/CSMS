@@ -17,6 +17,8 @@
   font-family: "Poppins", sans-serif;
   // Use clamp for responsive gap: min 1rem, preferred 2vw, max 2rem
   gap: clamp(1rem, 2vw, 2rem);
+  overflow-x: hidden;
+   margin-top: clamp(70px, 10vh, 100px);
 
   &::before {
     content: "";
