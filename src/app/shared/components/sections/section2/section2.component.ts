@@ -14,7 +14,6 @@ import { ImageModalComponent } from '../../image-modal/image-modal.component';
   styleUrls: ['./section2.component.scss'],
 })
 export class section2Component implements OnInit {
-  @Output() requestModalTrigger = new EventEmitter<void>();
   heading = sectionHeadingsMocks[2]; // Third heading is for section2
   titles = section2Mocks[0];
   contents = section2Mocks[1];
@@ -64,12 +63,6 @@ export class section2Component implements OnInit {
     return item.title;
   }
 
-  getLinkText(item: any): string {
-    if (Array.isArray(item.link)) {
-      return item.link[this.currentLanguageIndex];
-    }
-    return item.link;
-  }
 
   // Enhanced toggleItem method with smooth image transition
   toggleItem(index: number): void {
@@ -163,9 +156,7 @@ export class section2Component implements OnInit {
     });
   }
 
-  onLearnMore(): void {
-    this.requestModalTrigger.emit();
-  }
+
   openImageModal(): void {
     if (!this.currentImageSrc) return;
 

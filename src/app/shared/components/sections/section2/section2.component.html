@@ -22,9 +22,7 @@
 
         <div *ngIf="expandedItems[i]" class="content-details">
           <p>{{ getContent(contents[i]) }}</p>
-          <button class="learn-more-btn" (click)="onLearnMore()">
-            {{ getLinkText(contents[i]) }}
-          </button>
+
         </div>
       </div>
     </div>

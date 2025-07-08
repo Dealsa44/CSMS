@@ -37,6 +37,82 @@ export class section5Component implements OnInit {
     return item.title[this.currentLanguageIndex];
   }
 
+  /**
+   * Prevents non-numeric characters and '+' from being typed,
+   * except for '+' at the very beginning.
+   */
+  onKeyDown(event: KeyboardEvent): void {
+    const input = event.target as HTMLInputElement;
+    const value = input.value;
+    const key = event.key;
+
+    // Allow navigation keys, backspace, delete, tab
+    if (
+      key === 'Backspace' ||
+      key === 'Delete' ||
+      key === 'Tab' ||
+      key === 'ArrowLeft' ||
+      key === 'ArrowRight' ||
+      key === 'Home' ||
+      key === 'End'
+    ) {
+      return;
+    }
+
+    // Allow numbers
+    if (/\d/.test(key)) {
+      return;
+    }
+
+    // Allow '+' only if it's the first character being typed and the input is empty
+    if (key === '+' && input.selectionStart === 0 && !value.includes('+')) {
+      return;
+    }
+
+    // Prevent any other character
+    event.preventDefault();
+  }
+
+  /**
+   * Filters pasted content to ensure only numbers and a leading '+' are allowed.
+   */
+  onPaste(event: ClipboardEvent): void {
+    const clipboardData = event.clipboardData;
+    if (!clipboardData) {
+      return;
+    }
+
+    event.preventDefault(); // Stop the default paste behavior
+    const pastedText = clipboardData.getData('text');
+    let filteredText = '';
+
+    if (pastedText.startsWith('+')) {
+      filteredText = '+' + pastedText.substring(1).replace(/[^0-9]/g, '');
+    } else {
+      filteredText = pastedText.replace(/[^0-9]/g, '');
+    }
+
+    // Get the current input element and its value
+    const inputElement = event.target as HTMLInputElement;
+    const currentValue = inputElement.value;
+    const selectionStart = inputElement.selectionStart || 0;
+    const selectionEnd = inputElement.selectionEnd || 0;
+
+    // Construct the new value
+    const newValue =
+      currentValue.substring(0, selectionStart) +
+      filteredText +
+      currentValue.substring(selectionEnd);
+
+    // Update the ngModel (phoneNumber) and then the input element
+    this.phoneNumber = newValue;
+    // Manually update the input element's value since we prevented default paste
+    inputElement.value = this.phoneNumber;
+
+    // Dispatch an input event to ensure ngModel updates correctly if needed by other directives
+    inputElement.dispatchEvent(new Event('input'));
+  }
+
   onSubmit(): void {
     // Basic validation
     if (!this.phoneNumber || this.phoneNumber.length < 4) {
@@ -46,7 +122,8 @@ export class section5Component implements OnInit {
       return;
     }
 
-    // Remove any non-digit characters (except + if present)
+    // The phoneNumber should already be clean due to onKeyDown and onPaste,
+    // but a final clean-up here is good for robustness.
     const cleanedPhone = this.phoneNumber.replace(/[^\d+]/g, '');
 
     this.apiService.savePhoneNumber(cleanedPhone).subscribe({
