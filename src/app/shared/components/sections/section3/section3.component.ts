@@ -103,7 +103,7 @@ export class section3Component implements OnInit, OnDestroy {
         img.fetchPriority = 'high';
       }
       
-      img.src = `assets/imgs/section3/pic${i + 1}.png`;
+      img.src = `assets/imgs/section3/pic${i + 1}.jpg`;
     }
   }
 
@@ -167,13 +167,13 @@ export class section3Component implements OnInit, OnDestroy {
         const img = new Image();
         img.loading = 'eager';
         img.onload = () => this.imageCache.set(idx, img);
-        img.src = `assets/imgs/section3/pic${idx + 1}.png`;
+        img.src = `assets/imgs/section3/pic${idx + 1}.jpg`;
       }
     });
   }
 
   getImagePath(): string {
-    return `assets/imgs/section3/pic${this.activeItemIndex + 1}.png`;
+    return `assets/imgs/section3/pic${this.activeItemIndex + 1}.jpg`;
   }
 
   isImageReady(index: number): boolean {
@@ -195,6 +195,6 @@ export class section3Component implements OnInit, OnDestroy {
 
   // Method to get all images for template preloading
   getAllImagePaths(): string[] {
-    return this.items.map((_, index) => `assets/imgs/section3/pic${index + 1}.png`);
+    return this.items.map((_, index) => `assets/imgs/section3/pic${index + 1}.jpg`);
   }
 }
