@@ -1,8 +1,9 @@
 export const mainMocks = {
   title: [
-    'ავტოსერვისის პროცესის ოპტიმიზაცია საუკეთესო მომსახურების შეთავაზებისთვის',
-    'Optimizing the car service process to offer the best service',
-    'Оптимизация процесса обслуживания автомобилей для предоставления наилучшего сервиса',
+    'ავტომობილების სერვისის მართვის სისტემა',
+      'Car Service Management System',
+      'Система Управления Автосервисом',
+    
   ],
   id: 'main-subheading', 
 };

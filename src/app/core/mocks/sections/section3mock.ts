@@ -47,7 +47,7 @@ export const section3Mocks: any[][]= [
             order: 3,
         },
         {
-            title: ["ნაწილებისა დ მომსახურებების აღრიცხვა ევროსა და დოლარში","Accounting for parts and services in euros and dollars","Учет запчастей и услуг в евро и долларах"],
+            title: ["ნაწილებისა და მომსახურებების აღრიცხვა ევროსა და დოლარში","Accounting for parts and services in euros and dollars","Учет запчастей и услуг в евро и долларах"],
             link: ["გაიგეთ მეტი", "Learn more","Узнать больше"],
             order: 4,
         },
