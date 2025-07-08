@@ -19,13 +19,12 @@ export const section4Mocks = {
       name: ['პრემიუმი', 'Premium', 'Премиум'],
       price: '$1500',
       perMonth: ['/თვეში', '/month', '/месяц'],
-      button: ['პრეზენტაცია', 'Presentation', 'Презентация'],
     },
   },
   rows: [
     {
       type: 'header',
-      text: ['დაფა', 'Dashboard', 'Панель управления'],
+      text: ['მონიტორინგის დაფა', 'Monitoring dashboard', 'Панель мониторинга'],
       basic: null,
       standard: null,
       premium: null,

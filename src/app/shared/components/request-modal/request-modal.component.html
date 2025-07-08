@@ -9,8 +9,8 @@
                [(ngModel)]="formData[field.order]"
                [name]="'field-'+field.order"
                [id]="'field-'+field.order"
-               [placeholder]="getText(field)">
-        <div class="error-message" *ngIf="field.order === 1 && formErrors.fullName">{{ formErrors.fullName }}</div>
+               [placeholder]="getText(field)"
+               (input)="clearError(field.order)"> <div class="error-message" *ngIf="field.order === 1 && formErrors.fullName">{{ formErrors.fullName }}</div>
         <div class="error-message" *ngIf="field.order === 3 && formErrors.contact">{{ formErrors.contact }}</div>
         <div class="error-message" *ngIf="field.order === 4 && formErrors.email">{{ formErrors.email }}</div>
         <div class="error-message" *ngIf="field.order === 3 && formErrors.phone">{{ formErrors.phone }}</div>

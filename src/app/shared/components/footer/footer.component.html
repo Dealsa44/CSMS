@@ -1,34 +1,48 @@
 <footer class="footer">
-    <div class="footer-container">
-      <div class="footer-left">
-        <div class="logo-container">
-          <img src="assets/imgs/footer/pic1.png" alt="UGT Logo" class="ugt-logo">
-          <div class="social-icons">
-            <button (click)="openSocial('https://www.facebook.com/UGTtechnology')" class="social-icon">
-              <img src="assets/icons/footer/facebook.svg" alt="Facebook">
-            </button>
-            <button (click)="openSocial('https://youtube.com/@ugtchannel4706')" class="social-icon">
-              <img src="assets/icons/footer/youtube.svg" alt="YouTube">
-            </button>
-            <button (click)="openSocial('https://linkedin.com/company/ugt/')" class="social-icon">
-              <img src="assets/icons/footer/linkedin.svg" alt="LinkedIn">
-            </button>
-          </div>
-        </div>
-        <div class="archive">
-          <p>© {{currentYear}} UGT. All rights reserved.</p>
+  <div class="footer-container">
+    <div class="footer-left">
+      <div class="logo-container">
+        <img
+          src="assets/imgs/footer/pic1.png"
+          alt="UGT Logo"
+          class="ugt-logo"
+        />
+        <div class="social-icons">
+          <button
+            (click)="openSocial('https://www.facebook.com/UGTtechnology')"
+            class="social-icon"
+          >
+            <img src="assets/icons/footer/facebook.svg" alt="Facebook" />
+          </button>
+          <button
+            (click)="openSocial('https://youtube.com/@ugtchannel4706')"
+            class="social-icon"
+          >
+            <img src="assets/icons/footer/youtube.svg" alt="YouTube" />
+          </button>
+          <button
+            (click)="openSocial('https://linkedin.com/company/ugt/')"
+            class="social-icon"
+          >
+            <img src="assets/icons/footer/linkedin.svg" alt="LinkedIn" />
+          </button>
         </div>
       </div>
-  
-      <div class="footer-right">
-        <h3 class="footer-header">{{ getHeader() }}</h3>
-        <div class="contact-info">
-          <p class="address" (click)="openMap()">
-            {{ getAddress() }}
-          </p>
-          <p class="phone" (click)="handlePhoneClick()">+995 (32) 2 22 05 05</p>
-          <p class="email" (click)="handleEmailClick()">ugt&#64;ugt.ge</p>
-        </div>
+      <div class="archive">
+        <p>© {{ currentYear }} UGT. All rights reserved.</p>
       </div>
     </div>
-  </footer>
+
+    <div class="footer-right">
+      <h3 class="footer-header">{{ getHeader() }}</h3>
+      <div class="contact-info">
+        <p class="address" (click)="openMap()">
+          {{ getAddress() }}
+        </p>
+        <p class="phone" (click)="handlePhoneClick()">+995 (32) 2 22 05 05</p>
+        <p class="email" (click)="handleEmailClick()">ugt&#64;ugt.ge</p>
+        <p class="website" (click)="openWebsite('https://ugt.ge/')">ugt.ge</p>
+      </div>
+    </div>
+  </div>
+</footer>

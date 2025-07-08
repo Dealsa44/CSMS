@@ -1,24 +1,18 @@
 .main-section {
-  // Using fit-content allows the section to naturally size based on its children,
-  // which is better for preventing overall page overflow if content is tall.
-  // If you *insist* it always fills the screen initially, revert to min-height: 100vh,
-  // but be aware it will require even more aggressive shrinking of children.
   min-height: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  // Use clamp for responsive padding: min 2rem, preferred 5vw, max 4rem
   padding: clamp(2rem, 5vw, 4rem);
   background-color: #f5f9fa;
   position: relative;
-  overflow: auto; // Keep this to allow scrolling if content still exceeds viewport
+  overflow: auto;
   color: #124255;
   font-family: "Poppins", sans-serif;
-  // Use clamp for responsive gap: min 1rem, preferred 2vw, max 2rem
   gap: clamp(1rem, 2vw, 2rem);
   overflow-x: hidden;
-   margin-top: clamp(70px, 10vh, 100px);
+  margin-top: clamp(30px, 1vh, 100px);
 
   &::before {
     content: "";
@@ -46,7 +40,6 @@
   }
 
   .main-heading {
-    // Use clamp for responsive font size: min 2.5rem, preferred 8vw, max 5rem
     font-size: clamp(2.5rem, 8vw, 5rem);
     font-weight: 800;
     text-align: center;
@@ -61,11 +54,9 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    // Use clamp for responsive horizontal padding: min 0.5rem, preferred 2vw, max 2rem
     padding: 0 clamp(0.5rem, 2vw, 2rem);
     text-shadow: 0 4px 6px rgba(18, 66, 85, 0.1);
-    // Add a responsive margin-bottom
-    margin-bottom: clamp(1.5rem, 3vw, 3rem); // min 1.5rem, preferred 3vw, max 3rem
+    margin-bottom: clamp(1.5rem, 3vw, 3rem);
 
     &::after {
       content: "";
@@ -81,13 +72,31 @@
       opacity: 0;
     }
 
-    // Keep specific media queries for adjustments not easily handled by clamp,
-    // or for overriding clamp behavior if necessary.
     @media (max-width: 768px) {
-      // Font size is largely handled by clamp now, but you can override here
-      // if you need a specific size at this breakpoint.
-      // font-size: 3rem; // Removed as clamp handles it
-      margin-bottom: 2rem; // Slightly reduce margin for this breakpoint
+      margin-bottom: 2rem;
+    }
+  }
+
+  /* SUBHEADING STYLES - FONT-WEIGHT ADJUSTED */
+  .main-subheading {
+    font-size: clamp(1rem, 2.5vw, 1.75rem);
+    font-weight: 600; /* Increased font-weight from 500 to 600 */
+    text-align: center;
+    color: rgba(18, 66, 85, 0.85);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -1.5rem;
+    margin-bottom: clamp(2rem, 3.5vw, 4rem);
+    line-height: 1.6;
+    padding: 0 clamp(1rem, 3vw, 2.5rem);
+    transform: translateY(30px);
+    opacity: 0;
+    animation: fadeInUp 1s cubic-bezier(0.22, 0.61, 0.36, 1) 0.6s forwards;
+
+    @media (max-width: 768px) {
+      font-size: clamp(0.9rem, 2.8vw, 1.2rem);
+      margin-bottom: 2.5rem;
     }
   }
 
@@ -96,7 +105,6 @@
     z-index: 1;
     max-width: 1200px;
     width: 100%;
-    // Use clamp for responsive max-height: min 40vh, preferred 50vw, max 60vh
     max-height: clamp(40vh, 50vw, 60vh);
     border-radius: 20px;
     overflow: hidden;
@@ -107,7 +115,6 @@
     animation: fadeInScale 1s cubic-bezier(0.22, 0.61, 0.36, 1) 0.6s forwards;
     transition: all 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
     background-color: white;
-    // Use clamp for responsive padding: min 1rem, preferred 3vw, max 2.5rem
     padding: clamp(1rem, 3vw, 2.5rem);
     border: none;
     perspective: 1000px;
@@ -384,48 +391,27 @@ html {
   scroll-behavior: smooth;
 }
 
-/*
-  Removed the specific media queries for font-size and padding
-  where clamp() is now being used, as clamp() provides a more fluid
-  and often sufficient level of responsiveness.
-  Kept original structure for clarity if you wish to re-introduce specific overrides.
-*/
 .main-section {
   @media (min-width: 1920px) {
-    // Only adjust where clamp might not be sufficient or you need specific overrides
-    // padding: 6rem; // Handled by clamp(2rem, 5vw, 4rem) which will max out at 4rem at 1920px (5vw * 1920 = 96px ~ 6rem)
-    // .main-heading { font-size: 6rem; } // clamp will max out at 5rem. Override if 6rem is a hard requirement.
     .main-image-container {
-      max-width: 1400px; // This is still a good specific max-width for very large screens.
-      // padding: 3rem; // Handled by clamp(1rem, 3vw, 2.5rem)
+      max-width: 1400px;
     }
-  }
-
-  @media (max-width: 1024px) {
-    // .main-heading { font-size: 4rem; } // Handled by clamp.
-    // .main-image-container { max-width: 900px; padding: 2rem; } // max-width remains, padding handled by clamp
   }
 
   @media (max-width: 768px) {
-    // padding: 3rem; // Handled by clamp.
     .main-heading {
-      // font-size: 3.5rem; // Handled by clamp.
-      margin-bottom: 2rem; // Keep specific margin reduction
+      margin-bottom: 2rem;
     }
     .main-image-container {
-      max-width: 100%; // Important for filling width on smaller screens
-      // padding: 1.5rem; // Handled by clamp.
-      border-radius: 16px; // Keep specific border-radius
-      max-height: 50vh; // More aggressive max-height reduction
+      max-width: 100%;
+      border-radius: 16px;
+      max-height: 50vh;
     }
   }
 
   @media (max-width: 480px) {
-    // padding: 2rem; // Handled by clamp.
-    // .main-heading { font-size: 2.5rem; } // Handled by clamp.
     .main-image-container {
-      // padding: 1rem; // Handled by clamp.
-      max-height: 40vh; // Further aggressive max-height reduction
+      max-height: 40vh;
     }
   }
 }

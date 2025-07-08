@@ -17,6 +17,7 @@ export class section1Component implements OnInit {
   currentLanguageIndex = 0;
 
   constructor(private languageService: LanguageService) {}
+
   ngAfterViewInit() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry, index) => {
@@ -32,6 +33,7 @@ export class section1Component implements OnInit {
       observer.observe(card);
     });
   }
+
   ngOnInit(): void {
     this.languageService.currentLanguage$.subscribe((index) => {
       this.currentLanguageIndex = index;
@@ -40,6 +42,10 @@ export class section1Component implements OnInit {
 
   getHeading(): string {
     return this.heading.title[this.currentLanguageIndex];
+  }
+
+  getSubheading(): string {
+    return this.challenges.subheading[this.currentLanguageIndex];
   }
 
   getChallengeTitle(challenge: any): string {

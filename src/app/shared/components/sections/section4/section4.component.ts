@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, HostListener} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LanguageService } from '../../../../core/services/language.service';
 import { section4Mocks } from '../../../../core/mocks/sections/section4mock';
@@ -12,7 +12,6 @@ import { sectionHeadingsMocks } from '../../../../core/mocks/sections/sectionhea
   styleUrls: ['./section4.component.scss'], // Ensure this path is correct
 })
 export class section4Component implements OnInit {
-  @Output() requestModalTrigger = new EventEmitter<void>();
   pricingData = section4Mocks;
   currentLanguageIndex = 0;
   heading = sectionHeadingsMocks[4]; // Index 4 for the pricing section heading
@@ -49,10 +48,6 @@ export class section4Component implements OnInit {
 
   getHeading(): string {
     return this.heading.title[this.currentLanguageIndex];
-  }
-
-  onDemo(): void {
-    this.requestModalTrigger.emit();
   }
 
   toggleCollapse() {

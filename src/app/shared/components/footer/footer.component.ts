@@ -17,7 +17,7 @@ export class FooterComponent {
   isMobileDevice(): boolean {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   }
-  
+
   constructor(private languageService: LanguageService) {}
 
   getCurrentLanguageIndex(): number {
@@ -60,8 +60,13 @@ export class FooterComponent {
       this.openEmail();
     }
   }
-  
+
   openEmail(): void {
     window.open('https://mail.google.com/mail/?view=cm&fs=1&to=ugt@ugt.ge', '_blank');
+  }
+
+  // New method to open the website
+  openWebsite(url: string): void {
+    window.open(url, '_blank');
   }
 }

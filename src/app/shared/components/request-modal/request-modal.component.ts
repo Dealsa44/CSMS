@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnDestroy } from '@angular/core'; // Add OnDestroy
 import { RequestModelMocks } from '../../../core/mocks/requestmodelmock';
 import { LanguageService } from '../../../core/services/language.service';
 import { ApiService } from '../../../core/services/api.service';
@@ -7,12 +7,12 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-request-modal',
-  imports: [FormsModule, CommonModule], // Add any necessary imports here
+  imports: [FormsModule, CommonModule],
   standalone: true,
   templateUrl: './request-modal.component.html',
   styleUrls: ['./request-modal.component.scss'],
 })
-export class RequestModalComponent {
+export class RequestModalComponent implements OnDestroy { // Implement OnDestroy
   @Input() visible = false;
   @Output() visibleChange = new EventEmitter<boolean>();
   contactData = RequestModelMocks;
@@ -25,6 +25,7 @@ export class RequestModalComponent {
     private languageService: LanguageService,
     private apiService: ApiService
   ) {}
+
   getCurrentLanguageIndex(): number {
     return this.languageService.getCurrentLanguage();
   }
@@ -75,9 +76,7 @@ export class RequestModalComponent {
   }
 
   validatePhone(phone: string): boolean {
-    // Remove all non-digit characters
     const cleanedPhone = phone.replace(/\D/g, '');
-    // Check for at least 7 digits (same as backend)
     return cleanedPhone.length >= 7;
   }
 
@@ -105,7 +104,7 @@ export class RequestModalComponent {
       },
       error: (error) => {
         console.error('Registration failed:', error);
-        // Handle error (show error message)
+        // You might want to display a generic error message here if the API call fails
       },
     });
   }
@@ -120,6 +119,34 @@ export class RequestModalComponent {
   resetForm(): void {
     this.formData = {};
     this.formErrors = {};
+  }
+
+  clearError(fieldOrder: number): void {
+    switch (fieldOrder) {
+      case 1: // Full Name
+        if (this.formErrors.fullName) {
+          delete this.formErrors.fullName;
+        }
+        break;
+      case 3: // Phone (can also trigger contact error)
+        if (this.formErrors.phone) {
+          delete this.formErrors.phone;
+        }
+        if (this.formErrors.contact) {
+            delete this.formErrors.contact;
+        }
+        break;
+      case 4: // Email (can also trigger contact error)
+        if (this.formErrors.email) {
+          delete this.formErrors.email;
+        }
+        if (this.formErrors.contact) {
+            delete this.formErrors.contact;
+        }
+        break;
+      default:
+        break;
+    }
   }
 
   ngOnDestroy(): void {

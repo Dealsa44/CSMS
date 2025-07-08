@@ -1,51 +1,60 @@
 export const section3Mocks: any[][]= [
     [
         {
-            title: ["AD-სთან ინტეგრაცია", "Integration with AD","Интеграция с AD"],
+            title: ["მომხმარებლებისა და უფლებების მართვა","User and rights management","Управление пользователями и правами"],
             order: 0,
         },
         {
-            title: ["გარანტიების აღრიცხვა", "Accounting of guarantees","Учет гарантий"],
+            title: ["საბუღალტრო პროგრამასთან ინტეგრაცია","Integration with accounting software","Интеграция с бухгалтерским программным обеспечением"],
             order: 1,
         },
         {
-            title: ["საბუღალტრო პროგრამასთან ინტეგრაცია", "Integration with accounting program","Интеграция с бухгалтерской программой"],
+            title: ["SMS-ების ავტომატური დაგზავნა","Automatic sending of SMS messages","Автоматическая отправка СМС-сообщений"],
             order: 2,
         },
         {
-            title: ["ოსტატების ვიზიტების დაჯავშნა", "Booking of master visits","Бронирование визитов мастеров"],
+            title: ["AD-სთან ინტეგრაცია","Integration with AD","Интеграция с AD"],
             order: 3,
         },
         {
-            title: ["ციფრული პრეისკურანტის შექმნა", "Creation of digital price list","Создание цифрового прейскуранта"],
+            title: ["უცხოურ ვალუტებში აღრიცხვა","Accounting in foreign currencies","Учет в иностранной валюте"],
             order: 4,
+        },
+        {
+            title: ["რეპორტინგი","Reporting","Отчетность"],
+            order: 5,
         },
     ],
     [
         {
-            title: ["პროგრამის მოხმარებლების ავტორიზაციის პროცესის დაკავშირება შესაძლებელია აქტიურ დირექტორიასთან (AD)", "The authorization process of program users can be linked to Active Directory (AD)","Процесс авторизации пользователей программы можно связать с Активный каталог (AD)"],
+            title: ["პროგრამაში ავტორიზებული მომხმარებლებისთვის ფუნქცია-მოვალეობების შესაბამისი უფლებების მინიჭება","Assigning rights corresponding to the functions and responsibilities to authorized users in the program","Назначение авторизованным пользователям в программе прав, соответствующих функциям и обязанностям"],
             link: ["გაიგეთ მეტი", "Learn more","Узнать больше"],
             order: 0,
         },
         {
-            title: ["პროგრამაში გაციფრულებულია ყველანაირი საგარანტიო პირობა, როგორც შიდა ისე მომწოდებლის განარტიის შემთხვევაში.", "All types of warranty conditions are digitized in the program, both in the case of internal and supplier warranty.","Все виды гарантийных условий оцифрованы в программе, как в случае внутренней, так и в случае поставщика."],
+            title: ["შესაძლებელია სხვადასხვა საბუღალტრო პროგრამებთან ინტეგრაცია, მიუხედავად იმისა, რომ ავტოსერვისის მართვის სისტემას შეუძლია დამოუკიდებლად ფუნქციონირება","Integration with various accounting programs is possible, although the car service management system can operate independently.","Возможна интеграция с различными бухгалтерскими программами, хотя система управления автосервисом может работать автономно."],
             link: ["გაიგეთ მეტი", "Learn more","Узнать больше"],
             order: 1,
         },
         {
-            title: ["პროგრამა ინტეგრირდება საბუღალტრო და ERP სისტემებთან, რაც იძლევა მონაცემების ლაივ რეჟიმში გაცვლის შესაძლებლობას.", "The program integrates with accounting and ERP systems, which provides the ability to exchange data in live mode.","Программа интегрируется с бухгалтерскими и ERP-системами, что позволяет обмениваться данными в режиме реального времени."],
+            title: ["ავტოსერვისის პროცესთან, ვიზიტების დაგეგმვასთან დაკავშირებული შეტყობინებების ავტომატური დაგზავნა.","Automatic sending of notifications related to the car service process and visit scheduling.","Автоматическая отправка уведомлений, связанных с процессом обслуживания автомобиля и планированием визитов."],
             link: ["გაიგეთ მეტი", "Learn more","Узнать больше"],
             order: 2,
         },
         {
-            title: ["პროგრამაში შესაძლებელია ავტოსერვისზე წინასწარ ჩაწერა: ავტო-ტექნიკის როგორც სერვის ცენტრში მიყვანის, ისე ოსტატის ადგილზე მივნილების შემთხვევაში.", "It is possible to pre-register for the auto service in the program: both in the case of bringing the auto-technical service center and in the case of the master coming to the place.","В программе можно предварительно записаться на автосервис: как в случае доставки автотехнического сервисного центра, так и в случае приезда мастера на место."],
+            title: ["პროგრამის მომხმარებლების ავტორიზაციის პროცესის დაკავშირება შესაძლებელია აქტიურ დირექტორიასთან (AD)","The authorization process for program users can be connected to Active Directory (AD)","Процесс авторизации пользователей программы может быть подключен к Active Directory (AD)"],
             link: ["გაიგეთ მეტი", "Learn more","Узнать больше"],
             order: 3,
         },
         {
-            title: ["პროგრამაში გაციფრულებულია ავტოსერვისთან დაკავშირებული ყველანაირი დოკუმენტი: პრეისკურანტი, ავტოსერვისის ხარჯთაღრიცხვა, მიღება-ჩაბარებები და ინვოისები.", "All documents related to auto service are digitized in the program: price list, auto service cost calculation, acceptance-deliveries and invoices.","Все документы, связанные с автосервисом, оцифрованы в программе: прайс-лист, калькуляция автосервиса, прием-передачи и счета-фактуры."],
+            title: ["ნაწილებისა დ მომსახურებების აღრიცხვა ევროსა და დოლარში","Accounting for parts and services in euros and dollars","Учет запчастей и услуг в евро и долларах"],
             link: ["გაიგეთ მეტი", "Learn more","Узнать больше"],
             order: 4,
+        },
+        {
+            title: ["სისტემაში წარმოდგენილია სხვადასხვა შინაარსის რეპორტები და მონიტორინგის დაფა.","The system features reports of various contents and a monitoring dashboard.","Система содержит отчеты различного содержания и панель мониторинга."],
+            link: ["გაიგეთ მეტი", "Learn more","Узнать больше"],
+            order: 5,
         },
     ]
 ]

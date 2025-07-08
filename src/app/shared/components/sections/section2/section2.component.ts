@@ -137,7 +137,7 @@ export class section2Component implements OnInit {
   // Helper method to get image path by index (used internally for transitions)
   private getImagePathByIndex(index: number): string {
     if (index === -1) {
-      return 'assets/imgs/section2/pic7.png'; // Default image when nothing is selected
+      return 'assets/imgs/section2/pic8.png'; // Default image when nothing is selected
     }
     return `assets/imgs/section2/pic${index + 1}.png`;
   }
@@ -145,7 +145,7 @@ export class section2Component implements OnInit {
   // Original getImagePath method (keeping for compatibility)
   getImagePath(): string {
     if (this.activeIndex === -1) {
-      return 'assets/imgs/section2/pic7.png'; // Default image when nothing is selected
+      return 'assets/imgs/section2/pic8.png'; // Default image when nothing is selected
     }
     return `assets/imgs/section2/pic${this.activeIndex + 1}.png`;
   }
@@ -154,7 +154,7 @@ export class section2Component implements OnInit {
   private preloadImages(): void {
     // Preload default image
     const defaultImg = new Image();
-    defaultImg.src = 'assets/imgs/section2/pic7.png';
+    defaultImg.src = 'assets/imgs/section2/pic8.png';
 
     // Preload all section images
     this.titles.forEach((_, index) => {
