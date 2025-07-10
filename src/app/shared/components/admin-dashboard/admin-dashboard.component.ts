@@ -153,7 +153,7 @@ export class AdminDashboardComponent implements OnInit {
 
     this.http
       .delete(
-        `csms-backend-production.up.railway.app/${endpoint}/delete/${id}`
+        `https://csms-backend-production.up.railway.app/${endpoint}/delete/${id}`
       )
       .subscribe({
         next: () => {
@@ -179,7 +179,7 @@ export class AdminDashboardComponent implements OnInit {
       type === 'users' ? 'users/delete_all' : 'numbers/delete_all';
 
     this.http
-      .delete(`csms-backend-production.up.railway.app/${endpoint}`)
+      .delete(`https://csms-backend-production.up.railway.app/${endpoint}`)
       .subscribe({
         next: () => {
           if (type === 'users') {
