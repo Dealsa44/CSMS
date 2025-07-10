@@ -112,19 +112,27 @@ export class section5Component implements OnInit {
     // Dispatch an input event to ensure ngModel updates correctly if needed by other directives
     inputElement.dispatchEvent(new Event('input'));
   }
-
+  validatePhoneNumber(phone: string): boolean {
+    // Remove all non-digit characters (keeping only numbers)
+    const cleanedPhone = phone.replace(/[^\d]/g, '');
+    return cleanedPhone.length >= 7;
+  }
   onSubmit(): void {
-    // Basic validation
-    if (!this.phoneNumber || this.phoneNumber.length < 4) {
+    // First clean the phone number (remove all non-digit characters except leading +)
+    let cleanedPhone = this.phoneNumber;
+    if (cleanedPhone.startsWith('+')) {
+      cleanedPhone = '+' + cleanedPhone.substring(1).replace(/[^\d]/g, '');
+    } else {
+      cleanedPhone = cleanedPhone.replace(/[^\d]/g, '');
+    }
+
+    // Validate using the same rules as backend
+    if (!this.validatePhoneNumber(cleanedPhone)) {
       this.notificationMessage = this.getText(this.content[6]); // Invalid phone number message
       this.showNotification = true;
       this.resetNotification();
       return;
     }
-
-    // The phoneNumber should already be clean due to onKeyDown and onPaste,
-    // but a final clean-up here is good for robustness.
-    const cleanedPhone = this.phoneNumber.replace(/[^\d+]/g, '');
 
     this.apiService.savePhoneNumber(cleanedPhone).subscribe({
       next: (response) => {
