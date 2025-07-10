@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private apiUrl = 'csms-backend-production.up.railway.app';
+  private apiUrl = 'https://csms-backend-production.up.railway.app';
 
   constructor(private http: HttpClient) {}
 
