@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { LanguageService } from '../../../core/services/language.service';
 import { adminDashboardTexts } from '../../../core/mocks/admin-dashboard-textsmock';
+import { AuthService } from '../../../core/services/auth.service';
 
 interface User {
   id: number;
@@ -48,6 +49,7 @@ export class AdminDashboardComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private languageService: LanguageService,
+    private authService: AuthService,
     private router: Router
   ) {}
 
@@ -198,13 +200,6 @@ export class AdminDashboardComponent implements OnInit {
   }
   // Add this to the component class
   logout(): void {
-    // Clear local storage (optional, AuthService will handle this)
-    localStorage.removeItem('csms_auth_token');
-
-    // Get current language from route
-    const lang = this.route.snapshot.params['lang'];
-
-    // Navigate to home page in current language
-    this.router.navigate([`/${lang}`]);
-  }
+  this.authService.logout();
+}
 }
