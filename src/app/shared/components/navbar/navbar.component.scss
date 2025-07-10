@@ -36,7 +36,6 @@
   &:hover {
     box-shadow: 0 8px 24px rgba(11, 40, 51, 0.3),
       0 0 0 1px rgba(26, 147, 111, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px);
 
     &::before {
       left: 100%;
@@ -44,7 +43,7 @@
   }
 
   .navbar-brand {
-    font-family: 'Times New Roman', Times, serif;
+    font-family: "Times New Roman", Times, serif;
     font-weight: 800;
     font-size: 1.8rem;
     color: #f3e9d2;
@@ -281,10 +280,17 @@
       }
 
       .dropdown-arrow {
-        font-size: 0.7rem;
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid #000000;
         margin-left: 5px;
         transition: transform 0.4s ease;
+        display: inline-block; // Important for positioning
+        vertical-align: middle; // Align with text
       }
+
       &:hover {
         .language-flag-icon {
           transform: scale(1.1) translateY(-1px);

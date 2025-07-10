@@ -374,6 +374,6 @@ export const section4Mocks = {
     ],
     price: '$1500',
   },
-  collapseText: ['გაშლა', 'Expand', 'Развернуть'],
-  expandText: ['დახურვა', 'Collapse', 'Свернуть'],
+  collapseText: ['მეტი','More','Более'],
+  expandText: ['ნაკლები','Less','Меньше'],
 };

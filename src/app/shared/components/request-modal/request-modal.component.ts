@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output, OnDestroy } from '@angular/core'; // Add OnDestroy
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnDestroy,
+} from '@angular/core'; // Add OnDestroy
 import { RequestModelMocks } from '../../../core/mocks/requestmodelmock';
 import { LanguageService } from '../../../core/services/language.service';
 import { ApiService } from '../../../core/services/api.service';
@@ -12,7 +18,8 @@ import { CommonModule } from '@angular/common';
   templateUrl: './request-modal.component.html',
   styleUrls: ['./request-modal.component.scss'],
 })
-export class RequestModalComponent implements OnDestroy { // Implement OnDestroy
+export class RequestModalComponent implements OnDestroy {
+  // Implement OnDestroy
   @Input() visible = false;
   @Output() visibleChange = new EventEmitter<boolean>();
   contactData = RequestModelMocks;
@@ -47,6 +54,12 @@ export class RequestModalComponent implements OnDestroy { // Implement OnDestroy
     // Full Name validation (order: 1)
     if (!this.formData[1] || this.formData[1].trim() === '') {
       this.formErrors.fullName = this.getText(this.contactData[7]);
+      isValid = false;
+    } else if (this.formData[1].trim().length < 3) {
+      this.formErrors.fullName = this.getText(this.contactData[12]);
+      isValid = false;
+    } else if (!/^[\p{L}\s]+$/u.test(this.formData[1])) {
+      this.formErrors.fullName = this.getText(this.contactData[11]);
       isValid = false;
     }
 
@@ -133,7 +146,7 @@ export class RequestModalComponent implements OnDestroy { // Implement OnDestroy
           delete this.formErrors.phone;
         }
         if (this.formErrors.contact) {
-            delete this.formErrors.contact;
+          delete this.formErrors.contact;
         }
         break;
       case 4: // Email (can also trigger contact error)
@@ -141,7 +154,7 @@ export class RequestModalComponent implements OnDestroy { // Implement OnDestroy
           delete this.formErrors.email;
         }
         if (this.formErrors.contact) {
-            delete this.formErrors.contact;
+          delete this.formErrors.contact;
         }
         break;
       default:
@@ -153,5 +166,33 @@ export class RequestModalComponent implements OnDestroy { // Implement OnDestroy
     if (this.notificationTimeout) {
       clearTimeout(this.notificationTimeout);
     }
+  }
+  handlePhoneInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const originalValue = input.value;
+    const cursorPosition = input.selectionStart || 0;
+
+    // Get the current value and clean it
+    let cleanedValue = originalValue.replace(/\D/g, '');
+
+    // Calculate how many non-digits were before the cursor
+    const nonDigitsBeforeCursor = originalValue
+      .substring(0, cursorPosition)
+      .replace(/\D/g, '').length;
+
+    // Update both the model and the input value
+    this.formData[3] = cleanedValue;
+    input.value = cleanedValue;
+
+    // Calculate new cursor position
+    const newCursorPosition = Math.max(0, nonDigitsBeforeCursor);
+
+    // Restore cursor position after a small delay (next tick)
+    setTimeout(() => {
+      input.setSelectionRange(newCursorPosition, newCursorPosition);
+    }, 0);
+
+    // Clear any existing errors
+    this.clearError(3);
   }
 }

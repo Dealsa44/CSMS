@@ -67,4 +67,20 @@ export const RequestModelMocks: any[] = [
     ],
     order: 10,
   },
+  {
+    title: [
+      'სახელი უნდა შეიცავდეს მხოლოდ ასოებს და გამოყოფებს',
+      'Name should contain only letters and spaces',
+      'Имя должно содержать только буквы и пробелы',
+    ],
+    order: 11,
+  },
+  {
+    title: [
+      'სახელი უნდა შეიცავდეს მინიმუმ 3 სიმბოლოს',
+      'Name should contain at least 3 characters',
+      'Имя должно содержать минимум 3 символа',
+    ],
+    order: 12,
+  },
 ];
