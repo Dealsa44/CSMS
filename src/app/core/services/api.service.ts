@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private apiUrl = 'https://ugtcsms-dddygmd9e3hjf6aq.northeurope-01.azurewebsites.net';
+  private apiUrl = 'csms-backend-production.up.railway.app';
 
   constructor(private http: HttpClient) {}
 

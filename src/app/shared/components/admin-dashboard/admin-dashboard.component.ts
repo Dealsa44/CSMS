@@ -68,13 +68,13 @@ export class AdminDashboardComponent implements OnInit {
     this.error = null;
 
     this.http
-      .get<User[]>('https://ugtcsms-dddygmd9e3hjf6aq.northeurope-01.azurewebsites.net/users/all')
+      .get<User[]>('csms-backend-production.up.railway.app/users/all')
       .subscribe({
         next: (users) => {
           this.users = users;
           this.http
             .get<PhoneNumber[]>(
-              'https://ugtcsms-dddygmd9e3hjf6aq.northeurope-01.azurewebsites.net/numbers/all'
+              'csms-backend-production.up.railway.app/numbers/all'
             )
             .subscribe({
               next: (numbers) => {
@@ -153,7 +153,7 @@ export class AdminDashboardComponent implements OnInit {
 
     this.http
       .delete(
-        `https://ugtcsms-dddygmd9e3hjf6aq.northeurope-01.azurewebsites.net/${endpoint}/delete/${id}`
+        `csms-backend-production.up.railway.app/${endpoint}/delete/${id}`
       )
       .subscribe({
         next: () => {
@@ -179,7 +179,7 @@ export class AdminDashboardComponent implements OnInit {
       type === 'users' ? 'users/delete_all' : 'numbers/delete_all';
 
     this.http
-      .delete(`https://ugtcsms-dddygmd9e3hjf6aq.northeurope-01.azurewebsites.net/${endpoint}`)
+      .delete(`csms-backend-production.up.railway.app/${endpoint}`)
       .subscribe({
         next: () => {
           if (type === 'users') {
