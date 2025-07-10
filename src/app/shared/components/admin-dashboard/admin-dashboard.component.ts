@@ -68,13 +68,13 @@ export class AdminDashboardComponent implements OnInit {
     this.error = null;
 
     this.http
-      .get<User[]>('csms-backend-production.up.railway.app/users/all')
+      .get<User[]>('https://csms-backend-production.up.railway.app/users/all')
       .subscribe({
         next: (users) => {
           this.users = users;
           this.http
             .get<PhoneNumber[]>(
-              'csms-backend-production.up.railway.app/numbers/all'
+              'https://csms-backend-production.up.railway.app/numbers/all'
             )
             .subscribe({
               next: (numbers) => {
