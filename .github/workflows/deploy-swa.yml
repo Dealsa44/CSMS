@@ -33,5 +33,4 @@ jobs:
           action: "upload"
           app_location: "/"
           output_location: "dist/csms/browser"
-          deployment_environment: "Production"
           production_branch: "master"
